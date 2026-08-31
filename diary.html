@@ -116,14 +116,22 @@ main section.view.on{display:block}
 .step{margin-top:26px}
 .step h3{font-size:1.02rem;margin-bottom:3px;font-family:'IBM Plex Sans KR',sans-serif;font-weight:600}
 .step .sub{color:var(--ink-3);font-size:.78rem;margin-bottom:10px}
-.seg{display:flex;gap:8px}
+.seg{display:flex;flex-direction:column;gap:8px}
 .seg button{
-  flex:1;border:1.5px solid var(--rule);border-radius:10px;background:var(--surface);
-  padding:.6rem .3rem;font-size:.82rem;color:var(--ink-2);line-height:1.35;
+  border:1.5px solid var(--rule);border-radius:12px;background:var(--surface);
+  padding:.85rem 1rem;font-size:.86rem;color:var(--ink-2);line-height:1.62;text-align:left;
+  display:flex;flex-direction:column;gap:.35rem;transition:border-color .12s;
 }
-.seg button b{display:block;font-weight:600;color:var(--ink)}
-.seg button small{display:block;color:var(--ink-3);font-size:.68rem}
+.seg button .stag{
+  display:inline-flex;align-items:center;gap:.45rem;
+  font-family:'IBM Plex Mono',monospace;font-size:.66rem;letter-spacing:.08em;
+  font-weight:500;color:var(--ink-3);text-transform:uppercase;
+}
+.seg button .stag i{width:8px;height:8px;border-radius:50%;background:var(--rule-strong);flex:none}
+.seg button p{margin:0;color:var(--ink-2)}
 .seg button[aria-pressed="true"]{border-color:var(--ink);box-shadow:var(--shadow)}
+.seg button[aria-pressed="true"] p{color:var(--ink)}
+.seg button[aria-pressed="true"] .stag{color:var(--ink)}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
 .chips button{
   border:1.5px solid var(--rule);border-radius:999px;background:var(--surface);
@@ -268,8 +276,8 @@ footer{margin-top:44px;font-size:.66rem;color:var(--ink-3);font-family:'IBM Plex
       <div id="colorGroups"></div>
 
       <div class="step" id="stepState" hidden>
-        <h3 data-i18n="q2">지금 이 색은 어떤 상태인가요?</h3>
-        <p class="sub" data-i18n="q2hint">정답은 없습니다. 느낌으로 고르세요.</p>
+        <h3 data-i18n="q2">지금 마음에 가장 가까운 문장은?</h3>
+        <p class="sub" data-i18n="q2hint">이 색의 세 가지 상태입니다. 읽어보고 오늘과 닮은 문장을 고르세요.</p>
         <div class="seg" id="stateSeg"></div>
       </div>
 
@@ -339,7 +347,7 @@ const UI = {
   ko: {
     appTitle:"데일리 컬러 다이어리",
     q1:"오늘 아침, 어떤 색이 떠올랐나요?", q1hint:"생각하지 말고, 먼저 눈이 가는 색을 고르세요.",
-    q2:"지금 이 색은 어떤 상태인가요?", q2hint:"정답은 없습니다. 느낌으로 고르세요.",
+    q2:"지금 마음에 가장 가까운 문장은?", q2hint:"이 색의 세 가지 상태입니다. 읽어보고 오늘과 닮은 문장을 고르세요.",
     q3:"오늘의 감정을 골라주세요", q3hint:"최대 3개까지",
     q4:"한 줄 느낌", q4hint:"지금 마음을 한 문장으로",
     q5:"이 색이 떠오른 이유가 있다면", q5hint:"건너뛰어도 괜찮습니다",
@@ -375,7 +383,7 @@ const UI = {
   en: {
     appTitle:"Daily Color Diary",
     q1:"What color came to you this morning?", q1hint:"Don't overthink it — pick the one your eyes go to first.",
-    q2:"How is this color showing up today?", q2hint:"There is no right answer. Go by feel.",
+    q2:"Which sentence is closest to how you feel?", q2hint:"These are this color's three states. Pick the one that sounds like today.",
     q3:"Pick today's emotions", q3hint:"Up to 3",
     q4:"One line about today", q4hint:"Your mood in a single sentence",
     q5:"Why this color, if you know", q5hint:"Feel free to skip",
@@ -760,11 +768,14 @@ function renderColorGrid(){
 }
 function renderStateSeg(){
   const seg = $("#stateSeg"); seg.innerHTML = "";
+  if (!sel.color) return;
+  const c = byId[sel.color][store.lang];
   const lab = { balanced:[T.stBalanced,T.stBalancedS], excess:[T.stExcess,T.stExcessS], deficit:[T.stDeficit,T.stDeficitS] };
+  const desc = { balanced:c.balanced, excess:c.excess, deficit:c.deficit };
   STATES.forEach(st=>{
     const b = document.createElement("button"); b.type = "button";
     b.setAttribute("aria-pressed", String(sel.state===st));
-    b.innerHTML = `<b>${esc(lab[st][0])}</b><small>${esc(lab[st][1])}</small>`;
+    b.innerHTML = `<span class="stag"><i></i>${esc(lab[st][0])} · ${esc(lab[st][1])}</span><p>${esc(desc[st])}</p>`;
     b.addEventListener("click", ()=>{ sel.state = st; renderStateSeg(); $("#stepEmotion").hidden = false; $("#stepText").hidden = false; renderEmotionChips(); updateSave(); });
     seg.appendChild(b);
   });
