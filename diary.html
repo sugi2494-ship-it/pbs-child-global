@@ -175,6 +175,7 @@ textarea{min-height:76px;resize:vertical}
 }
 .crow p{font-size:.9rem;color:var(--ink-2)}
 .crow p.big{font-family:'Gowun Batang',serif;font-size:1.02rem;color:var(--ink);line-height:1.65}
+.crow p.quote{font-size:.95rem;color:var(--ink-2)}
 .bal{display:flex;align-items:center;gap:10px;margin-bottom:5px}
 .bal i{width:16px;height:16px;border-radius:50%;flex:none}
 .bal b{font-size:.88rem}
@@ -184,6 +185,52 @@ textarea{min-height:76px;resize:vertical}
   flex:1;border:1.5px solid var(--rule-strong);border-radius:10px;background:transparent;
   color:var(--ink-2);font-size:.84rem;font-weight:500;padding:.65rem;
 }
+
+/* state slider */
+.sl-swatch{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+.sl-swatch i{width:54px;height:54px;border-radius:14px;display:block;flex:none;transition:background .12s}
+.sl-tag{font-weight:600;font-size:.98rem}
+.sl-tag small{display:block;font-weight:400;font-size:.72rem;color:var(--ink-3)}
+.sl-track-wrap{position:relative;padding:6px 0}
+.sl-mid{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:5px;height:24px;border-radius:3px;background:var(--ground);border:1.5px solid var(--rule-strong);pointer-events:none}
+input[type=range].sl{
+  -webkit-appearance:none;appearance:none;display:block;width:100%;height:18px;
+  border-radius:9px;border:1px solid var(--rule);margin:0;background:var(--surface-2);
+}
+input[type=range].sl::-webkit-slider-thumb{
+  -webkit-appearance:none;width:28px;height:28px;border-radius:50%;
+  background:var(--surface);border:3px solid var(--ink);cursor:pointer;box-shadow:var(--shadow);
+}
+input[type=range].sl::-moz-range-thumb{
+  width:28px;height:28px;border-radius:50%;background:var(--surface);
+  border:3px solid var(--ink);cursor:pointer;
+}
+.sl-scale{display:flex;justify-content:space-between;font-size:.7rem;color:var(--ink-3);margin-top:8px}
+.sl-scale span:nth-child(2){color:var(--ink-2);font-weight:600}
+.sl-result{margin-top:16px;border-left:3px solid var(--rule-strong);padding:.3rem 0 .3rem 13px;font-size:.88rem;color:var(--ink-2);line-height:1.65}
+.sl-result .k{font-family:'IBM Plex Mono',monospace;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:3px}
+.sl-result b{color:var(--ink)}
+
+/* calendar */
+.cal-head{display:grid;grid-template-columns:repeat(7,1fr);margin-top:8px;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:.64rem;color:var(--ink-3)}
+.cal-head span{padding:4px 0}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-top:4px}
+.cal-cell{
+  aspect-ratio:1;border:0;background:transparent;border-radius:50%;
+  display:grid;place-items:center;font-size:.82rem;color:var(--ink-3);
+  font-variant-numeric:tabular-nums;padding:0;
+}
+.cal-cell.has{background:var(--dc);color:#fff;font-weight:600;cursor:pointer}
+.cal-cell:disabled{cursor:default}
+.cal-cell.today{box-shadow:0 0 0 2px var(--ground), 0 0 0 4px var(--ink-3)}
+.cal-cell.sel{box-shadow:0 0 0 2px var(--ground), 0 0 0 4px var(--ink)}
+.wrow{display:grid;grid-template-columns:82px 1fr auto;gap:10px;align-items:center;margin-bottom:11px}
+.wlab b{display:block;font-size:.76rem}
+.wlab span{font-size:.62rem;color:var(--ink-3);font-family:'IBM Plex Mono',monospace}
+.wbar{display:flex;height:13px;border-radius:4px;overflow:hidden;gap:2px}
+.wbar div{min-width:4px}
+.wtop{font-size:.72rem;color:var(--ink-2);white-space:nowrap}
+.wtop .n{font-family:'IBM Plex Mono',monospace;color:var(--ink-3)}
 
 /* journal */
 .jitem{
@@ -282,26 +329,22 @@ footer{margin-top:44px;font-size:.66rem;color:var(--ink-3);font-family:'IBM Plex
       <p class="hint" data-i18n="q1hint">생각하지 말고, 먼저 눈이 가는 색을 고르세요.</p>
       <div id="colorGroups"></div>
 
-      <div class="step" id="stepState" hidden>
-        <h3 data-i18n="q2">지금 마음에 가장 가까운 문장은?</h3>
-        <p class="sub" data-i18n="q2hint">이 색의 세 가지 상태입니다. 읽어보고 오늘과 닮은 문장을 고르세요.</p>
-        <div class="seg" id="stateSeg"></div>
-      </div>
-
       <div class="step" id="stepEmotion" hidden>
         <h3 data-i18n="q3">오늘의 감정을 골라주세요</h3>
         <p class="sub" data-i18n="q3hint">최대 5개까지 — 긍정과 부정을 섞어 골라도 됩니다</p>
         <div class="chips" id="emotionChips"></div>
       </div>
 
+      <div class="step" id="stepState" hidden>
+        <h3 data-i18n="q2">이 색의 진하기로 오늘을 표현해보세요</h3>
+        <p class="sub" data-i18n="q2hint">가운데 점이 균형입니다. 오른쪽으로 갈수록 진해지고(과잉), 왼쪽으로 갈수록 옅어집니다(결핍).</p>
+        <div id="stateSlider"></div>
+      </div>
+
       <div class="step" id="stepText" hidden>
-        <h3 data-i18n="q4">한 줄 느낌</h3>
-        <p class="sub" data-i18n="q4hint">지금 마음을 한 문장으로</p>
-        <input type="text" id="feeling" maxlength="120">
-        <div style="height:14px"></div>
-        <h3 data-i18n="q5">이 색이 떠오른 이유가 있다면</h3>
-        <p class="sub" data-i18n="q5hint">건너뛰어도 괜찮습니다</p>
-        <textarea id="reason" maxlength="600"></textarea>
+        <h3 data-i18n="q4">오늘의 한 줄</h3>
+        <p class="sub" data-i18n="q4hint">느낌이나 이 색이 떠오른 이유를 한 줄로 — 건너뛰어도 괜찮습니다</p>
+        <input type="text" id="feeling" maxlength="200">
         <button class="primary" id="saveBtn" data-i18n="save">오늘의 카드 받기</button>
       </div>
 
@@ -309,9 +352,22 @@ footer{margin-top:44px;font-size:.66rem;color:var(--ink-3);font-family:'IBM Plex
     </section>
 
     <section class="view" id="view-journal">
-      <h2 class="q" data-i18n="jTitle">기록</h2>
-      <p class="hint" data-i18n="jHint">하루 한 장씩 쌓입니다.</p>
-      <div id="journalList"></div>
+      <div class="mnav">
+        <h2 id="jMonth"></h2>
+        <div class="mv">
+          <button type="button" id="jPrev" aria-label="previous month">‹</button>
+          <button type="button" id="jNext" aria-label="next month">›</button>
+        </div>
+      </div>
+      <p class="hint" data-i18n="jHint">날짜를 누르면 그날의 기록이 보입니다.</p>
+      <div class="cal-head" id="calHead"></div>
+      <div class="cal-grid" id="calGrid"></div>
+      <div id="dayDetail"></div>
+      <div class="rblock">
+        <h3 data-i18n="weekStats">주간 컬러 통계</h3>
+        <p class="rsub" data-i18n="weekStatsSub">한 주씩, 어떤 색이 모였는지</p>
+        <div id="weekStats"></div>
+      </div>
     </section>
 
     <section class="view" id="view-report">
@@ -354,18 +410,23 @@ const UI = {
   ko: {
     appTitle:"데일리 컬러 다이어리",
     q1:"오늘 아침, 어떤 색이 떠올랐나요?", q1hint:"생각하지 말고, 먼저 눈이 가는 색을 고르세요.",
-    q2:"지금 마음에 가장 가까운 문장은?", q2hint:"이 색의 세 가지 상태입니다. 읽어보고 오늘과 닮은 문장을 고르세요.",
+    q2:"이 색의 진하기로 오늘을 표현해보세요", q2hint:"가운데 점이 균형입니다. 오른쪽으로 갈수록 진해지고(과잉), 왼쪽으로 갈수록 옅어집니다(결핍).",
     q3:"오늘의 감정을 골라주세요", q3hint:"최대 5개까지 — 긍정과 부정을 섞어 골라도 됩니다",
     emoPos:"긍정의 감정", emoNeg:"부정의 감정", emoNeu:"놀람 · 중립",
-    q4:"한 줄 느낌", q4hint:"지금 마음을 한 문장으로",
-    q5:"이 색이 떠오른 이유가 있다면", q5hint:"건너뛰어도 괜찮습니다",
+    q4:"오늘의 한 줄", q4hint:"느낌이나 이 색이 떠오른 이유를 한 줄로 — 건너뛰어도 괜찮습니다",
+    resultLabel:"지금 상태로 읽으면",
     save:"오늘의 카드 받기", saved:"오늘의 기록이 저장되었습니다",
     edit:"다시 기록하기", copyCard:"카드 텍스트 복사", copied:"복사되었습니다", shareCard:"공유하기",
     tabToday:"오늘", tabJournal:"기록", tabReport:"리포트",
-    jTitle:"기록", jHint:"하루 한 장씩 쌓입니다.", jEmpty:"아직 기록이 없습니다.\n오늘 탭에서 첫 색을 골라보세요.",
+    jTitle:"기록", jHint:"날짜를 누르면 그날의 기록이 보입니다.",
+    weekStats:"주간 컬러 통계", weekStatsSub:"한 주씩, 어떤 색이 모였는지", weekLabel:(n)=>`${n}주차`, jEmpty:"아직 기록이 없습니다.\n오늘 탭에서 첫 색을 골라보세요.",
     del:"삭제", delConfirm:"이 날의 기록을 삭제할까요?",
     kIdentity:"오늘의 문장", kState:"지금의 상태", kComfort:"위로", kAction:"오늘의 작은 행동",
     kBalance:"밸런스 컬러", kComm:"소통 카드 — 곁에 있는 사람에게",
+    kQuote:"오늘의 명언", kFood:"오늘의 컬러 푸드",
+    foodOwn:(n)=>`${n}의 에너지를 담은 음식들이에요.`,
+    foodFill:(n)=>`부족해진 ${n}의 에너지를 음식으로 조금씩 채워보세요.`,
+    foodCalm:(n,b)=>`넘치는 에너지를 밸런스 컬러 ${b}의 푸드가 부드럽게 가라앉혀줍니다.`,
     stBalanced:"균형", stExcess:"과잉", stDeficit:"결핍",
     stBalancedS:"잘 흐르고 있어요", stExcessS:"조금 넘치고 있어요", stDeficitS:"조금 부족해요",
     engineLabel:"진단에서 나온 나의 강점 엔진",
@@ -391,18 +452,23 @@ const UI = {
   en: {
     appTitle:"Daily Color Diary",
     q1:"What color came to you this morning?", q1hint:"Don't overthink it — pick the one your eyes go to first.",
-    q2:"Which sentence is closest to how you feel?", q2hint:"These are this color's three states. Pick the one that sounds like today.",
+    q2:"Set today's depth of this color", q2hint:"The center dot is balance. Slide right and it deepens (overflowing); slide left and it fades (running low).",
     q3:"Pick today's emotions", q3hint:"Up to 5 — mixing positive and negative is fine",
     emoPos:"Pleasant feelings", emoNeg:"Unpleasant feelings", emoNeu:"Surprise · Neutral",
-    q4:"One line about today", q4hint:"Your mood in a single sentence",
-    q5:"Why this color, if you know", q5hint:"Feel free to skip",
+    q4:"One line for today", q4hint:"A feeling, or why this color came to you — okay to skip",
+    resultLabel:"Read as a state",
     save:"Get today's card", saved:"Today's entry has been saved",
     edit:"Edit today's entry", copyCard:"Copy card text", copied:"Copied", shareCard:"Share",
     tabToday:"Today", tabJournal:"Journal", tabReport:"Report",
-    jTitle:"Journal", jHint:"One card a day, quietly stacking up.", jEmpty:"No entries yet.\nPick your first color in the Today tab.",
+    jTitle:"Journal", jHint:"Tap a date to see that day's entry.",
+    weekStats:"Weekly color stats", weekStatsSub:"Week by week, which colors gathered", weekLabel:(n)=>`Week ${n}`, jEmpty:"No entries yet.\nPick your first color in the Today tab.",
     del:"Delete", delConfirm:"Delete this day's entry?",
     kIdentity:"Today's sentence", kState:"Current state", kComfort:"A word of comfort", kAction:"One small action",
     kBalance:"Balancing color", kComm:"Communication card — for someone near you",
+    kQuote:"Today's quote", kFood:"Today's color food",
+    foodOwn:(n)=>`Foods that carry the energy of ${n}.`,
+    foodFill:(n)=>`Refill the low energy of ${n}, one bite at a time.`,
+    foodCalm:(n,b)=>`Let the foods of your balancing color, ${b}, gently settle the overflow.`,
     stBalanced:"Balanced", stExcess:"Overflowing", stDeficit:"Running low",
     stBalancedS:"flowing well", stExcessS:"a little too much", stDeficitS:"a little dried up",
     engineLabel:"My strength engine (from the PBS test)",
@@ -471,6 +537,57 @@ const EMO_GROUPS = [
   {id:"ang_upset",ko:"속상한",en:"Upset"},{id:"ang_touchy",ko:"예민해진",en:"Irritable"},
   {id:"ang_jealous",ko:"질투나는",en:"Jealous"}]}
 ];
+/* 색별 오늘의 명언(균형·과잉·결핍) + 컬러 푸드 */
+const EXTRAS = {
+ magenta:{food:{ko:"비트 · 라즈베리 · 석류",en:"Beet · Raspberry · Pomegranate"},quote:{
+  balanced:{ko:"사랑은 서로를 마주 보는 것이 아니라 같은 방향을 함께 바라보는 것이다. — 생텍쥐페리",en:"Love does not consist in gazing at each other, but in looking outward together in the same direction. — Saint-Exupéry"},
+  excess:{ko:"나를 돌보는 일은 방종이 아니라 자기 보존이다. — 오드리 로드",en:"Caring for myself is not self-indulgence, it is self-preservation. — Audre Lorde"},
+  deficit:{ko:"끊임없이 다른 무엇이 되라는 세상에서 나 자신으로 사는 것이 가장 위대한 성취다. — 에머슨",en:"To be yourself in a world that is constantly trying to make you something else is the greatest accomplishment. — Emerson"}}},
+ red:{food:{ko:"토마토 · 딸기 · 붉은 파프리카",en:"Tomato · Strawberry · Red bell pepper"},quote:{
+  balanced:{ko:"천 리 길도 한 걸음부터. — 노자",en:"A journey of a thousand miles begins with a single step. — Laozi"},
+  excess:{ko:"서두르면 도리어 이루지 못한다(欲速則不達). — 공자",en:"If you hurry, you will not arrive. — Confucius"},
+  deficit:{ko:"할 수 있다고 믿는 순간, 이미 절반은 이룬 것이다. — 시어도어 루스벨트",en:"Believe you can and you're halfway there. — Theodore Roosevelt"}}},
+ redorange:{food:{ko:"살구 · 홍시 · 붉은 렌틸콩",en:"Apricot · Persimmon · Red lentils"},quote:{
+  balanced:{ko:"느려도 꾸준한 자가 경주에서 이긴다. — 이솝",en:"Slow and steady wins the race. — Aesop"},
+  excess:{ko:"휴식은 게으름이 아니다. — 존 러벅",en:"Rest is not idleness. — John Lubbock"},
+  deficit:{ko:"가장 어두운 밤도 끝나고, 해는 떠오른다. — 빅토르 위고",en:"Even the darkest night will end and the sun will rise. — Victor Hugo"}}},
+ orange:{food:{ko:"당근 · 오렌지 · 단호박",en:"Carrot · Orange · Pumpkin"},quote:{
+  balanced:{ko:"빨리 가려면 혼자 가고, 멀리 가려면 함께 가라. — 아프리카 속담",en:"If you want to go fast, go alone. If you want to go far, go together. — African proverb"},
+  excess:{ko:"말하는 것은 지식의 영역이고, 듣는 것은 지혜의 특권이다. — 올리버 웬델 홈스",en:"It is the province of knowledge to speak, and it is the privilege of wisdom to listen. — Oliver Wendell Holmes"},
+  deficit:{ko:"친구를 얻는 유일한 방법은 먼저 친구가 되어주는 것이다. — 에머슨",en:"The only way to have a friend is to be one. — Emerson"}}},
+ yellow:{food:{ko:"바나나 · 레몬 · 옥수수",en:"Banana · Lemon · Corn"},quote:{
+  balanced:{ko:"나에게 특별한 재능은 없다. 다만 열렬히 궁금해할 뿐이다. — 아인슈타인",en:"I have no special talent. I am only passionately curious. — Einstein"},
+  excess:{ko:"단순함은 궁극의 정교함이다. — 레오나르도 다 빈치",en:"Simplicity is the ultimate sophistication. — Leonardo da Vinci"},
+  deficit:{ko:"세상은 한 권의 책이다. 여행하지 않는 사람은 그중 한 페이지만 읽는 셈이다. — 아우구스티누스",en:"The world is a book, and those who do not travel read only one page. — Augustine"}}},
+ gold:{food:{ko:"꿀 · 현미 · 생강차",en:"Honey · Brown rice · Ginger tea"},quote:{
+  balanced:{ko:"자존감은 모든 미덕의 초석이다. — 존 허셜",en:"Self-respect is the cornerstone of all virtue. — John Herschel"},
+  excess:{ko:"남이 알아주지 않아도 성내지 않으니, 또한 군자가 아닌가. — 공자, 논어",en:"Is he not a noble one, who feels no discomposure though men take no note of him? — Confucius, Analects"},
+  deficit:{ko:"비교는 기쁨을 훔쳐가는 도둑이다. — 시어도어 루스벨트",en:"Comparison is the thief of joy. — Theodore Roosevelt"}}},
+ yellowgreen:{food:{ko:"아보카도 · 완두 · 청포도",en:"Avocado · Green peas · Green grapes"},quote:{
+  balanced:{ko:"부드러운 것이 단단한 것을 이긴다. — 노자",en:"The soft overcomes the hard. — Laozi"},
+  excess:{ko:"어느 항구로 갈지 모르는 사람에게는 어떤 바람도 순풍이 아니다. — 세네카",en:"If one does not know to which port one is sailing, no wind is favorable. — Seneca"},
+  deficit:{ko:"변화는 삶의 법칙이다. 과거와 현재만 바라보는 사람은 미래를 놓친다. — 존 F. 케네디",en:"Change is the law of life. Those who look only to the past or present are certain to miss the future. — John F. Kennedy"}}},
+ green:{food:{ko:"브로콜리 · 시금치 · 키위",en:"Broccoli · Spinach · Kiwi"},quote:{
+  balanced:{ko:"자연의 속도를 따르라. 자연의 비밀은 인내다. — 에머슨",en:"Adopt the pace of nature: her secret is patience. — Emerson"},
+  excess:{ko:"용기란 두려움이 없는 것이 아니라, 두려움보다 소중한 것이 있다고 판단하는 것이다. — 앰브로즈 레드문",en:"Courage is not the absence of fear, but the judgment that something else is more important than fear. — Ambrose Redmoon"},
+  deficit:{ko:"맑고 고요함이 세상의 바름이 된다(淸靜爲天下正). — 노자",en:"Clarity and stillness set the world right. — Laozi"}}},
+ bluegreen:{food:{ko:"녹차 · 민트티 · 오이",en:"Green tea · Mint tea · Cucumber"},quote:{
+  balanced:{ko:"이따금 일에서 멀어져 보라. 돌아왔을 때 판단이 더 또렷해진다. — 레오나르도 다 빈치",en:"Every now and then go away, for when you come back to your work your judgment will be surer. — Leonardo da Vinci"},
+  excess:{ko:"누구도 홀로 떨어진 섬이 아니다. — 존 던",en:"No man is an island. — John Donne"},
+  deficit:{ko:"활을 늘 당겨두면 부러진다. — 그리스 속담",en:"A bow kept always bent will break. — Greek proverb"}}},
+ blue:{food:{ko:"블루베리 · 등푸른 생선 · 치아시드",en:"Blueberry · Mackerel · Chia seeds"},quote:{
+  balanced:{ko:"신뢰를 쌓는 데는 20년이 걸리지만, 무너지는 데는 5분이면 충분하다. — 워런 버핏",en:"It takes 20 years to build a reputation and five minutes to ruin it. — Warren Buffett"},
+  excess:{ko:"사람들은 당신이 한 말은 잊어도, 당신이 느끼게 해준 것은 잊지 않는다. — 마야 안젤루",en:"People will forget what you said, but people will never forget how you made them feel. — Maya Angelou"},
+  deficit:{ko:"어려운 문제는 풀 수 있는 크기로 나누어라. — 데카르트",en:"Divide each difficulty into as many parts as is feasible to resolve it. — Descartes"}}},
+ indigo:{food:{ko:"가지 · 블랙베리 · 검은콩",en:"Eggplant · Blackberry · Black beans"},quote:{
+  balanced:{ko:"성찰하지 않는 삶은 살 가치가 없다. — 소크라테스",en:"The unexamined life is not worth living. — Socrates"},
+  excess:{ko:"아는 것만으로는 충분하지 않다. 적용해야 한다. 원하는 것만으로는 충분하지 않다. 행해야 한다. — 괴테",en:"Knowing is not enough; we must apply. Willing is not enough; we must do. — Goethe"},
+  deficit:{ko:"네 안을 들여다보라. 그 안에 선의 샘이 있다. — 마르쿠스 아우렐리우스",en:"Look within. Within is the fountain of good. — Marcus Aurelius"}}},
+ purple:{food:{ko:"포도 · 자색고구마 · 적양배추",en:"Grapes · Purple sweet potato · Red cabbage"},quote:{
+  balanced:{ko:"왜 살아야 하는지 아는 사람은 그 어떤 상황도 견뎌낼 수 있다. — 니체",en:"He who has a why to live can bear almost any how. — Nietzsche"},
+  excess:{ko:"눈은 별을 향하되, 발은 땅을 딛고 있으라. — 시어도어 루스벨트",en:"Keep your eyes on the stars, and your feet on the ground. — Theodore Roosevelt"},
+  deficit:{ko:"삶은 마지막 순간까지 의미를 지닌다. — 빅터 프랭클",en:"Life holds meaning until the very last moment. — Viktor Frankl"}}}
+};
 const EMO_BY_ID = {};
 EMO_GROUPS.forEach(g=>g.items.forEach(it=>{ EMO_BY_ID[it.id] = {...it, core:g.core, valence:g.valence}; }));
 const coreOf = id => EMO_BY_ID[id] ? EMO_BY_ID[id].core : id;
@@ -816,25 +933,45 @@ function renderColorGrid(){
       b.type = "button"; b.className = "cbtn";
       b.setAttribute("aria-pressed", String(sel.color===id));
       b.innerHTML = `<i style="background:${cvar(id)}"></i><span>${esc(cname(id))}</span>`;
-      b.addEventListener("click", ()=>{ sel.color = id; renderColorGrid(); $("#stepState").hidden = false; renderStateSeg(); updateSave(); $("#stepState").scrollIntoView({behavior:"smooth",block:"center"}); });
+      b.addEventListener("click", ()=>{ sel.color = id; renderColorGrid(); $("#stepEmotion").hidden = false; renderEmotionChips(); if(!$("#stepState").hidden) renderStateSlider(); updateSave(); $("#stepEmotion").scrollIntoView({behavior:"smooth",block:"start"}); });
       grid.appendChild(b);
     });
     g.appendChild(grid); wrap.appendChild(g);
   }
 }
-function renderStateSeg(){
-  const seg = $("#stateSeg"); seg.innerHTML = "";
-  if (!sel.color) return;
-  const c = byId[sel.color][store.lang];
+function stateFromVal(v){ return v < 35 ? "deficit" : (v > 65 ? "excess" : "balanced"); }
+function swatchMix(colorVar, v){
+  if (v <= 50) return `color-mix(in srgb, ${colorVar} ${Math.round(22 + v*1.56)}%, var(--surface))`;
+  return `color-mix(in srgb, ${colorVar} ${Math.round(100 - (v-50)*0.76)}%, black)`;
+}
+function renderStateSlider(){
+  const wrap = $("#stateSlider"); if (!sel.color){ wrap.innerHTML = ""; return; }
+  const v0 = (typeof sel.v === "number") ? sel.v : 50;
+  wrap.innerHTML = `
+    <div class="sl-swatch"><i id="slSw"></i>
+      <div class="sl-tag"><span id="slTagMain"></span><small id="slTagSub"></small></div></div>
+    <div class="sl-track-wrap">
+      <input type="range" class="sl" id="slRange" min="0" max="100" value="${v0}" aria-label="${esc(T.q2)}">
+      <span class="sl-mid" aria-hidden="true"></span>
+    </div>
+    <div class="sl-scale"><span>${esc(T.stDeficit)}</span><span>${esc(T.stBalanced)}</span><span>${esc(T.stExcess)}</span></div>
+    <div class="sl-result" id="slResult"></div>`;
+  const range = $("#slRange");
+  const c = cvar(sel.color);
+  range.style.background = `linear-gradient(90deg, color-mix(in srgb, ${c} 22%, var(--surface)) 0%, ${c} 50%, color-mix(in srgb, ${c} 62%, black) 100%)`;
   const lab = { balanced:[T.stBalanced,T.stBalancedS], excess:[T.stExcess,T.stExcessS], deficit:[T.stDeficit,T.stDeficitS] };
-  const desc = { balanced:c.balanced, excess:c.excess, deficit:c.deficit };
-  STATES.forEach(st=>{
-    const b = document.createElement("button"); b.type = "button";
-    b.setAttribute("aria-pressed", String(sel.state===st));
-    b.innerHTML = `<span class="stag"><i></i>${esc(lab[st][0])} · ${esc(lab[st][1])}</span><p>${esc(desc[st])}</p>`;
-    b.addEventListener("click", ()=>{ sel.state = st; renderStateSeg(); $("#stepEmotion").hidden = false; $("#stepText").hidden = false; renderEmotionChips(); updateSave(); });
-    seg.appendChild(b);
-  });
+  const paint = ()=>{
+    const v = +range.value; sel.v = v; sel.state = stateFromVal(v);
+    $("#slSw").style.background = swatchMix(c, v);
+    $("#slTagMain").textContent = `${cname(sel.color)} · ${lab[sel.state][0]}`;
+    $("#slTagSub").textContent = lab[sel.state][1];
+    const cd = byId[sel.color][store.lang];
+    const desc = { balanced:cd.balanced, excess:cd.excess, deficit:cd.deficit }[sel.state];
+    $("#slResult").innerHTML = `<span class="k">${esc(T.resultLabel)}</span><b>${esc(lab[sel.state][0])}</b> — ${esc(desc)}`;
+    updateSave();
+  };
+  range.addEventListener("input", paint);
+  paint();
 }
 function renderEmotionChips(){
   const w = $("#emotionChips"); w.innerHTML = "";
@@ -854,6 +991,9 @@ function renderEmotionChips(){
           if (sel.emotions.includes(it.id)) sel.emotions = sel.emotions.filter(x=>x!==it.id);
           else if (sel.emotions.length < 5) sel.emotions.push(it.id);
           else { toast(T.q3hint); return; }
+          if ($("#stepState").hidden && sel.emotions.length){
+            $("#stepState").hidden = false; $("#stepText").hidden = false; renderStateSlider();
+          }
           renderEmotionChips();
         });
         chips.appendChild(b);
@@ -890,6 +1030,10 @@ function renderCard(entry){
       <div class="crow"><span class="k">${esc(T.kState)} — ${esc(stateLabel(entry.s))}</span><p>${esc(stDesc)}</p></div>
       <div class="crow"><span class="k">${esc(T.kComfort)}</span><p class="big">${esc(c.comfort)}</p></div>
       <div class="crow"><span class="k">${esc(T.kAction)}</span><p>${esc(act)}</p></div>
+      <div class="crow"><span class="k">${esc(T.kQuote)}</span><p class="big quote">${esc(EXTRAS[entry.c].quote[entry.s][store.lang])}</p></div>
+      <div class="crow"><span class="k">${esc(T.kFood)}</span>
+        <p><b>${esc(entry.s==="excess" ? EXTRAS[byId[entry.c].balance].food[store.lang] : EXTRAS[entry.c].food[store.lang])}</b></p>
+        <p style="margin-top:4px">${esc(entry.s==="deficit" ? T.foodFill(c.name) : entry.s==="excess" ? T.foodCalm(c.name, byId[byId[entry.c].balance][store.lang].name) : T.foodOwn(c.name))}</p></div>
       <div class="crow"><span class="k">${esc(T.kBalance)}</span>
         <div class="bal"><i style="background:${cvar(bal.id)}"></i><b>${esc(bal[store.lang].name)}</b></div>
         <p>${esc(c.balanceWhy)}</p></div>
@@ -904,16 +1048,18 @@ function renderCard(entry){
   $("#copyCard").addEventListener("click", ()=>{
     const lines = [
       `■ ${c.name} — ${stateLabel(entry.s)}`, c.identity, "", stDesc, "", `${T.kComfort}: ${c.comfort}`,
-      `${T.kAction}: ${act}`, `${T.kComm}: “${c.comm}”`, "", "PBS Daily Color Diary"
+      `${T.kAction}: ${act}`, `${T.kQuote}: ${EXTRAS[entry.c].quote[entry.s][store.lang]}`,
+      `${T.kComm}: “${c.comm}”`, "", "PBS Daily Color Diary"
     ].join("\n");
     (navigator.share ? navigator.share({text:lines}).catch(()=>{}) : navigator.clipboard.writeText(lines).then(()=>toast(T.copied)).catch(()=>{}));
     if (!navigator.share) return;
   });
   $("#editEntry").addEventListener("click", ()=>{
-    sel = { color:entry.c, state:entry.s, emotions:[...(entry.e||[])] };
-    $("#feeling").value = entry.f||""; $("#reason").value = entry.r||"";
-    $("#stepState").hidden = false; $("#stepEmotion").hidden = false; $("#stepText").hidden = false;
-    renderColorGrid(); renderStateSeg(); renderEmotionChips(); updateSave();
+    sel = { color:entry.c, state:entry.s, emotions:[...(entry.e||[])],
+            v:(typeof entry.v==="number"?entry.v:({balanced:50,excess:80,deficit:20}[entry.s]||50)) };
+    $("#feeling").value = entry.f || entry.r || "";
+    $("#stepEmotion").hidden = false; $("#stepState").hidden = false; $("#stepText").hidden = false;
+    renderColorGrid(); renderEmotionChips(); renderStateSlider(); updateSave();
     wrap.innerHTML = ""; window.scrollTo({top:0,behavior:"smooth"});
   });
 }
@@ -923,37 +1069,81 @@ function loadToday(){
     ["stepState","stepEmotion","stepText"].forEach(id=>$("#"+id).hidden = true);
     $("#colorGroups").innerHTML = ""; renderCard(e);
   } else {
-    sel = { color:null, state:null, emotions:[] };
-    $("#feeling").value = ""; $("#reason").value = "";
+    sel = { color:null, state:null, emotions:[], v:undefined };
+    $("#feeling").value = "";
     ["stepState","stepEmotion","stepText"].forEach(id=>$("#"+id).hidden = true);
     renderCard(null); renderColorGrid(); updateSave();
   }
 }
 $("#saveBtn").addEventListener("click", ()=>{
   if (!(sel.color && sel.state)) return;
-  store.logs[todayKey()] = { c:sel.color, s:sel.state, e:[...sel.emotions], f:$("#feeling").value.trim(), r:$("#reason").value.trim(), lang:store.lang, t:Date.now() };
+  store.logs[todayKey()] = { c:sel.color, s:sel.state, v:(typeof sel.v==="number"?sel.v:50), e:[...sel.emotions], f:$("#feeling").value.trim(), lang:store.lang, t:Date.now() };
   persist(); toast(T.saved); loadToday();
   setTimeout(()=>{ const cw=$("#cardWrap .card"); if(cw) cw.scrollIntoView({behavior:"smooth",block:"start"}); }, 60);
 });
 
 /* ---- 기록 ---- */
+let journalYM = null, jSelected = null;
 function renderJournal(){
-  const list = $("#journalList");
-  const keys = Object.keys(store.logs).sort().reverse();
-  if (!keys.length){ list.innerHTML = `<div class="empty">${esc(T.jEmpty).replace(/\n/g,"<br>")}</div>`; return; }
-  list.innerHTML = keys.map(k=>{
-    const e = store.logs[k];
-    const ems = (e.e||[]).map(x=>emoLabel(x)).join(", ");
-    return `<div class="jitem"><i style="background:${cvar(e.c)}"></i>
-      <div><div class="jd num">${k}${e.demo?` · ${esc(T.demoTag)}`:""}</div>
-        <div class="jc">${esc(cname(e.c))} <small>· ${esc(stateLabel(e.s))}${ems?` · ${esc(ems)}`:""}</small></div>
-        ${e.f?`<div class="jf">${esc(e.f)}</div>`:""}</div>
-      <button type="button" class="jx" data-del="${k}">${esc(T.del)}</button></div>`;
-  }).join("");
-  list.querySelectorAll("[data-del]").forEach(b=>b.addEventListener("click", ()=>{
-    if (!confirm(T.delConfirm)) return;
-    delete store.logs[b.dataset.del]; persist(); renderJournal(); loadToday();
-  }));
+  const now = new Date();
+  if (!journalYM) journalYM = [now.getFullYear(), now.getMonth()];
+  const [y,m] = journalYM;
+  $("#jMonth").textContent = store.lang==="ko" ? `${y}년 ${T.monthNames[m]}` : `${T.monthNames[m]} ${y}`;
+  $("#jNext").disabled = (y===now.getFullYear() && m===now.getMonth());
+  $("#calHead").innerHTML = T.weekday.map(w=>`<span>${esc(w)}</span>`).join("");
+
+  const daysIn = new Date(y, m+1, 0).getDate();
+  const off = new Date(y, m, 1).getDay();
+  const mp = `${y}-${pad(m+1)}-`;
+  const tk = todayKey();
+  const cells = [];
+  for (let i=0;i<off;i++) cells.push("<span></span>");
+  for (let d=1;d<=daysIn;d++){
+    const k = mp + pad(d), e = store.logs[k];
+    const cls = "cal-cell" + (k===tk?" today":"") + (k===jSelected?" sel":"") + (e?" has":"");
+    if (e) cells.push(`<button type="button" class="${cls}" data-k="${k}" style="--dc:${cvar(e.c)}" title="${esc(cname(e.c))} · ${esc(stateLabel(e.s))}"><span>${d}</span></button>`);
+    else cells.push(`<button type="button" class="${cls}" disabled><span>${d}</span></button>`);
+  }
+  $("#calGrid").innerHTML = cells.join("");
+  $("#calGrid").querySelectorAll("button.has").forEach(b=>b.addEventListener("click", ()=>{ jSelected = b.dataset.k; renderJournal(); }));
+
+  const dd = $("#dayDetail");
+  const se = (jSelected && jSelected.startsWith(mp)) ? store.logs[jSelected] : null;
+  if (se){
+    const ems = (se.e||[]).map(emoLabel).join(", ");
+    dd.innerHTML = `<div class="jitem" style="margin-top:14px"><i style="background:${cvar(se.c)}"></i>
+      <div><div class="jd num">${jSelected}${se.demo?` · ${esc(T.demoTag)}`:""}</div>
+        <div class="jc">${esc(cname(se.c))} <small>· ${esc(stateLabel(se.s))}${ems?` · ${esc(ems)}`:""}</small></div>
+        ${(se.f||se.r)?`<div class="jf">${esc(se.f||se.r)}</div>`:""}</div>
+      <button type="button" class="jx" data-del="${jSelected}">${esc(T.del)}</button></div>`;
+    dd.querySelector("[data-del]").addEventListener("click", ()=>{
+      if (!confirm(T.delConfirm)) return;
+      delete store.logs[jSelected]; jSelected = null; persist(); renderJournal(); loadToday();
+    });
+  } else {
+    const any = Object.keys(store.logs).some(k=>k.startsWith(mp));
+    dd.innerHTML = any ? "" : `<div class="empty">${esc(T.jEmpty).replace(/\n/g,"<br>")}</div>`;
+  }
+
+  /* 한 주씩(일~토) 컬러 통계 */
+  const ws = $("#weekStats"); let rows = "", wk = 1;
+  for (let start=1; start<=daysIn; wk++){
+    const end = Math.min(daysIn, start + (6 - new Date(y,m,start).getDay()));
+    const ents = [];
+    for (let d=start; d<=end; d++){ const e = store.logs[mp+pad(d)]; if (e) ents.push(e); }
+    if (ents.length){
+      const cnt = {}; ents.forEach(e=>cnt[e.c]=(cnt[e.c]||0)+1);
+      const topc = WHEEL.filter(id=>cnt[id]).sort((a,b)=>cnt[b]-cnt[a])[0];
+      const segs = WHEEL.filter(id=>cnt[id]).map(id=>
+        `<div style="flex:${cnt[id]};background:${cvar(id)}" title="${esc(cname(id))} ${cnt[id]}"></div>`).join("");
+      rows += `<div class="wrow">
+        <div class="wlab"><b>${esc(T.weekLabel(wk))}</b><span>${m+1}/${start}–${m+1}/${end}</span></div>
+        <div class="wbar">${segs}</div>
+        <div class="wtop">${esc(cname(topc))} <span class="n">${ents.length}</span></div></div>`;
+    }
+    start = end + 1;
+  }
+  ws.innerHTML = rows || `<p class="rsub" style="margin:0">${esc(T.rEmpty)}</p>`;
 }
 
 /* ---- 리포트 ---- */
@@ -1087,6 +1277,8 @@ document.querySelectorAll(".langs button").forEach(b=>b.addEventListener("click"
   store.lang = b.dataset.lang; persist(); renderAll();
 }));
 $("#myEngine").addEventListener("change", e=>{ store.engine = e.target.value; persist(); renderReport(); });
+$("#jPrev").addEventListener("click", ()=>{ if(!journalYM) return; let [y,m]=journalYM; m--; if(m<0){m=11;y--;} journalYM=[y,m]; jSelected=null; renderJournal(); });
+$("#jNext").addEventListener("click", ()=>{ if(!journalYM) return; let [y,m]=journalYM; m++; if(m>11){m=0;y++;} journalYM=[y,m]; jSelected=null; renderJournal(); });
 $("#mPrev").addEventListener("click", ()=>{ let [y,m]=reportYM; m--; if(m<0){m=11;y--;} reportYM=[y,m]; renderReport(); });
 $("#mNext").addEventListener("click", ()=>{ let [y,m]=reportYM; m++; if(m>11){m=0;y++;} reportYM=[y,m]; renderReport(); });
 
