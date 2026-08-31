@@ -331,7 +331,7 @@ footer{margin-top:44px;font-size:.66rem;color:var(--ink-3);font-family:'IBM Plex
 
       <div class="step" id="stepEmotion" hidden>
         <h3 data-i18n="q3">오늘의 감정을 골라주세요</h3>
-        <p class="sub" data-i18n="q3hint">최대 5개까지 — 긍정과 부정을 섞어 골라도 됩니다</p>
+        <p class="sub" data-i18n="q3hint">이 색만의 감정들입니다. 최대 5개 — 섞어 골라도 됩니다</p>
         <div class="chips" id="emotionChips"></div>
       </div>
 
@@ -411,8 +411,9 @@ const UI = {
     appTitle:"데일리 컬러 다이어리",
     q1:"오늘 아침, 어떤 색이 떠올랐나요?", q1hint:"생각하지 말고, 먼저 눈이 가는 색을 고르세요.",
     q2:"이 색의 진하기로 오늘을 표현해보세요", q2hint:"고른 감정에 맞춰 버튼이 먼저 움직여줍니다. 가운데 점이 균형 — 오른쪽은 진해지며 과잉, 왼쪽은 옅어지며 결핍. 손으로 조정해도 됩니다.",
-    q3:"오늘의 감정을 골라주세요", q3hint:"최대 5개까지 — 긍정과 부정을 섞어 골라도 됩니다",
+    q3:"오늘의 감정을 골라주세요", q3hint:"이 색만의 감정들입니다. 최대 5개 — 섞어 골라도 됩니다",
     emoPos:"긍정의 감정", emoNeg:"부정의 감정", emoNeu:"놀람 · 중립",
+    emoBal:(n)=>`${n}의 균형 감정 — 잘 흐를 때`, emoExc:(n)=>`${n}의 과잉 신호 — 넘칠 때`, emoDef:(n)=>`${n}의 결핍 신호 — 부족할 때`,
     q4:"오늘의 한 줄", q4hint:"느낌이나 이 색이 떠오른 이유를 한 줄로 — 건너뛰어도 괜찮습니다",
     resultLabel:"지금 상태로 읽으면",
     save:"오늘의 카드 받기", saved:"오늘의 기록이 저장되었습니다",
@@ -453,8 +454,9 @@ const UI = {
     appTitle:"Daily Color Diary",
     q1:"What color came to you this morning?", q1hint:"Don't overthink it — pick the one your eyes go to first.",
     q2:"Set today's depth of this color", q2hint:"The knob moves first to match your chosen feelings. Center dot = balance; right deepens (overflowing), left fades (running low). Adjust by hand anytime.",
-    q3:"Pick today's emotions", q3hint:"Up to 5 — mixing positive and negative is fine",
+    q3:"Pick today's emotions", q3hint:"These feelings belong to this color. Up to 5 — mixing is fine",
     emoPos:"Pleasant feelings", emoNeg:"Unpleasant feelings", emoNeu:"Surprise · Neutral",
+    emoBal:(n)=>`${n} in balance — when it flows`, emoExc:(n)=>`Signs of overflow — too much ${n}`, emoDef:(n)=>`Signs of running low — not enough ${n}`,
     q4:"One line for today", q4hint:"A feeling, or why this color came to you — okay to skip",
     resultLabel:"Read as a state",
     save:"Get today's card", saved:"Today's entry has been saved",
@@ -501,41 +503,70 @@ const EMO_GROUPS = [
   {id:"joy_happy",ko:"행복한",en:"Happy"},{id:"joy_delight",ko:"즐거운",en:"Delighted"},
   {id:"joy_flutter",ko:"설레는",en:"Excited"},{id:"joy_proud",ko:"뿌듯한",en:"Proud"},
   {id:"joy_light",ko:"홀가분한",en:"Relieved"},{id:"joy_grateful",ko:"감사한",en:"Grateful"},
-  {id:"joy_serene",ko:"평온한",en:"Serene"}]},
+  {id:"joy_serene",ko:"평온한",en:"Serene"},
+  {id:"joy_excited",ko:"신나는",en:"Thrilled"},{id:"joy_content",ko:"만족스러운",en:"Content"},
+  {id:"joy_full",ko:"충만한",en:"Fulfilled"},{id:"joy_cheer",ko:"유쾌한",en:"Cheerful"},
+  {id:"joy_fresh",ko:"산뜻한",en:"Refreshed"},{id:"joy_moved",ko:"벅찬",en:"Moved"},
+  {id:"joy_ease",ko:"여유로운",en:"Unhurried"},{id:"joy_clear",ko:"개운한",en:"Clear-headed"},
+  {id:"joy_fond",ko:"흐뭇한",en:"Heartwarmed"},{id:"joy_glad",ko:"반가운",en:"Glad"}]},
  {core:"trust", valence:"pos", items:[
   {id:"trust_secure",ko:"든든한",en:"Reassured"},{id:"trust_safe",ko:"안심되는",en:"Safe"},
   {id:"trust_warm",ko:"따뜻한",en:"Warm"},{id:"trust_loved",ko:"사랑받는",en:"Loved"},
   {id:"trust_respected",ko:"존중받는",en:"Respected"},{id:"trust_connected",ko:"연결된",en:"Connected"},
-  {id:"trust_comfy",ko:"편안한",en:"Comfortable"}]},
+  {id:"trust_comfy",ko:"편안한",en:"Comfortable"},
+  {id:"trust_cozy",ko:"포근한",en:"Cozy"},{id:"trust_stable",ko:"안정된",en:"Grounded"},
+  {id:"trust_sincere",ko:"진실한",en:"Sincere"},{id:"trust_reliable",ko:"믿음직한",en:"Dependable"},
+  {id:"trust_caring",ko:"돌보고 싶은",en:"Caring"},{id:"trust_tender",ko:"다정한",en:"Tender"},
+  {id:"trust_open",ko:"마음이 열린",en:"Open-hearted"}]},
  {core:"anticipation", valence:"pos", items:[
   {id:"antic_hope",ko:"기대되는",en:"Hopeful"},{id:"antic_optimist",ko:"희망찬",en:"Optimistic"},
   {id:"antic_motivated",ko:"의욕적인",en:"Motivated"},{id:"antic_curious",ko:"호기심 가득한",en:"Curious"},
   {id:"antic_energized",ko:"활기찬",en:"Energized"},{id:"antic_focused",ko:"집중되는",en:"Focused"},
-  {id:"antic_confident",ko:"자신 있는",en:"Confident"}]},
+  {id:"antic_confident",ko:"자신 있는",en:"Confident"},
+  {id:"antic_challenge",ko:"도전하고 싶은",en:"Ready to dare"},{id:"antic_passion",ko:"열정적인",en:"Passionate"},
+  {id:"antic_inspired",ko:"영감이 떠오르는",en:"Inspired"},{id:"antic_flow",ko:"몰입한",en:"In flow"},
+  {id:"antic_resolute",ko:"결의에 찬",en:"Resolute"},{id:"antic_strong",ko:"힘이 나는",en:"Empowered"},
+  {id:"antic_renewed",ko:"새로워지는",en:"Renewed"}]},
  {core:"surprise", valence:"neu", items:[
   {id:"surp_surprised",ko:"놀란",en:"Surprised"},{id:"surp_dazed",ko:"얼떨떨한",en:"Dazed"},
   {id:"surp_amazed",ko:"신기한",en:"Amazed"},{id:"surp_confused",ko:"혼란스러운",en:"Confused"},
-  {id:"surp_lostword",ko:"어리둥절한",en:"Bewildered"},{id:"surp_overwhelmed",ko:"압도된",en:"Overwhelmed"}]},
+  {id:"surp_lostword",ko:"어리둥절한",en:"Bewildered"},{id:"surp_overwhelmed",ko:"압도된",en:"Overwhelmed"},
+  {id:"surp_thrill",ko:"두근거리는",en:"Heart-racing"}]},
  {core:"fear", valence:"neg", items:[
   {id:"fear_anxious",ko:"불안한",en:"Anxious"},{id:"fear_worried",ko:"걱정되는",en:"Worried"},
   {id:"fear_tense",ko:"긴장한",en:"Tense"},{id:"fear_scared",ko:"겁나는",en:"Scared"},
   {id:"fear_stuck",ko:"막막한",en:"At a loss"},{id:"fear_edge",ko:"조마조마한",en:"On edge"},
-  {id:"fear_shrunk",ko:"위축된",en:"Intimidated"}]},
+  {id:"fear_shrunk",ko:"위축된",en:"Intimidated"},
+  {id:"fear_restless",ko:"초조한",en:"Restless"},{id:"fear_hesitant",ko:"망설여지는",en:"Hesitant"},
+  {id:"fear_unsure",ko:"자신 없는",en:"Unsure of myself"},{id:"fear_shaky",ko:"흔들리는",en:"Shaken"},
+  {id:"fear_chased",ko:"쫓기는 듯한",en:"Chased"}]},
  {core:"sadness", valence:"neg", items:[
   {id:"sad_sad",ko:"슬픈",en:"Sad"},{id:"sad_gloomy",ko:"우울한",en:"Gloomy"},
   {id:"sad_lonely",ko:"외로운",en:"Lonely"},{id:"sad_longing",ko:"그리운",en:"Longing"},
   {id:"sad_letdown",ko:"서운한",en:"Hurt"},{id:"sad_hollow",ko:"허전한",en:"Empty"},
-  {id:"sad_drained",ko:"지친",en:"Drained"}]},
+  {id:"sad_drained",ko:"지친",en:"Drained"},
+  {id:"sad_helpless",ko:"무기력한",en:"Listless"},{id:"sad_void",ko:"공허한",en:"Hollowed out"},
+  {id:"sad_burnout",ko:"소진된",en:"Burned out"},{id:"sad_tearful",ko:"눈물나는",en:"Tearful"},
+  {id:"sad_bleak",ko:"쓸쓸한",en:"Desolate"},{id:"sad_sinking",ko:"가라앉는",en:"Sinking"},
+  {id:"sad_regret",ko:"후회되는",en:"Regretful"},{id:"sad_sorry",ko:"미안한",en:"Sorry"},
+  {id:"sad_selfblame",ko:"자책하는",en:"Self-blaming"}]},
  {core:"disgust", valence:"neg", items:[
   {id:"disg_uncomfy",ko:"불편한",en:"Uncomfortable"},{id:"disg_burden",ko:"부담스러운",en:"Burdened"},
   {id:"disg_stifled",ko:"답답한",en:"Stifled"},{id:"disg_fedup",ko:"지겨운",en:"Fed up"},
   {id:"disg_displeased",ko:"못마땅한",en:"Displeased"},{id:"disg_awkward",ko:"민망한",en:"Embarrassed"},
-  {id:"disg_ashamed",ko:"부끄러운",en:"Ashamed"}]},
+  {id:"disg_ashamed",ko:"부끄러운",en:"Ashamed"},
+  {id:"disg_bored",ko:"싫증난",en:"Weary of it"},{id:"disg_distant",ko:"거리 두고 싶은",en:"Needing distance"},
+  {id:"disg_stiff",ko:"어색한",en:"Ill at ease"},{id:"disg_small",ko:"초라해지는",en:"Feeling small"},
+  {id:"disg_behind",ko:"뒤처진 것 같은",en:"Left behind"}]},
  {core:"anger", valence:"neg", items:[
   {id:"ang_angry",ko:"화나는",en:"Angry"},{id:"ang_irritated",ko:"짜증나는",en:"Irritated"},
   {id:"ang_wronged",ko:"억울한",en:"Wronged"},{id:"ang_resentful",ko:"분한",en:"Resentful"},
   {id:"ang_upset",ko:"속상한",en:"Upset"},{id:"ang_touchy",ko:"예민해진",en:"Irritable"},
-  {id:"ang_jealous",ko:"질투나는",en:"Jealous"}]}
+  {id:"ang_jealous",ko:"질투나는",en:"Jealous"},
+  {id:"ang_flare",ko:"욱하는",en:"Flaring up"},{id:"ang_hasty",ko:"조급한",en:"Impatient"},
+  {id:"ang_pushed",ko:"재촉당하는 기분",en:"Pushed around"},{id:"ang_control",ko:"통제하고 싶은",en:"Needing control"},
+  {id:"ang_rigid",ko:"고집스러워지는",en:"Turning rigid"},{id:"ang_cold",ko:"차가워지는",en:"Turning cold"},
+  {id:"ang_critical",ko:"비판적이 되는",en:"Turning critical"}]}
 ];
 /* 색별 오늘의 명언(균형·과잉·결핍) + 컬러 푸드 */
 const EXTRAS = {
@@ -604,6 +635,60 @@ const EMO_SV = {
 };
 const coreOf = id => EMO_BY_ID[id] ? EMO_BY_ID[id].core : id;
 const emoLabel = id => EMO_BY_ID[id] ? EMO_BY_ID[id][store.lang==="en"?"en":"ko"] : (T.emotions[id]||id);
+
+/* 컬러별 감정 어휘: 각 색의 심리 주제에 맞는 균형/과잉/결핍 감정 15개씩 */
+const COLOR_EMO = {
+ magenta:{
+  balanced:["trust_caring","trust_warm","joy_fond","trust_tender","joy_grateful","trust_loved","joy_full","trust_sincere","joy_moved","trust_connected","joy_happy","trust_open","joy_content","trust_cozy","joy_serene"],
+  excess:["sad_letdown","ang_upset","disg_burden","sad_sorry","ang_wronged","sad_drained","ang_resentful","sad_tearful","disg_uncomfy","ang_touchy","sad_selfblame","surp_overwhelmed","fear_worried","ang_jealous","sad_burnout"],
+  deficit:["sad_hollow","disg_small","sad_lonely","fear_unsure","sad_void","sad_gloomy","disg_behind","sad_longing","fear_shrunk","sad_bleak","disg_ashamed","sad_sinking","sad_helpless","sad_sad","fear_hesitant"]},
+ red:{
+  balanced:["antic_energized","antic_motivated","antic_confident","antic_challenge","antic_passion","joy_excited","antic_strong","antic_resolute","surp_thrill","joy_proud","antic_focused","joy_delight","joy_flutter","antic_hope","joy_cheer"],
+  excess:["ang_hasty","ang_flare","ang_irritated","ang_angry","fear_chased","ang_pushed","fear_tense","surp_overwhelmed","ang_touchy","disg_stifled","ang_resentful","fear_restless","ang_control","fear_edge","ang_wronged"],
+  deficit:["sad_helpless","sad_drained","fear_stuck","fear_unsure","sad_sinking","disg_bored","fear_hesitant","sad_gloomy","fear_shrunk","sad_burnout","disg_behind","sad_regret","sad_void","disg_fedup","sad_hollow"]},
+ redorange:{
+  balanced:["antic_flow","antic_focused","joy_proud","antic_strong","antic_motivated","joy_content","antic_resolute","joy_excited","antic_energized","joy_full","antic_passion","joy_moved","antic_challenge","joy_delight","surp_thrill"],
+  excess:["sad_burnout","fear_chased","fear_tense","ang_hasty","surp_overwhelmed","disg_stifled","ang_touchy","fear_restless","sad_drained","ang_irritated","disg_burden","ang_flare","fear_edge","ang_pushed","fear_anxious"],
+  deficit:["sad_helpless","disg_bored","fear_stuck","sad_sinking","disg_fedup","sad_regret","fear_hesitant","sad_void","fear_unsure","sad_gloomy","disg_behind","sad_hollow","fear_shrunk","sad_lonely","sad_bleak"]},
+ orange:{
+  balanced:["joy_cheer","joy_glad","trust_connected","joy_excited","joy_delight","trust_warm","antic_energized","joy_happy","trust_open","joy_flutter","trust_tender","surp_thrill","joy_fond","antic_curious","joy_fresh"],
+  excess:["surp_overwhelmed","disg_burden","ang_touchy","fear_restless","disg_uncomfy","ang_irritated","disg_stifled","sad_letdown","ang_upset","disg_awkward","disg_stiff","sad_drained","ang_hasty","fear_edge","ang_flare"],
+  deficit:["sad_lonely","disg_distant","sad_bleak","fear_shrunk","sad_hollow","fear_unsure","sad_gloomy","sad_longing","disg_bored","fear_hesitant","sad_sad","fear_anxious","sad_helpless","sad_void","disg_ashamed"]},
+ yellow:{
+  balanced:["antic_curious","joy_cheer","antic_inspired","joy_excited","surp_amazed","joy_flutter","antic_hope","joy_delight","joy_fresh","antic_energized","surp_thrill","joy_glad","joy_happy","antic_optimist","joy_light"],
+  excess:["surp_confused","fear_restless","ang_hasty","surp_dazed","disg_stifled","surp_overwhelmed","ang_irritated","fear_chased","disg_burden","ang_touchy","fear_tense","surp_lostword","ang_flare","fear_edge","disg_uncomfy"],
+  deficit:["disg_bored","disg_fedup","sad_helpless","sad_void","sad_gloomy","disg_behind","sad_drained","fear_stuck","sad_sinking","sad_hollow","fear_unsure","sad_bleak","sad_sad","fear_shrunk","sad_regret"]},
+ gold:{
+  balanced:["joy_proud","trust_respected","antic_confident","joy_content","trust_reliable","joy_full","trust_stable","joy_fond","trust_sincere","joy_grateful","antic_resolute","joy_ease","trust_secure","joy_moved","antic_strong"],
+  excess:["ang_jealous","disg_displeased","ang_critical","fear_restless","ang_touchy","disg_uncomfy","ang_rigid","surp_overwhelmed","ang_upset","fear_tense","disg_burden","ang_wronged","ang_control","fear_edge","ang_resentful"],
+  deficit:["disg_small","disg_behind","disg_ashamed","fear_unsure","sad_gloomy","fear_shrunk","sad_selfblame","sad_hollow","disg_awkward","sad_letdown","sad_sinking","sad_regret","sad_helpless","sad_lonely","sad_void"]},
+ yellowgreen:{
+  balanced:["joy_fresh","antic_renewed","antic_hope","joy_light","antic_curious","joy_flutter","trust_open","antic_challenge","joy_glad","surp_amazed","joy_clear","antic_optimist","joy_cheer","trust_safe","joy_serene"],
+  excess:["fear_hesitant","surp_confused","fear_shaky","fear_edge","disg_uncomfy","surp_dazed","fear_anxious","disg_stiff","fear_restless","surp_lostword","disg_burden","fear_worried","fear_tense","surp_overwhelmed","disg_awkward"],
+  deficit:["disg_fedup","sad_sinking","disg_bored","sad_helpless","fear_stuck","sad_gloomy","disg_stifled","sad_drained","fear_shrunk","sad_hollow","disg_behind","sad_void","fear_unsure","sad_bleak","sad_regret"]},
+ green:{
+  balanced:["joy_serene","trust_comfy","trust_stable","joy_ease","trust_cozy","trust_safe","joy_clear","trust_warm","joy_content","trust_secure","joy_light","joy_grateful","trust_connected","joy_fond","trust_open"],
+  excess:["disg_stifled","fear_hesitant","disg_burden","sad_letdown","ang_upset","disg_uncomfy","fear_worried","ang_touchy","surp_confused","disg_fedup","sad_sorry","ang_wronged","disg_displeased","ang_resentful","fear_edge"],
+  deficit:["fear_anxious","fear_tense","fear_unsure","sad_drained","fear_restless","fear_shaky","surp_overwhelmed","sad_sinking","fear_chased","sad_helpless","fear_scared","sad_gloomy","sad_burnout","sad_hollow","fear_stuck"]},
+ bluegreen:{
+  balanced:["joy_light","joy_clear","trust_safe","joy_serene","trust_stable","joy_fresh","joy_ease","trust_comfy","antic_renewed","trust_secure","joy_content","antic_focused","joy_grateful","trust_cozy","joy_happy"],
+  excess:["disg_distant","sad_lonely","ang_cold","disg_stiff","sad_bleak","disg_uncomfy","fear_hesitant","sad_hollow","disg_displeased","ang_critical","sad_longing","fear_shrunk","disg_fedup","sad_gloomy","ang_touchy"],
+  deficit:["surp_overwhelmed","sad_burnout","disg_burden","sad_drained","fear_chased","disg_stifled","fear_tense","fear_restless","sad_helpless","ang_irritated","fear_anxious","ang_pushed","fear_edge","sad_sinking","ang_upset"]},
+ blue:{
+  balanced:["antic_focused","trust_reliable","joy_clear","trust_stable","antic_confident","trust_secure","joy_serene","antic_resolute","trust_sincere","joy_content","trust_respected","joy_ease","trust_safe","antic_flow","joy_proud"],
+  excess:["ang_critical","ang_cold","ang_control","disg_displeased","ang_rigid","fear_tense","disg_uncomfy","ang_irritated","disg_stifled","ang_touchy","fear_restless","disg_fedup","ang_hasty","disg_distant","ang_upset"],
+  deficit:["surp_confused","fear_stuck","surp_dazed","fear_anxious","fear_shaky","surp_lostword","fear_unsure","sad_helpless","fear_worried","surp_overwhelmed","fear_hesitant","sad_sinking","sad_gloomy","fear_edge","sad_drained"]},
+ indigo:{
+  balanced:["antic_focused","antic_inspired","joy_serene","antic_flow","surp_amazed","antic_curious","joy_clear","trust_sincere","joy_content","antic_resolute","joy_full","trust_stable","joy_grateful","antic_confident","joy_ease"],
+  excess:["sad_sinking","fear_anxious","sad_gloomy","surp_confused","sad_lonely","fear_worried","disg_stifled","sad_selfblame","fear_edge","sad_regret","disg_distant","fear_restless","sad_bleak","fear_tense","sad_tearful"],
+  deficit:["sad_void","disg_bored","sad_helpless","surp_dazed","disg_fedup","sad_hollow","fear_stuck","sad_drained","disg_behind","surp_lostword","fear_unsure","sad_sad","disg_stiff","fear_hesitant","sad_burnout"]},
+ purple:{
+  balanced:["antic_inspired","joy_moved","surp_amazed","joy_full","antic_hope","joy_flutter","surp_thrill","joy_grateful","antic_curious","joy_fond","trust_connected","antic_optimist","joy_happy","antic_renewed","joy_delight"],
+  excess:["surp_dazed","fear_shaky","surp_confused","disg_uncomfy","fear_hesitant","sad_longing","surp_lostword","fear_anxious","disg_fedup","sad_lonely","fear_restless","surp_overwhelmed","fear_edge","disg_stiff","fear_worried"],
+  deficit:["sad_void","sad_hollow","disg_bored","sad_helpless","sad_gloomy","sad_sinking","sad_bleak","fear_stuck","sad_drained","disg_behind","sad_sad","sad_regret","sad_tearful","fear_unsure","sad_burnout"]}
+};
+const STATE_SV = { balanced:50, excess:78, deficit:22 };
+
 const STATES = ["balanced","excess","deficit"];
 const ENGINES = { red:["magenta","red","redorange"], yellow:["orange","yellow","gold"], green:["yellowgreen","green","bluegreen"], blue:["blue","indigo","purple"] };
 
@@ -945,7 +1030,15 @@ function renderColorGrid(){
       b.type = "button"; b.className = "cbtn";
       b.setAttribute("aria-pressed", String(sel.color===id));
       b.innerHTML = `<i style="background:${cvar(id)}"></i><span>${esc(cname(id))}</span>`;
-      b.addEventListener("click", ()=>{ sel.color = id; renderColorGrid(); $("#stepEmotion").hidden = false; renderEmotionChips(); if(!$("#stepState").hidden) renderStateSlider(); updateSave(); $("#stepEmotion").scrollIntoView({behavior:"smooth",block:"start"}); });
+      b.addEventListener("click", ()=>{
+        sel.color = id;
+        const pool = COLOR_EMO[id] ? [...COLOR_EMO[id].balanced, ...COLOR_EMO[id].excess, ...COLOR_EMO[id].deficit] : [];
+        sel.emotions = sel.emotions.filter(x=>pool.includes(x));
+        renderColorGrid(); $("#stepEmotion").hidden = false; renderEmotionChips();
+        if (!$("#stepState").hidden){ renderStateSlider(); recalcSlider(); }
+        updateSave();
+        $("#stepEmotion").scrollIntoView({behavior:"smooth",block:"start"});
+      });
       grid.appendChild(b);
     });
     g.appendChild(grid); wrap.appendChild(g);
@@ -1000,38 +1093,48 @@ function renderStateSlider(){
   range.addEventListener("input", paint);
   paint();
 }
+function emoStateOf(colorId, emoId){
+  const g = COLOR_EMO[colorId]; if (!g) return null;
+  if (g.balanced.includes(emoId)) return "balanced";
+  if (g.excess.includes(emoId)) return "excess";
+  if (g.deficit.includes(emoId)) return "deficit";
+  return null;
+}
+function recalcSlider(){
+  if (!sel.emotions.length) return;
+  const vals = sel.emotions.map(id=>{
+    const st = emoStateOf(sel.color, id);
+    return st ? STATE_SV[st] : (EMO_SV[id] ?? 50);
+  });
+  const avg = Math.round(vals.reduce((a,b)=>a+b,0) / vals.length);
+  sel.v = avg;
+  if ($("#stepState").hidden){
+    $("#stepState").hidden = false; $("#stepText").hidden = false; renderStateSlider();
+  } else animateSlider(avg);
+}
 function renderEmotionChips(){
   const w = $("#emotionChips"); w.innerHTML = "";
-  const secs = [["pos",T.emoPos],["neg",T.emoNeg],["neu",T.emoNeu]];
-  secs.forEach(([val,label])=>{
+  if (!sel.color || !COLOR_EMO[sel.color]) return;
+  const nm = cname(sel.color);
+  const groups = [["balanced", T.emoBal(nm)], ["excess", T.emoExc(nm)], ["deficit", T.emoDef(nm)]];
+  groups.forEach(([st,label])=>{
     const sec = document.createElement("div"); sec.className = "emo-sec";
     sec.innerHTML = `<div class="glabel">${esc(label)}</div>`;
-    EMO_GROUPS.filter(g=>g.valence===val).forEach(g=>{
-      const row = document.createElement("div"); row.className = "emo-row";
-      row.innerHTML = `<span class="emo-core">${esc(T.emotions[g.core])}</span>`;
-      const chips = document.createElement("div"); chips.className = "chips";
-      g.items.forEach(it=>{
-        const b = document.createElement("button"); b.type = "button";
-        b.setAttribute("aria-pressed", String(sel.emotions.includes(it.id)));
-        b.textContent = emoLabel(it.id);
-        b.addEventListener("click", ()=>{
-          if (sel.emotions.includes(it.id)) sel.emotions = sel.emotions.filter(x=>x!==it.id);
-          else if (sel.emotions.length < 5) sel.emotions.push(it.id);
-          else { toast(T.q3hint); return; }
-          if (sel.emotions.length){
-            const avg = Math.round(sel.emotions.reduce((a,id)=>a+(EMO_SV[id]??50),0)/sel.emotions.length);
-            sel.v = avg;
-            if ($("#stepState").hidden){
-              $("#stepState").hidden = false; $("#stepText").hidden = false; renderStateSlider();
-            } else animateSlider(avg);
-          }
-          renderEmotionChips();
-        });
-        chips.appendChild(b);
+    const chips = document.createElement("div"); chips.className = "chips";
+    COLOR_EMO[sel.color][st].forEach(id=>{
+      const b = document.createElement("button"); b.type = "button";
+      b.setAttribute("aria-pressed", String(sel.emotions.includes(id)));
+      b.textContent = emoLabel(id);
+      b.addEventListener("click", ()=>{
+        if (sel.emotions.includes(id)) sel.emotions = sel.emotions.filter(x=>x!==id);
+        else if (sel.emotions.length < 5) sel.emotions.push(id);
+        else { toast(T.q3hint); return; }
+        recalcSlider();
+        renderEmotionChips();
       });
-      row.appendChild(chips); sec.appendChild(row);
+      chips.appendChild(b);
     });
-    w.appendChild(sec);
+    sec.appendChild(chips); w.appendChild(sec);
   });
 }
 function updateSave(){ $("#saveBtn").disabled = !(sel.color && sel.state); }
