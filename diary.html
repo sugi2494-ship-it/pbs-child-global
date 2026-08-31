@@ -132,10 +132,17 @@ main section.view.on{display:block}
 .seg button[aria-pressed="true"]{border-color:var(--ink);box-shadow:var(--shadow)}
 .seg button[aria-pressed="true"] p{color:var(--ink)}
 .seg button[aria-pressed="true"] .stag{color:var(--ink)}
-.chips{display:flex;flex-wrap:wrap;gap:8px}
+.emo-sec{margin-bottom:16px}
+.emo-sec .glabel{margin-bottom:8px}
+.emo-row{display:flex;gap:10px;margin-bottom:10px;align-items:flex-start}
+.emo-core{
+  flex:none;width:52px;padding-top:.45rem;
+  font-size:.66rem;color:var(--ink-3);font-weight:500;line-height:1.3;
+}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
 .chips button{
   border:1.5px solid var(--rule);border-radius:999px;background:var(--surface);
-  padding:.4rem .85rem;font-size:.82rem;color:var(--ink-2);
+  padding:.32rem .7rem;font-size:.78rem;color:var(--ink-2);
 }
 .chips button[aria-pressed="true"]{border-color:var(--ink);color:var(--ink);font-weight:600;background:var(--surface-2)}
 textarea,input[type="text"]{
@@ -283,7 +290,7 @@ footer{margin-top:44px;font-size:.66rem;color:var(--ink-3);font-family:'IBM Plex
 
       <div class="step" id="stepEmotion" hidden>
         <h3 data-i18n="q3">오늘의 감정을 골라주세요</h3>
-        <p class="sub" data-i18n="q3hint">최대 3개까지</p>
+        <p class="sub" data-i18n="q3hint">최대 5개까지 — 긍정과 부정을 섞어 골라도 됩니다</p>
         <div class="chips" id="emotionChips"></div>
       </div>
 
@@ -348,7 +355,8 @@ const UI = {
     appTitle:"데일리 컬러 다이어리",
     q1:"오늘 아침, 어떤 색이 떠올랐나요?", q1hint:"생각하지 말고, 먼저 눈이 가는 색을 고르세요.",
     q2:"지금 마음에 가장 가까운 문장은?", q2hint:"이 색의 세 가지 상태입니다. 읽어보고 오늘과 닮은 문장을 고르세요.",
-    q3:"오늘의 감정을 골라주세요", q3hint:"최대 3개까지",
+    q3:"오늘의 감정을 골라주세요", q3hint:"최대 5개까지 — 긍정과 부정을 섞어 골라도 됩니다",
+    emoPos:"긍정의 감정", emoNeg:"부정의 감정", emoNeu:"놀람 · 중립",
     q4:"한 줄 느낌", q4hint:"지금 마음을 한 문장으로",
     q5:"이 색이 떠오른 이유가 있다면", q5hint:"건너뛰어도 괜찮습니다",
     save:"오늘의 카드 받기", saved:"오늘의 기록이 저장되었습니다",
@@ -384,7 +392,8 @@ const UI = {
     appTitle:"Daily Color Diary",
     q1:"What color came to you this morning?", q1hint:"Don't overthink it — pick the one your eyes go to first.",
     q2:"Which sentence is closest to how you feel?", q2hint:"These are this color's three states. Pick the one that sounds like today.",
-    q3:"Pick today's emotions", q3hint:"Up to 3",
+    q3:"Pick today's emotions", q3hint:"Up to 5 — mixing positive and negative is fine",
+    emoPos:"Pleasant feelings", emoNeg:"Unpleasant feelings", emoNeu:"Surprise · Neutral",
     q4:"One line about today", q4hint:"Your mood in a single sentence",
     q5:"Why this color, if you know", q5hint:"Feel free to skip",
     save:"Get today's card", saved:"Today's entry has been saved",
@@ -419,6 +428,53 @@ const UI = {
 };
 
 const EMOTIONS = ["joy","trust","fear","surprise","sadness","disgust","anger","anticipation"];
+/* 세부 감정 어휘 55개 — 플루칙 8정서를 코어로 두고, NVC 감정 목록·한국어
+   감정어휘 연구의 일상 표현으로 확장. 기록은 세부 어휘로, 통계는 코어 8로 집계. */
+const EMO_GROUPS = [
+ {core:"joy", valence:"pos", items:[
+  {id:"joy_happy",ko:"행복한",en:"Happy"},{id:"joy_delight",ko:"즐거운",en:"Delighted"},
+  {id:"joy_flutter",ko:"설레는",en:"Excited"},{id:"joy_proud",ko:"뿌듯한",en:"Proud"},
+  {id:"joy_light",ko:"홀가분한",en:"Relieved"},{id:"joy_grateful",ko:"감사한",en:"Grateful"},
+  {id:"joy_serene",ko:"평온한",en:"Serene"}]},
+ {core:"trust", valence:"pos", items:[
+  {id:"trust_secure",ko:"든든한",en:"Reassured"},{id:"trust_safe",ko:"안심되는",en:"Safe"},
+  {id:"trust_warm",ko:"따뜻한",en:"Warm"},{id:"trust_loved",ko:"사랑받는",en:"Loved"},
+  {id:"trust_respected",ko:"존중받는",en:"Respected"},{id:"trust_connected",ko:"연결된",en:"Connected"},
+  {id:"trust_comfy",ko:"편안한",en:"Comfortable"}]},
+ {core:"anticipation", valence:"pos", items:[
+  {id:"antic_hope",ko:"기대되는",en:"Hopeful"},{id:"antic_optimist",ko:"희망찬",en:"Optimistic"},
+  {id:"antic_motivated",ko:"의욕적인",en:"Motivated"},{id:"antic_curious",ko:"호기심 가득한",en:"Curious"},
+  {id:"antic_energized",ko:"활기찬",en:"Energized"},{id:"antic_focused",ko:"집중되는",en:"Focused"},
+  {id:"antic_confident",ko:"자신 있는",en:"Confident"}]},
+ {core:"surprise", valence:"neu", items:[
+  {id:"surp_surprised",ko:"놀란",en:"Surprised"},{id:"surp_dazed",ko:"얼떨떨한",en:"Dazed"},
+  {id:"surp_amazed",ko:"신기한",en:"Amazed"},{id:"surp_confused",ko:"혼란스러운",en:"Confused"},
+  {id:"surp_lostword",ko:"어리둥절한",en:"Bewildered"},{id:"surp_overwhelmed",ko:"압도된",en:"Overwhelmed"}]},
+ {core:"fear", valence:"neg", items:[
+  {id:"fear_anxious",ko:"불안한",en:"Anxious"},{id:"fear_worried",ko:"걱정되는",en:"Worried"},
+  {id:"fear_tense",ko:"긴장한",en:"Tense"},{id:"fear_scared",ko:"겁나는",en:"Scared"},
+  {id:"fear_stuck",ko:"막막한",en:"At a loss"},{id:"fear_edge",ko:"조마조마한",en:"On edge"},
+  {id:"fear_shrunk",ko:"위축된",en:"Intimidated"}]},
+ {core:"sadness", valence:"neg", items:[
+  {id:"sad_sad",ko:"슬픈",en:"Sad"},{id:"sad_gloomy",ko:"우울한",en:"Gloomy"},
+  {id:"sad_lonely",ko:"외로운",en:"Lonely"},{id:"sad_longing",ko:"그리운",en:"Longing"},
+  {id:"sad_letdown",ko:"서운한",en:"Hurt"},{id:"sad_hollow",ko:"허전한",en:"Empty"},
+  {id:"sad_drained",ko:"지친",en:"Drained"}]},
+ {core:"disgust", valence:"neg", items:[
+  {id:"disg_uncomfy",ko:"불편한",en:"Uncomfortable"},{id:"disg_burden",ko:"부담스러운",en:"Burdened"},
+  {id:"disg_stifled",ko:"답답한",en:"Stifled"},{id:"disg_fedup",ko:"지겨운",en:"Fed up"},
+  {id:"disg_displeased",ko:"못마땅한",en:"Displeased"},{id:"disg_awkward",ko:"민망한",en:"Embarrassed"},
+  {id:"disg_ashamed",ko:"부끄러운",en:"Ashamed"}]},
+ {core:"anger", valence:"neg", items:[
+  {id:"ang_angry",ko:"화나는",en:"Angry"},{id:"ang_irritated",ko:"짜증나는",en:"Irritated"},
+  {id:"ang_wronged",ko:"억울한",en:"Wronged"},{id:"ang_resentful",ko:"분한",en:"Resentful"},
+  {id:"ang_upset",ko:"속상한",en:"Upset"},{id:"ang_touchy",ko:"예민해진",en:"Irritable"},
+  {id:"ang_jealous",ko:"질투나는",en:"Jealous"}]}
+];
+const EMO_BY_ID = {};
+EMO_GROUPS.forEach(g=>g.items.forEach(it=>{ EMO_BY_ID[it.id] = {...it, core:g.core, valence:g.valence}; }));
+const coreOf = id => EMO_BY_ID[id] ? EMO_BY_ID[id].core : id;
+const emoLabel = id => EMO_BY_ID[id] ? EMO_BY_ID[id][store.lang==="en"?"en":"ko"] : (T.emotions[id]||id);
 const STATES = ["balanced","excess","deficit"];
 const ENGINES = { red:["magenta","red","redorange"], yellow:["orange","yellow","gold"], green:["yellowgreen","green","bluegreen"], blue:["blue","indigo","purple"] };
 
@@ -782,16 +838,29 @@ function renderStateSeg(){
 }
 function renderEmotionChips(){
   const w = $("#emotionChips"); w.innerHTML = "";
-  EMOTIONS.forEach(em=>{
-    const b = document.createElement("button"); b.type = "button";
-    b.setAttribute("aria-pressed", String(sel.emotions.includes(em)));
-    b.textContent = T.emotions[em];
-    b.addEventListener("click", ()=>{
-      if (sel.emotions.includes(em)) sel.emotions = sel.emotions.filter(x=>x!==em);
-      else if (sel.emotions.length < 3) sel.emotions.push(em);
-      renderEmotionChips();
+  const secs = [["pos",T.emoPos],["neg",T.emoNeg],["neu",T.emoNeu]];
+  secs.forEach(([val,label])=>{
+    const sec = document.createElement("div"); sec.className = "emo-sec";
+    sec.innerHTML = `<div class="glabel">${esc(label)}</div>`;
+    EMO_GROUPS.filter(g=>g.valence===val).forEach(g=>{
+      const row = document.createElement("div"); row.className = "emo-row";
+      row.innerHTML = `<span class="emo-core">${esc(T.emotions[g.core])}</span>`;
+      const chips = document.createElement("div"); chips.className = "chips";
+      g.items.forEach(it=>{
+        const b = document.createElement("button"); b.type = "button";
+        b.setAttribute("aria-pressed", String(sel.emotions.includes(it.id)));
+        b.textContent = emoLabel(it.id);
+        b.addEventListener("click", ()=>{
+          if (sel.emotions.includes(it.id)) sel.emotions = sel.emotions.filter(x=>x!==it.id);
+          else if (sel.emotions.length < 5) sel.emotions.push(it.id);
+          else { toast(T.q3hint); return; }
+          renderEmotionChips();
+        });
+        chips.appendChild(b);
+      });
+      row.appendChild(chips); sec.appendChild(row);
     });
-    w.appendChild(b);
+    w.appendChild(sec);
   });
 }
 function updateSave(){ $("#saveBtn").disabled = !(sel.color && sel.state); }
@@ -874,7 +943,7 @@ function renderJournal(){
   if (!keys.length){ list.innerHTML = `<div class="empty">${esc(T.jEmpty).replace(/\n/g,"<br>")}</div>`; return; }
   list.innerHTML = keys.map(k=>{
     const e = store.logs[k];
-    const ems = (e.e||[]).map(x=>T.emotions[x]).join(", ");
+    const ems = (e.e||[]).map(x=>emoLabel(x)).join(", ");
     return `<div class="jitem"><i style="background:${cvar(e.c)}"></i>
       <div><div class="jd num">${k}${e.demo?` · ${esc(T.demoTag)}`:""}</div>
         <div class="jc">${esc(cname(e.c))} <small>· ${esc(stateLabel(e.s))}${ems?` · ${esc(ems)}`:""}</small></div>
@@ -914,7 +983,7 @@ function renderReport(){
   const count = Object.fromEntries(WHEEL.map(id=>[id,0]));
   const stCount = { balanced:0, excess:0, deficit:0 };
   const heat = {}; WHEEL.forEach(id=>heat[id]=Object.fromEntries(EMOTIONS.map(e=>[e,0])));
-  logs.forEach(e=>{ count[e.c]++; stCount[e.s]++; (e.e||[]).forEach(em=>heat[e.c][em]++); });
+  logs.forEach(e=>{ count[e.c]++; stCount[e.s]++; (e.e||[]).forEach(em=>{ const c0=coreOf(em); if(heat[e.c][c0]!==undefined) heat[e.c][c0]++; }); });
   const n = logs.length;
   const max = Math.max(...Object.values(count));
   const top = WHEEL.filter(id=>count[id]===max)[0];
@@ -982,7 +1051,11 @@ function seedDemo(){
   const now = new Date();
   const weights = { magenta:2, red:6, redorange:3, orange:4, yellow:5, gold:1, yellowgreen:2, green:5, bluegreen:4, blue:5, indigo:4, purple:2 };
   const pool = Object.entries(weights).flatMap(([id,w])=>Array(w).fill(id));
-  const emByEngine = { red:["anticipation","joy","anger"], yellow:["joy","surprise","anticipation"], green:["trust","joy","sadness"], blue:["trust","fear","sadness","anticipation"] };
+  const emByEngine = {
+    red:["antic_motivated","joy_proud","ang_irritated","antic_energized"],
+    yellow:["joy_delight","surp_amazed","antic_curious","joy_flutter"],
+    green:["trust_comfy","joy_serene","sad_drained","trust_warm"],
+    blue:["trust_secure","fear_anxious","sad_gloomy","antic_focused"] };
   for (let i=1;i<=45;i++){
     const d = new Date(now); d.setDate(now.getDate()-i);
     const k = d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
