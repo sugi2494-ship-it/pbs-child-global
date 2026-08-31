@@ -337,7 +337,7 @@ footer{margin-top:44px;font-size:.66rem;color:var(--ink-3);font-family:'IBM Plex
 
       <div class="step" id="stepState" hidden>
         <h3 data-i18n="q2">이 색의 진하기로 오늘을 표현해보세요</h3>
-        <p class="sub" data-i18n="q2hint">가운데 점이 균형입니다. 오른쪽으로 갈수록 진해지고(과잉), 왼쪽으로 갈수록 옅어집니다(결핍).</p>
+        <p class="sub" data-i18n="q2hint">고른 감정에 맞춰 버튼이 먼저 움직여줍니다. 가운데 점이 균형 — 오른쪽은 진해지며 과잉, 왼쪽은 옅어지며 결핍. 손으로 조정해도 됩니다.</p>
         <div id="stateSlider"></div>
       </div>
 
@@ -410,7 +410,7 @@ const UI = {
   ko: {
     appTitle:"데일리 컬러 다이어리",
     q1:"오늘 아침, 어떤 색이 떠올랐나요?", q1hint:"생각하지 말고, 먼저 눈이 가는 색을 고르세요.",
-    q2:"이 색의 진하기로 오늘을 표현해보세요", q2hint:"가운데 점이 균형입니다. 오른쪽으로 갈수록 진해지고(과잉), 왼쪽으로 갈수록 옅어집니다(결핍).",
+    q2:"이 색의 진하기로 오늘을 표현해보세요", q2hint:"고른 감정에 맞춰 버튼이 먼저 움직여줍니다. 가운데 점이 균형 — 오른쪽은 진해지며 과잉, 왼쪽은 옅어지며 결핍. 손으로 조정해도 됩니다.",
     q3:"오늘의 감정을 골라주세요", q3hint:"최대 5개까지 — 긍정과 부정을 섞어 골라도 됩니다",
     emoPos:"긍정의 감정", emoNeg:"부정의 감정", emoNeu:"놀람 · 중립",
     q4:"오늘의 한 줄", q4hint:"느낌이나 이 색이 떠오른 이유를 한 줄로 — 건너뛰어도 괜찮습니다",
@@ -452,7 +452,7 @@ const UI = {
   en: {
     appTitle:"Daily Color Diary",
     q1:"What color came to you this morning?", q1hint:"Don't overthink it — pick the one your eyes go to first.",
-    q2:"Set today's depth of this color", q2hint:"The center dot is balance. Slide right and it deepens (overflowing); slide left and it fades (running low).",
+    q2:"Set today's depth of this color", q2hint:"The knob moves first to match your chosen feelings. Center dot = balance; right deepens (overflowing), left fades (running low). Adjust by hand anytime.",
     q3:"Pick today's emotions", q3hint:"Up to 5 — mixing positive and negative is fine",
     emoPos:"Pleasant feelings", emoNeg:"Unpleasant feelings", emoNeu:"Surprise · Neutral",
     q4:"One line for today", q4hint:"A feeling, or why this color came to you — okay to skip",
@@ -590,6 +590,18 @@ const EXTRAS = {
 };
 const EMO_BY_ID = {};
 EMO_GROUPS.forEach(g=>g.items.forEach(it=>{ EMO_BY_ID[it.id] = {...it, core:g.core, valence:g.valence}; }));
+/* 감정별 상태 좌표: 러셀 원형모델의 각성 축 응용.
+   긍정=균형권(44~62), 고각성 부정=과잉권(66+), 저각성 부정=결핍권(34-) */
+const EMO_SV = {
+  joy_happy:50, joy_delight:52, joy_flutter:58, joy_proud:52, joy_light:46, joy_grateful:50, joy_serene:44,
+  trust_secure:50, trust_safe:46, trust_warm:50, trust_loved:52, trust_respected:50, trust_connected:52, trust_comfy:44,
+  antic_hope:56, antic_optimist:55, antic_motivated:60, antic_curious:56, antic_energized:62, antic_focused:55, antic_confident:55,
+  surp_surprised:60, surp_dazed:55, surp_amazed:54, surp_confused:66, surp_lostword:58, surp_overwhelmed:78,
+  fear_anxious:70, fear_worried:68, fear_tense:72, fear_scared:70, fear_stuck:28, fear_edge:70, fear_shrunk:25,
+  sad_sad:28, sad_gloomy:24, sad_lonely:28, sad_longing:34, sad_letdown:32, sad_hollow:26, sad_drained:18,
+  disg_uncomfy:62, disg_burden:72, disg_stifled:70, disg_fedup:30, disg_displeased:64, disg_awkward:40, disg_ashamed:32,
+  ang_angry:80, ang_irritated:74, ang_wronged:72, ang_resentful:78, ang_upset:40, ang_touchy:72, ang_jealous:68
+};
 const coreOf = id => EMO_BY_ID[id] ? EMO_BY_ID[id].core : id;
 const emoLabel = id => EMO_BY_ID[id] ? EMO_BY_ID[id][store.lang==="en"?"en":"ko"] : (T.emotions[id]||id);
 const STATES = ["balanced","excess","deficit"];
@@ -944,6 +956,21 @@ function swatchMix(colorVar, v){
   if (v <= 50) return `color-mix(in srgb, ${colorVar} ${Math.round(22 + v*1.56)}%, var(--surface))`;
   return `color-mix(in srgb, ${colorVar} ${Math.round(100 - (v-50)*0.76)}%, black)`;
 }
+function animateSlider(target){
+  const r = $("#slRange");
+  if (!r){ sel.v = target; return; }
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches){
+    r.value = target; r.dispatchEvent(new Event("input")); return;
+  }
+  const from = +r.value, dur = 320, t0 = performance.now();
+  const step = (t)=>{
+    const k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+    r.value = Math.round(from + (target - from) * e);
+    r.dispatchEvent(new Event("input"));
+    if (k < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
 function renderStateSlider(){
   const wrap = $("#stateSlider"); if (!sel.color){ wrap.innerHTML = ""; return; }
   const v0 = (typeof sel.v === "number") ? sel.v : 50;
@@ -991,8 +1018,12 @@ function renderEmotionChips(){
           if (sel.emotions.includes(it.id)) sel.emotions = sel.emotions.filter(x=>x!==it.id);
           else if (sel.emotions.length < 5) sel.emotions.push(it.id);
           else { toast(T.q3hint); return; }
-          if ($("#stepState").hidden && sel.emotions.length){
-            $("#stepState").hidden = false; $("#stepText").hidden = false; renderStateSlider();
+          if (sel.emotions.length){
+            const avg = Math.round(sel.emotions.reduce((a,id)=>a+(EMO_SV[id]??50),0)/sel.emotions.length);
+            sel.v = avg;
+            if ($("#stepState").hidden){
+              $("#stepState").hidden = false; $("#stepText").hidden = false; renderStateSlider();
+            } else animateSlider(avg);
           }
           renderEmotionChips();
         });
