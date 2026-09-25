@@ -2933,7 +2933,7 @@ tbody tr:last-child td{border-bottom:none}
 </svg>
 
 <!-- ═══════════════════════════════════════════════════════════
-     LOCK SCREEN (비밀번호 8801)
+     LOCK SCREEN (본사 Supabase 계정 로그인)
      ═══════════════════════════════════════════════════════════ -->
 <div class="lock-screen" id="lock-screen">
   <div class="lock-card">
@@ -2941,7 +2941,7 @@ tbody tr:last-child td{border-bottom:none}
     <h1>관리자 페이지</h1>
     <div class="subtitle">PBS COLOR LAB · ADMIN ACCESS</div>
     <div class="lock-input-wrap">
-      <input type="password" id="lock-pw" class="lock-input" maxlength="4" placeholder="••••" inputmode="numeric" autocomplete="off">
+      <input type="password" id="lock-pw" class="lock-input" placeholder="본사 계정 비밀번호" autocomplete="current-password">
     </div>
     <div class="lock-error-msg" id="lock-error">비밀번호가 올바르지 않습니다</div>
     <button class="lock-btn" id="lock-btn" type="button">
@@ -3771,10 +3771,8 @@ let REVIEWS_FILTER = {search:'', stars:'', featured:''};
 // ────────────────────────────────────────────────────────────
 // LOCK SCREEN
 // ────────────────────────────────────────────────────────────
-const ADMIN_PW = '8801';
-
-/* 🔒 매번 비번 입력 강제 — 세션 캐싱 비활성화 (PW-LOCK-v3 / 2026-05-16) */
-console.log('[PBS-Admin-Global] PW-LOCK-v3 활성화 (매번 비번 8801 입력 필요)');
+/* 🔒 본사 관리자는 Supabase 계정(이메일+비밀번호)으로 로그인 — 비밀번호는 코드에 넣지 않음.
+   로그인은 부모 창의 PBS.adminLogin 이 처리하고, 세션은 메모리에만 유지(새로고침 시 다시 로그인). */
 function checkSession(){
   try{
     localStorage.removeItem(KEY_SESSION);
@@ -3828,9 +3826,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const pwBtn = document.getElementById('lock-btn');
   const pwError = document.getElementById('lock-error');
   pwInput.focus();
-  const tryLogin = () => {
-    if(pwInput.value === ADMIN_PW){
+  const tryLogin = async () => {
+    const P = window.parent && window.parent.PBS;
+    const ok = !!(P && P.adminLogin && pwInput.value && await P.adminLogin(pwInput.value));
+    if(ok){
       setSession();
+      try{ if(P.syncRecordsToLocal) await P.syncRecordsToLocal(); }catch(e){ console.warn('로그인 후 동기화 실패', e); }
       unlockApp();
     }else{
       pwInput.classList.add('error');
@@ -6078,6 +6079,18 @@ window.pbsDBReady = false;
 
 window.PBS = window.PBS || {};
 
+// === 관리자 로그인 (본사 Supabase 계정) ===
+const PBS_HQ_EMAIL = 'sugi2494@gmail.com';
+window.PBS.adminLogin = async function(pw) {
+  if (!window.pbsDBReady || !pw) return false;
+  const { error } = await window.pbsDB.auth.signInWithPassword({ email: PBS_HQ_EMAIL, password: pw });
+  if (error) { console.warn('[PBS] 관리자 로그인 실패:', error.message); return false; }
+  return true;
+};
+window.PBS.adminLogout = async function() {
+  try { if (window.pbsDBReady) await window.pbsDB.auth.signOut(); } catch (e) {}
+};
+
 // === 함수 1: 접근 코드 검증 ===
 window.PBS.verifyCode = async function(code, testType) {
   if (!window.pbsDBReady) return { ok:false, message:'서버 연결 실패' };
@@ -6096,7 +6109,9 @@ window.PBS.saveRecord = async function(record) {
   // (옛 중복 저장 코드 제거: 한 진단당 1건만 쌓이도록)
   if (!window.pbsDBReady) return { ok:false, fallback:'local' };
   try {
+    const newId = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : undefined;
     const payload = {
+      id: newId,
       test_type: record.test_type || 'global_30',
       is_premium: !!record.is_premium,
       code_id: record.code_id || null,
@@ -6118,10 +6133,10 @@ window.PBS.saveRecord = async function(record) {
       device: /Mobi|Android/i.test(navigator.userAgent) ? 'mobile' : 'desktop',
       referrer: document.referrer ? document.referrer.slice(0, 200) : null
     };
-    const { data, error } = await window.pbsDB
-      .from('pbs_global_records').insert(payload).select('id').single();
+    const { error } = await window.pbsDB
+      .from('pbs_global_records').insert(payload);
     if (error) throw error;
-    return { ok:true, id: data?.id };
+    return { ok:true, id: newId };
   } catch (e) {
     console.warn('[PBS] saveRecord 실패:', e);
     return { ok:false, fallback:'local', error: e.message };
@@ -7783,14 +7798,7 @@ async function openAdminMode() {
     localStorage.removeItem('pbs-global-admin-session');
   } catch(e) {}
 
-  // ✨ Supabase 자동 동기화 — reset-stamp 이후 데이터만 가져옴 (옛 데이터는 차단)
-  // 이 동기화 덕분에 다른 사람들이 진단한 결과도 관리자에서 볼 수 있어요.
-  if (window.PBS && window.PBS.syncRecordsToLocal) {
-    try {
-      const r = await window.PBS.syncRecordsToLocal();
-      if (r?.ok) console.log('[PBS-Child] 관리자 진입 자동 동기화: ' + (r.addedRecords||0) + '건 추가');
-    } catch(e) { console.warn('[PBS-Child] 자동 동기화 오류:', e); }
-  }
+  // ✨ Supabase 동기화는 관리자 로그인 성공 후(잠금 화면)에 실행됩니다.
   const tpl = document.getElementById('pbs-admin-template');
   const iframe = document.getElementById('pbs-admin-iframe');
   if (!tpl || !iframe) {
@@ -7806,6 +7814,7 @@ async function openAdminMode() {
 function closeAdminMode() {
   document.getElementById('pbs-admin-overlay').style.display = 'none';
   document.body.style.overflow = '';
+  try{ if(window.PBS && window.PBS.adminLogout) window.PBS.adminLogout(); }catch(e){}
   if (window.location.hash === '#admin') {
     history.replaceState(null, '', window.location.pathname);
   }
