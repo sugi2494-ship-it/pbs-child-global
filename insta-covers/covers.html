@@ -1,0 +1,55 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+body{margin:0;background:#888;display:flex;flex-wrap:wrap;gap:20px;padding:20px}
+.c{width:1080px;height:1080px;background:#E4007F;display:grid;place-items:center;position:relative}
+.c svg{width:640px;height:640px;fill:none;stroke:#fff;stroke-width:5.2;stroke-linecap:round;stroke-linejoin:round}
+</style></head><body>
+
+<!-- 1 처음이라면: 반짝임 -->
+<div class="c" id="c1"><svg viewBox="0 0 200 200">
+<path d="M100 30 C106 70 130 94 170 100 C130 106 106 130 100 170 C94 130 70 106 30 100 C70 94 94 70 100 30Z"/>
+<path d="M156 36 C158 46 164 52 174 54 C164 56 158 62 156 72 C154 62 148 56 138 54 C148 52 154 46 156 36Z"/>
+<circle cx="46" cy="156" r="6"/></svg></div>
+
+<!-- 2 컬러강점: 기어 + 네 점 -->
+<div class="c" id="c2"><svg viewBox="0 0 200 200">
+<path id="g"/>
+<circle cx="100" cy="100" r="22"/>
+<circle cx="100" cy="40" r="0"/></svg></div>
+
+<!-- 3 퍼스널컬러: 부채꼴 드레이프 스와치 -->
+<div class="c" id="c3"><svg viewBox="0 0 200 200">
+<g transform="rotate(-24 100 160)"><rect x="80" y="40" width="40" height="120" rx="8"/></g>
+<g transform="rotate(0 100 160)"><rect x="80" y="40" width="40" height="120" rx="8"/></g>
+<g transform="rotate(24 100 160)"><rect x="80" y="40" width="40" height="120" rx="8"/></g>
+<circle cx="100" cy="146" r="6"/></svg></div>
+
+<!-- 4 기관교육: 강의 보드 -->
+<div class="c" id="c4"><svg viewBox="0 0 200 200">
+<rect x="38" y="42" width="124" height="86" rx="8"/>
+<path d="M58 108 L84 84 L104 98 L140 64"/><path d="M126 64 H140 V78"/>
+<path d="M100 128 V150 M72 168 L100 150 L128 168"/></svg></div>
+
+<!-- 5 교육후기: 말풍선 + 하트 -->
+<div class="c" id="c5"><svg viewBox="0 0 200 200">
+<path d="M40 50 H160 a10 10 0 0 1 10 10 V124 a10 10 0 0 1 -10 10 H92 L64 160 V134 H40 a10 10 0 0 1 -10 -10 V60 a10 10 0 0 1 10 -10Z"/>
+<path d="M100 118 C84 106 72 98 72 84 C72 74 80 68 88 68 C94 68 98 72 100 76 C102 72 106 68 112 68 C120 68 128 74 128 84 C128 98 116 106 100 118Z"/></svg></div>
+
+<!-- 6 글로벌: 지구 + 비행 궤적 -->
+<div class="c" id="c6"><svg viewBox="0 0 200 200">
+<circle cx="96" cy="104" r="58"/><ellipse cx="96" cy="104" rx="24" ry="58"/><path d="M38 104 H154 M46 76 H146 M46 132 H146"/>
+<path d="M130 40 C150 30 172 34 178 50" stroke-dasharray="3 9"/><path d="M170 42 L180 52 L166 56"/></svg></div>
+
+<!-- 7 책 출간: 펼친 책 + 반짝임 -->
+<div class="c" id="c7"><svg viewBox="0 0 200 200">
+<path d="M100 70 C82 58 58 56 34 60 V150 C58 146 82 148 100 160 C118 148 142 146 166 150 V60 C142 56 118 58 100 70Z"/>
+<path d="M100 70 V160"/>
+<path d="M150 22 C152 32 158 38 168 40 C158 42 152 48 150 58 C148 48 142 42 132 40 C142 38 148 32 150 22Z"/></svg></div>
+
+<script>
+// 컬러강점 기어 톱니
+function gear(t,R,r,cx,cy){let d='';const s=Math.PI*2/t;for(let i=0;i<t;i++){const a=i*s;[[a-s*.25,r],[a-s*.14,R],[a+s*.14,R],[a+s*.25,r],[a+s*.5,r]].forEach(([g,q],j)=>{d+=(i||j?'L':'M')+(cx+q*Math.cos(g)).toFixed(1)+' '+(cy+q*Math.sin(g)).toFixed(1)+' '})}return d+'Z'}
+document.getElementById('g').setAttribute('d',gear(10,70,56,100,100));
+const s=document.querySelector('#c2 svg');
+[[100,76],[124,100],[100,124],[76,100]].forEach(([x,y])=>{const c=document.createElementNS('http://www.w3.org/2000/svg','circle');c.setAttribute('cx',x);c.setAttribute('cy',y);c.setAttribute('r',7);c.setAttribute('fill','#fff');s.appendChild(c)});
+s.querySelector('circle[r="22"]').remove();
+</script></body></html>
