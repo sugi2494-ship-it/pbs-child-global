@@ -26,6 +26,9 @@ const { chromium } = require(pwPath);
         if (b.bottom > limit + 1) out.push(`${s.id}: <${el.className || el.tagName}> 가 하단 여백을 침범 (${Math.round(b.bottom - limit)}px)`);
         if (el.scrollWidth > el.clientWidth + 1) out.push(`${s.id}: <${el.className || el.tagName}> 가로 넘침`);
       });
+      s.querySelectorAll('.cell .a').forEach(el => { if (el.offsetHeight > 70) out.push(`${s.id}: 한 장 정리 화살표 문구가 두 줄로 넘어감 ("${el.textContent}") → 7자 이내로 줄일 것`); });
+      s.querySelectorAll('.tags').forEach(el => { if (el.offsetHeight > 90) out.push(`${s.id}: 태그가 두 줄로 넘어감 → 개수나 글자 수를 줄일 것`); });
+      s.querySelectorAll('.row .tx').forEach(el => { if (el.offsetHeight > 70) out.push(`${s.id}: 표지 항목이 두 줄로 넘어감 ("${el.textContent}") → 17자 이내로 줄일 것`); });
       for (let i = 0; i < s.children.length; i++) for (let j = i + 1; j < s.children.length; j++) {
         const a = s.children[i], c = s.children[j];
         if (a.classList.contains('top') || a.classList.contains('foot') || c.classList.contains('foot')) continue;

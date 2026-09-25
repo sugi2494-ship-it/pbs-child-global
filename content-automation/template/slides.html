@@ -108,7 +108,7 @@ function build(D){
     <h2>${e.headline}</h2>
     <p class="desc">${e.desc}</p>
     <p class="say">자주 하는 말 <em style="background:${m.tint}">“${e.say}”</em></p>
-    <div class="fix" style="background:${m.tint}"><div class="k" style="color:${m.label}">다시 움직이는 법 · ${e.gear} 기어</div><div class="v">${e.fix}</div></div>
+    <div class="fix" style="background:${m.tint}"><div class="k" style="color:${m.label}">${D.fixLabel||'다시 움직이는 법'} · ${e.gear} 기어</div><div class="v">${e.fix}</div></div>
     ${foot(`<span class="bars"><i class="b${i+1}"></i></span>`)}</section>`)});
   s.push(`<section class="slide sheet" id="s7">${hdr(7)}
     <h2>${D.sheet.title}</h2>
