@@ -9,6 +9,7 @@ const {chromium}=require(require('child_process').execSync('npm root -g').toStri
   await p.goto('file://'+path.join(__dirname,'figures.html'),{waitUntil:'networkidle'});
   await p.evaluate(()=>document.fonts.ready);
   const ids=await p.$$eval('section.fig',s=>s.map(e=>e.id));
+  const caps=await p.$$eval('section.fig',s=>s.map(e=>[e.id,e.dataset.cap]));fs.writeFileSync(path.join(out,'captions.json'),JSON.stringify(caps,null,1));
   for(const id of ids){
     await p.locator('#'+id).screenshot({path:path.join(out,id+'.png')});
   }

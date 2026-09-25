@@ -1,97 +1,4 @@
-<!doctype html>
-<html lang="ko"><head><meta charset="utf-8">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Noto+Serif+KR:wght@700;900&display=swap">
 <style>
-:root{
-  --ink:#1B1519; --sub:#5E545B; --hair:#E4DCE1; --wash:#F7F3F5; --mag:#D1006F; --mag-t:#FCE3EF;
-  --red:#D23B30; --red-t:#F7D5D1; --yel:#E0A400; --yel-d:#9A6E00; --yel-t:#F6E4AE;
-  --grn:#2C8C5A; --grn-t:#CDEAD8; --blu:#2C66A8; --blu-t:#D3E2F4;
-  --serif:"Noto Serif KR",serif; --sans:"Noto Sans KR",sans-serif;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:#fff;font-family:var(--sans);color:var(--ink);word-break:keep-all}
-.fig{width:1200px;background:#fff;padding:64px 64px 56px;margin:0;display:flex;flex-direction:column;gap:28px}
-.lead{font:700 22px var(--sans);letter-spacing:.08em;color:var(--mag)}
-h2{font:900 44px/1.3 var(--serif);letter-spacing:-.02em}
-.note{font:500 22px/1.6 var(--sans);color:var(--sub);border-top:2px solid var(--hair);padding-top:18px}
-.b-red{background:var(--red)}.b-yel{background:var(--yel)}.b-grn{background:var(--grn)}.b-blu{background:var(--blu)}
-
-/* 2-1 */
-.two{display:grid;grid-template-columns:1fr 90px 1fr;align-items:stretch}
-.side{border:3px solid var(--hair);border-radius:20px;padding:36px 34px;display:flex;flex-direction:column;gap:22px}
-.side .t{font:900 34px var(--sans)}
-.side .q{font:700 30px/1.4 var(--serif)}
-.row2{display:flex;flex-direction:column;gap:6px}
-.row2 .k{font:700 19px var(--sans);letter-spacing:.06em;color:var(--sub)}
-.row2 .v{font:500 25px/1.5 var(--sans)}
-.chips{display:flex;gap:10px}.chips i{display:block;width:58px;height:58px;border-radius:12px}
-.mid{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--mag);font:700 19px/1.3 var(--sans);text-align:center}
-.mid svg{width:64px}
-
-/* 4-1 tray */
-.trayfig{display:grid;grid-template-columns:1fr 330px;gap:36px;align-items:center}
-.tray{position:relative;height:430px}
-.tray .plate{position:absolute;left:0;right:0;bottom:30px;height:250px;border-radius:50%;background:var(--red-t);border:6px solid var(--red);box-shadow:0 22px 0 -6px #E7B4AE}
-.tray .plabel{position:absolute;left:0;right:0;bottom:62px;text-align:center;font:900 30px var(--sans);color:var(--red)}
-.tray .plabel small{display:block;font:500 21px var(--sans);color:var(--ink);margin-top:4px}
-.gear{position:absolute;display:flex;flex-direction:column;align-items:center;gap:6px}
-.gear svg{width:190px;height:190px;display:block}
-.gear .gl{font:900 28px var(--sans)}
-.gear .gs{font:500 19px var(--sans);color:var(--sub)}
-.legend{display:flex;flex-direction:column;gap:22px}
-.lg{border-left:8px solid;padding:6px 0 6px 20px;display:flex;flex-direction:column;gap:6px}
-.lg .k{font:900 28px var(--sans)}
-.lg .v{font:500 22px/1.55 var(--sans);color:var(--ink)}
-.lg .v b{font-weight:700}
-
-/* 4 engines */
-.g4{display:grid;grid-template-columns:1fr 1fr;gap:22px}
-.eng{border-radius:20px;overflow:hidden;border:3px solid var(--hair);display:flex;flex-direction:column}
-.eng .hd{padding:24px 30px;color:#fff;display:flex;justify-content:space-between;align-items:baseline}
-.eng .hd b{font:900 36px var(--sans)}
-.eng .hd span{font:700 20px var(--sans);opacity:.92}
-.eng .bd{padding:24px 30px 28px;display:flex;flex-direction:column;gap:16px;flex:1}
-.eng .ess{font:900 28px/1.35 var(--serif)}
-.eng .line{font:500 22px/1.55 var(--sans)}
-.eng .ov{margin-top:auto;font:500 20px/1.5 var(--sans);color:var(--sub);padding:14px 18px;border-radius:12px}
-.eng .ov b{font-weight:700;color:var(--ink)}
-
-/* 9-1 rings */
-.ringfig{display:grid;grid-template-columns:560px 1fr;gap:40px;align-items:center}
-.rings{position:relative;width:560px;height:560px}
-.rings div{position:absolute;border-radius:50%;display:flex;justify-content:center}
-.r3{inset:0;background:#F1ECEF;border:3px solid #D9CFD5}
-.r2{inset:95px;background:#E6DDE2;border:3px solid #CBBEC6}
-.r1{inset:190px;background:var(--mag);align-items:center}
-.rings .lab{position:absolute;left:0;right:0;text-align:center;font:900 26px var(--sans)}
-.rings .lab small{display:block;font:500 18px var(--sans);color:var(--sub)}
-.r1 .lab{position:static;color:#fff}.r1 .lab small{color:#fff;opacity:.9}
-.steps3{display:flex;flex-direction:column;gap:22px}
-.s3{display:grid;grid-template-columns:64px 1fr;gap:18px;align-items:start}
-.s3 .n{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;font:900 30px var(--sans);color:#fff;background:var(--ink)}
-.s3 .k{font:900 28px var(--sans)}
-.s3 .v{font:500 22px/1.5 var(--sans);color:var(--ink)}
-.s3 .q{font:700 21px/1.5 var(--serif);color:var(--mag);margin-top:4px}
-
-/* 9-2 map */
-.map{display:grid;grid-template-columns:170px repeat(3,1fr);gap:12px}
-.map .ch{font:700 21px var(--sans);color:var(--sub);text-align:center;padding:6px 0;letter-spacing:.04em}
-.map .rh{border-radius:14px;color:#fff;display:flex;flex-direction:column;justify-content:center;padding:0 20px}
-.map .rh b{font:900 28px var(--sans)}.map .rh span{font:700 18px var(--sans);opacity:.9}
-.map .c{border-radius:14px;padding:20px 20px;display:flex;flex-direction:column;gap:8px;min-height:150px}
-.map .c b{font:900 26px var(--sans)}
-.map .c span{font:500 19px/1.5 var(--sans)}
-
-/* 9-3 steps */
-.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;position:relative}
-.st{border:3px solid var(--hair);border-radius:18px;padding:26px 24px;display:flex;flex-direction:column;gap:12px;position:relative;background:#fff}
-.st .n{font:900 22px var(--sans);color:var(--mag);letter-spacing:.06em}
-.st .k{font:900 29px/1.3 var(--sans)}
-.st .v{font:500 20px/1.55 var(--sans);color:var(--sub)}
-.st:not(:last-child)::after{content:"";position:absolute;right:-17px;top:50%;width:16px;height:16px;border-top:4px solid var(--mag);border-right:4px solid var(--mag);transform:translateY(-50%) rotate(45deg);background:transparent}
-.loop{display:flex;align-items:center;gap:16px;font:700 22px var(--sans);color:var(--mag)}
-.loop svg{width:1072px;height:84px}
-
 /* 공통 부품 */
 .cols2{display:grid;grid-template-columns:1fr 1fr;gap:22px}
 .cols3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
@@ -104,7 +11,7 @@ h2{font:900 44px/1.3 var(--serif);letter-spacing:-.02em}
 .box li{font:500 21px/1.5 var(--sans);padding-left:22px;position:relative}
 .box li::before{content:"";position:absolute;left:0;top:.62em;width:10px;height:10px;border-radius:50%;background:currentColor;opacity:.55}
 .quote{font:700 26px/1.5 var(--serif)}
-.tag{display:inline-block;font:700 20px var(--sans)!important;padding:5px 16px;border-radius:99px;color:#fff!important}
+.tag{display:inline-block;font:700 18px var(--sans);padding:4px 14px;border-radius:99px;color:#fff}
 .arrowR{display:flex;align-items:center;justify-content:center;color:var(--mag)}
 .arrowR svg{width:56px}
 .q3{display:flex;flex-direction:column;gap:14px}
@@ -145,8 +52,8 @@ h2{font:900 44px/1.3 var(--serif);letter-spacing:-.02em}
 .hub{position:relative;width:1072px;height:560px}
 .hub .core{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:250px;height:250px;border-radius:50%;background:var(--mag);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:6px}
 .hub .core b{font:900 32px var(--sans)}.hub .core span{font:500 19px var(--sans)}
-.hub .sat{position:absolute;width:380px;border:3px solid var(--hair);border-radius:18px;background:#fff;padding:18px 22px;display:flex;flex-direction:column;gap:6px}
-.hub .sat b{font:900 28px var(--sans)}.hub .sat span{font:500 21px/1.5 var(--sans);color:var(--ink)}
+.hub .sat{position:absolute;width:300px;border:3px solid var(--hair);border-radius:18px;background:#fff;padding:18px 22px;display:flex;flex-direction:column;gap:6px}
+.hub .sat b{font:900 25px var(--sans)}.hub .sat span{font:500 18px/1.5 var(--sans);color:var(--ink)}
 .blocks{display:grid;grid-template-columns:1.3fr 1fr .7fr .8fr;gap:10px}
 .blk{border-radius:16px;padding:24px 20px;display:flex;flex-direction:column;gap:10px;min-height:300px}
 .blk .k{font:900 26px var(--sans)}
@@ -188,9 +95,9 @@ h2{font:900 44px/1.3 var(--serif);letter-spacing:-.02em}
 .epi .big{font:900 58px/1.45 var(--serif);letter-spacing:-.02em}
 .epi .by{font:700 22px var(--sans);color:var(--sub);letter-spacing:.1em}
 .epi .bars4{display:flex;gap:10px;justify-content:center}.epi .bars4 i{display:block;width:60px;height:10px;border-radius:5px}
+</style>
 
-</style></head><body>
-
+<!-- 1장 -->
 <section class="fig" id="g01-1" data-cap="질문의 방향을 바꾸면 불안이 신호가 된다">
   <div class="lead">1장 · 열심히 사는데 왜 불안한가</div>
   <h2>“더 노력해야 할까?”에서, 세 가지 질문으로</h2>
@@ -206,29 +113,7 @@ h2{font:900 44px/1.3 var(--serif);letter-spacing:-.02em}
   <p class="note">불안은 때로 내 방식과 삶의 방식이 어긋났다는 신호가 된다.</p>
 </section>
 
-<section class="fig" id="g02-1" data-cap="어울리는 색과 나를 움직이는 색">
-  <div class="lead">2장 · 어울리는 색과 나를 움직이는 색</div>
-  <h2>거울 속 나에서, 삶의 현장 속 나로</h2>
-  <div class="two">
-    <div class="side">
-      <div class="chips"><i style="background:#F3C9B6"></i><i style="background:#E7A9B6"></i><i style="background:#C98B5A"></i><i style="background:#7A4A6E"></i></div>
-      <div class="t">퍼스널컬러</div>
-      <div class="q">어떤 색이 나를<br>밝혀 주는가?</div>
-      <div class="row2"><span class="k">살피는 것</span><span class="v">피부·눈동자·머리카락 같은 외적 특성과 조화를 이루는 색</span></div>
-      <div class="row2"><span class="k">얻는 것</span><span class="v">거울 속 나를 새롭게 바라보고 표현하는 경험</span></div>
-    </div>
-    <div class="mid"><svg viewBox="0 0 64 40"><path d="M2 20h52M40 6l16 14-16 14" fill="none" stroke="#D1006F" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>질문을<br>한 걸음 더</div>
-    <div class="side" style="border-color:var(--mag)">
-      <div class="chips"><i class="b-red"></i><i class="b-yel"></i><i class="b-grn"></i><i class="b-blu"></i></div>
-      <div class="t" style="color:var(--mag)">컬러강점</div>
-      <div class="q">무엇이 나를<br>움직이는가?</div>
-      <div class="row2"><span class="k">살피는 것</span><span class="v">일·관계·목표 앞에서 실제로 살아온 장면과 행동</span></div>
-      <div class="row2"><span class="k">얻는 것</span><span class="v">나를 움직이는 내적 동력과 강점의 쓰임</span></div>
-    </div>
-  </div>
-  <p class="note">어느 한쪽이 더 우월하거나 다른 쪽을 대신하지 않는다. 외적인 발견에서 내적인 이해로 질문을 이어 가는 것이다.</p>
-</section>
-
+<!-- 3장 -->
 <section class="fig" id="g03-1" data-cap="약점 보완과 강점 개발은 함께 간다">
   <div class="lead">3장 · 강점은 발견하는 데서 끝나지 않는다</div>
   <h2>약점 보완과 강점 개발은 하는 일이 다르다</h2>
@@ -262,24 +147,7 @@ h2{font:900 44px/1.3 var(--serif);letter-spacing:-.02em}
   <p class="note">강점은 새 길의 방향을 비출 뿐, 그 길까지 대신 걸어 주지는 않는다.</p>
 </section>
 
-<section class="fig" id="g04-1" data-cap="큰 쟁반 하나, 그 위의 두 기어">
-  <div class="lead">4장 · 엔진과 기어</div>
-  <h2>큰 쟁반 하나, 그 위의 두 기어</h2>
-  <div class="trayfig">
-    <div class="tray">
-      <div class="plate"></div>
-      <div class="plabel">베이스 엔진 · RED<small>무엇에서 힘을 얻고 무엇을 중요하게 여기는가</small></div>
-      <div class="gear" style="left:70px;top:0"><svg data-gear="#2C66A8"></svg><span class="gl" style="color:var(--blu)">B2 분석</span><span class="gs">파워 기어 ①</span></div>
-      <div class="gear" style="right:70px;top:0"><svg data-gear="#2C8C5A"></svg><span class="gl" style="color:var(--grn)">G2 평화</span><span class="gs">파워 기어 ②</span></div>
-    </div>
-    <div class="legend">
-      <div class="lg" style="border-color:var(--red)"><span class="k">엔진 · 동력</span><span class="v">비교적 지속적으로 나를 움직이는 힘. <b>네 가지 가운데 가장 두드러진 하나</b>를 베이스 엔진으로 살핀다.</span></div>
-      <div class="lg" style="border-color:var(--ink)"><span class="k">기어 · 작동 방식</span><span class="v">목표와 상황에 맞게 선택하고 훈련하는 강점. <b>열두 기어 가운데 가장 높은 둘</b>이 파워 기어다.</span></div>
-    </div>
-  </div>
-  <p class="note">예시: 같은 RED 엔진이라도 B2 분석이 두드러지면 빠르게 시작한 뒤 근거를 깊이 확인하고, G2 평화가 두드러지면 목표를 밀면서도 합의를 함께 살핀다. 파워 기어는 익숙하게 써 온 강점의 단서일 뿐, 평생 그것만 써야 한다는 뜻이 아니다.</p>
-</section>
-
+<!-- 4장 -->
 <section class="fig" id="g04-2" data-cap="같은 엔진이어도 두 기어가 다르면 모습이 달라진다">
   <div class="lead">4장 · 같은 엔진, 다른 두 기어</div>
   <h2>쟁반은 같아도, 올라간 두 기어에 따라 달라진다</h2>
@@ -309,17 +177,7 @@ h2{font:900 44px/1.3 var(--serif);letter-spacing:-.02em}
   </div>
 </section>
 
-<section class="fig" id="g05-0" data-cap="네 엔진 한눈에 보기 (2부 여는 그림)">
-  <div class="lead">2부 · 나를 움직이는 네 가지 컬러 엔진</div>
-  <h2>네 엔진 한눈에 보기</h2>
-  <div class="g4">
-    <div class="eng"><div class="hd b-red"><b>RED · 추진</b><span>5장</span></div><div class="bd"><div class="ess">빠름보다 전진</div><div class="line">나는 목표를 행동으로 옮기고, 행동을 결과로 이어 가는 사람이다.</div><div class="ov" style="background:var(--red-t)"><b>과열 신호</b> 속도·통제·결과 집착이 사람과 검토를 앞설 수 있다</div></div></div>
-    <div class="eng"><div class="hd b-yel"><b>YELLOW · 관계</b><span>6장</span></div><div class="bd"><div class="ess">밝음보다 확장</div><div class="line">나는 사람과 가능성을 연결해 새로운 장면을 펼치는 사람이다.</div><div class="ov" style="background:var(--yel-t)"><b>과열 신호</b> 연결과 아이디어가 흩어지고 약속이 과해질 수 있다</div></div></div>
-    <div class="eng"><div class="hd b-grn"><b>GREEN · 조화</b><span>7장</span></div><div class="bd"><div class="ess">순종보다 지속 가능성</div><div class="line">나는 관계와 환경이 오래 갈 수 있도록 안정과 균형을 지키는 사람이다.</div><div class="ov" style="background:var(--grn-t)"><b>과열 신호</b> 갈등 회피·자기희생·변화 지연으로 흐를 수 있다</div></div></div>
-    <div class="eng"><div class="hd b-blu"><b>BLUE · 분석</b><span>8장</span></div><div class="bd"><div class="ess">지식보다 신뢰할 구조</div><div class="line">나는 근거와 기준을 세워 복잡한 일을 신뢰할 수 있는 결과로 만든다.</div><div class="ov" style="background:var(--blu-t)"><b>과열 신호</b> 분석 과다·완벽주의·규칙 과잉으로 실행을 늦출 수 있다</div></div></div>
-  </div>
-</section>
-
+<!-- 5~8장 양면 -->
 <section class="fig" id="g05-1" data-cap="RED가 힘을 발휘하는 순간과 그림자">
   <div class="lead">5장 · RED — 목표와 결과를 향해 앞으로 밀고 나가는 사람</div>
   <div class="engtop"><div class="sw b-red"></div><div><b>RED · 추진</b><br><span>빠름보다 전진</span></div></div>
@@ -384,61 +242,7 @@ h2{font:900 44px/1.3 var(--serif);letter-spacing:-.02em}
   <div class="band" style="background:var(--wash)">완벽 대신 제출 가능한 기준 · 검토 전에 “무엇이 확인되면 제출할 수 있는가”를 먼저 정한다.</div>
 </section>
 
-<section class="fig" id="g09-1" data-cap="기어 번호 1·2·3은 등급이 아니라 범위">
-  <div class="lead">9장 · 기어 번호의 뜻</div>
-  <h2>1·2·3은 등급이 아니라, 힘이 닿는 범위다</h2>
-  <div class="ringfig">
-    <div class="rings">
-      <div class="r3"><span class="lab" style="top:26px">3 · 영향력<small>결과·환경·구조</small></span></div>
-      <div class="r2"><span class="lab" style="top:24px">2 · 관계<small>사람과 함께</small></span></div>
-      <div class="r1"><span class="lab">1 · 본능<small>나에게서 시작</small></span></div>
-    </div>
-    <div class="steps3">
-      <div class="s3"><span class="n" style="background:var(--mag)">1</span><div><div class="k">본능</div><div class="v">나에게서 먼저 시작되는 기본적인 힘</div><div class="q">나는 무엇을 보면 자연스럽게 움직이는가?</div></div></div>
-      <div class="s3"><span class="n" style="background:#8E7F88">2</span><div><div class="k">관계</div><div class="v">그 힘이 다른 사람과 연결되어 함께 작동하는 범위</div><div class="q">이 힘을 사람과 함께 어떻게 쓸 것인가?</div></div></div>
-      <div class="s3"><span class="n" style="background:#B7A9B1">3</span><div><div class="k">영향력</div><div class="v">행동을 결과·환경·지속 가능한 구조로 확장하는 범위</div><div class="q">결과와 구조로 어떻게 남길 것인가?</div></div></div>
-    </div>
-  </div>
-  <p class="note">세 범위는 차례로 올라가야 하는 성장 사다리가 아니다. 출발이 필요하면 본능, 협력이 필요하면 관계, 결과를 남겨야 하면 영향력이 알맞을 수 있다. 3기어가 더 훌륭한 사람을 뜻하지 않는다.</p>
-</section>
-
-<section class="fig" id="g09-2" data-cap="열두 기어 지도">
-  <div class="lead">9장 · 네 엔진의 본능·관계·영향력 지도</div>
-  <h2>열두 기어 지도</h2>
-  <div class="map">
-    <span></span><span class="ch">1 · 본능</span><span class="ch">2 · 관계</span><span class="ch">3 · 영향력</span>
-    <div class="rh b-red"><b>RED</b><span>추진</span></div>
-    <div class="c" style="background:var(--red-t)"><b>R1 도전</b><span>목표 앞에서 먼저 움직인다</span></div>
-    <div class="c" style="background:var(--red-t)"><b>R2 열정</b><span>사람과 상황의 온도를 높여 함께 움직인다</span></div>
-    <div class="c" style="background:var(--red-t)"><b>R3 성과</b><span>행동을 결과물과 구조로 이어 간다</span></div>
-    <div class="rh b-yel"><b>YELLOW</b><span>관계</span></div>
-    <div class="c" style="background:var(--yel-t)"><b>Y1 발견</b><span>사람과 정보를 먼저 알아보고 나눈다</span></div>
-    <div class="c" style="background:var(--yel-t)"><b>Y2 공감</b><span>가능성을 상대의 마음과 연결한다</span></div>
-    <div class="c" style="background:var(--yel-t)"><b>Y3 창의</b><span>연결을 새로운 방식과 장면으로 넓힌다</span></div>
-    <div class="rh b-grn"><b>GREEN</b><span>조화</span></div>
-    <div class="c" style="background:var(--grn-t)"><b>G1 배려</b><span>사람과 환경의 필요를 먼저 알아차린다</span></div>
-    <div class="c" style="background:var(--grn-t)"><b>G2 평화</b><span>차이를 조율해 관계의 안정을 만든다</span></div>
-    <div class="c" style="background:var(--grn-t)"><b>G3 밸런스</b><span>돌봄과 기준이 오래 가도록 균형을 세운다</span></div>
-    <div class="rh b-blu"><b>BLUE</b><span>분석</span></div>
-    <div class="c" style="background:var(--blu-t)"><b>B1 신뢰</b><span>약속과 근거를 확인해 믿음을 쌓는다</span></div>
-    <div class="c" style="background:var(--blu-t)"><b>B2 분석</b><span>정보와 관점을 검토해 판단을 돕는다</span></div>
-    <div class="c" style="background:var(--blu-t)"><b>B3 체계</b><span>정확한 과정을 기준과 구조로 남긴다</span></div>
-  </div>
-  <p class="note">기어를 바꾼다(변속)는 것은 더 높은 번호를 고르는 일이 아니라, 목표에 맞게 강점을 쓰는 방식을 조정하는 일이다.</p>
-</section>
-
-<section class="fig" id="g09-3" data-cap="기어 선택의 네 단계">
-  <div class="lead">9장 · 기어 선택의 네 단계</div>
-  <h2>정답을 맞히지 말고, 24시간 안에 시험한다</h2>
-  <div class="flow">
-    <div class="st"><span class="n">STEP 1</span><span class="k">목표 확인</span><span class="v">지금 이루고 싶은 목표를 한 문장으로 적는다</span></div>
-    <div class="st"><span class="n">STEP 2</span><span class="k">지금의 기어</span><span class="v">가장 자주 쓰는 기어와 과사용되는 강점을 살핀다</span></div>
-    <div class="st"><span class="n">STEP 3</span><span class="k">필요한 기어</span><span class="v">막힌 지점을 움직이는 데 필요한 기어를 고른다</span></div>
-    <div class="st" style="border-color:var(--mag)"><span class="n">STEP 4</span><span class="k">24시간 시험</span><span class="v">작은 행동으로 해 보고 결과를 기록한다</span></div>
-  </div>
-  <div class="loop"><svg viewBox="0 0 1072 84"><path d="M1000 4v26H40V8" fill="none" stroke="#D1006F" stroke-width="4" stroke-dasharray="10 8"/><path d="M28 20l12-16 12 16" fill="none" stroke="#D1006F" stroke-width="4" stroke-linejoin="round"/><text x="520" y="72" text-anchor="middle" font-family="Noto Sans KR" font-weight="700" font-size="21" fill="#D1006F">도움이 되었는지 확인하고, 필요하면 다시 선택한다</text></svg></div>
-</section>
-
+<!-- 10~13장 세 기어 -->
 <section class="fig" id="g10-1" data-cap="RED의 세 기어 한눈에 보기">
   <div class="lead">10장 · RED의 세 기어 — 도전·열정·성과</div>
   <h2>RED 세 기어 한눈에 보기</h2>
@@ -479,6 +283,7 @@ h2{font:900 44px/1.3 var(--serif);letter-spacing:-.02em}
   </div>
 </section>
 
+<!-- 14장 -->
 <section class="fig" id="g14-1" data-cap="같은 강의도 네 방식으로 빛난다">
   <div class="lead">14장 · 직업보다, 내 강점이 쓰이는 방식을 보라</div>
   <h2>같은 강의도 네 방식으로 빛난다</h2>
@@ -492,6 +297,7 @@ h2{font:900 44px/1.3 var(--serif);letter-spacing:-.02em}
   <p class="note">어느 방식도 더 우월하지 않다. 교육의 목표와 참여자의 필요에 따라 앞에 세울 힘이 달라질 뿐이다. 직업을 색에 배정하면 사람은 다시 상자에 갇힌다.</p>
 </section>
 
+<!-- 15장 -->
 <section class="fig" id="g15-1" data-cap="빽빽한 시간표보다 네 개의 블록">
   <div class="lead">15장 · 내 목표에 맞는 하루를 설계하라</div>
   <h2>빽빽한 시간표보다, 네 개의 블록</h2>
@@ -504,6 +310,7 @@ h2{font:900 44px/1.3 var(--serif);letter-spacing:-.02em}
   <p class="note">블록의 순서와 길이는 내 에너지와 목표에 맞춘다. 좋은 루틴도 내 목표와 연결되지 않으면 숙제가 된다.</p>
 </section>
 
+<!-- 16장 -->
 <section class="fig" id="g16-1" data-cap="피로 뒤에는 개인의 기어와 일의 구조가 함께 있다">
   <div class="lead">16장 · 지친 나를 탓하기 전에</div>
   <h2>피로 뒤에는 두 가지가 함께 있다</h2>
@@ -521,6 +328,7 @@ h2{font:900 44px/1.3 var(--serif);letter-spacing:-.02em}
   <p class="note">폭력·괴롭힘·차별·과도한 업무량·고용 불안·권한 부족은 더 잘 쉬거나 더 좋은 기어를 쓰면 사라지는 문제가 아니다. 사실을 기록하고 공식 절차와 지원을 이용한다.</p>
 </section>
 
+<!-- 17장 -->
 <section class="fig" id="g17-1" data-cap="24시간 대화 재설계 다섯 단계">
   <div class="lead">17장 · 내 강점이 왜 상대에게는 불편할까</div>
   <h2>색을 맞히지 말고, 대화의 순서를 바꾼다</h2>
@@ -535,6 +343,7 @@ h2{font:900 44px/1.3 var(--serif);letter-spacing:-.02em}
   <p class="note">사람을 바꾸려 하면 관계는 방어적이 된다. 목표·역할·기준·요청을 바꾸면 협업은 실험할 수 있다.</p>
 </section>
 
+<!-- 18장 -->
 <section class="fig" id="g18-1" data-cap="바꾼 것은 아이의 성격이 아니라 대화의 순서였다">
   <div class="lead">18장 · 가장 가까운 사람의 색이 가장 안 보인다</div>
   <h2>바꾼 것은 성격이 아니라, 대화의 순서</h2>
@@ -551,20 +360,22 @@ h2{font:900 44px/1.3 var(--serif);letter-spacing:-.02em}
   <p class="note">‘BLUE 아이는 모두 느리다’는 뜻이 아니다. 한 아이의 반복 행동과 필요를 대화로 이해한 결과다.</p>
 </section>
 
+<!-- 19장 -->
 <section class="fig" id="g19-1" data-cap="키맨이 나누는 다섯 가지">
   <div class="lead">19장 · 내 강점의 다음 문을 열어 주는 사람, 키맨</div>
   <h2>키맨은 인맥이 아니라, 나누는 역할이다</h2>
-  <div class="center"><div class="hub" style="height:640px">
+  <div class="center"><div class="hub" style="height:600px">
     <div class="core"><b>나의 목표</b><span>지금 어디에서<br>막혔는가</span></div>
-    <div class="sat" style="left:346px;top:0"><b>기회</b><span>가능성을 발견하고 설 자리를 연다</span></div>
-    <div class="sat" style="left:0;top:190px;width:300px"><b>피드백</b><span>무엇을 줄이고 남길지 기준을 건넨다</span></div>
-    <div class="sat" style="right:0;top:190px;width:300px"><b>연결</b><span>준비됐을 때 필요한 사람을 소개한다</span></div>
-    <div class="sat" style="left:120px;top:470px;width:340px"><b>기준</b><span>결과와 약속을 확인한다</span></div>
-    <div class="sat" style="right:120px;top:470px;width:340px"><b>책임</b><span>‘언젠가’를 날짜와 결과물로 바꾼다</span></div>
+    <div class="sat" style="left:386px;top:0"><b>기회</b><span>가능성을 발견하고 설 자리를 연다</span></div>
+    <div class="sat" style="left:0;top:150px"><b>피드백</b><span>무엇을 줄이고 남길지 기준을 건넨다</span></div>
+    <div class="sat" style="right:0;top:150px"><b>연결</b><span>준비됐을 때 필요한 사람을 소개한다</span></div>
+    <div class="sat" style="left:90px;bottom:0"><b>기준</b><span>결과와 약속을 확인한다</span></div>
+    <div class="sat" style="right:90px;bottom:0"><b>책임</b><span>‘언젠가’를 날짜와 결과물로 바꾼다</span></div>
   </div></div>
   <p class="note">한 사람이 모든 역할을 할 필요는 없다. 나도 누군가에게 이 중 하나를 건네는 키맨이 될 수 있다.</p>
 </section>
 
+<!-- 20장 -->
 <section class="fig" id="g20-1" data-cap="행동의 순서를 팀의 언어로 번역하기">
   <div class="lead">20장 · 좋은 리더는 모든 기어를 혼자 쓰지 않는다</div>
   <h2>행동의 순서를 팀의 언어로</h2>
@@ -577,6 +388,7 @@ h2{font:900 44px/1.3 var(--serif);letter-spacing:-.02em}
   <p class="note">화살표는 한 사람의 두 엔진이 아니라 행동을 이어 가는 순서다. 리더는 “누가 더 RED인가?”보다 “이번 목표에 어떤 기어가 필요하고, 누가 그 역할과 권한을 맡을 것인가?”를 묻는다.</p>
 </section>
 
+<!-- 21장 -->
 <section class="fig" id="g21-1" data-cap="브랜드 문장의 다섯 요소">
   <div class="lead">21장 · 나만의 컬러 브랜드 만들기</div>
   <h2>브랜드는 나를 꾸미는 일이 아니라, 반복한 가치를 설명하게 하는 일</h2>
@@ -591,6 +403,7 @@ h2{font:900 44px/1.3 var(--serif);letter-spacing:-.02em}
   <p class="note">‘저는 BLUE입니다’보다 ‘흩어진 경험을 기준과 과정으로 정리해 다른 사람도 쓸 수 있게 남깁니다’가 더 구체적이다. 경험과 역량이 없는 약속은 브랜드가 아니라 과장이다.</p>
 </section>
 
+<!-- 에필로그 -->
 <section class="fig epi" id="g22-1" data-cap="에필로그 인용">
   <div class="lead">에필로그 · 당신은 부족한 사람이 아니다</div>
   <div class="qm">“</div>
@@ -598,6 +411,7 @@ h2{font:900 44px/1.3 var(--serif);letter-spacing:-.02em}
   <div class="bars4"><i class="b-red"></i><i class="b-yel"></i><i class="b-grn"></i><i class="b-blu"></i></div>
 </section>
 
+<!-- 부록 A -->
 <section class="fig" id="gA-1" data-cap="나의 컬러강점 한 페이지 (워크시트)">
   <div class="lead">실습부록 A · 나의 컬러강점 한 장 정리</div>
   <h2>나의 컬러강점 한 페이지</h2>
@@ -612,6 +426,7 @@ h2{font:900 44px/1.3 var(--serif);letter-spacing:-.02em}
   <p class="note">검사가 아니다. 빈칸을 모두 채우지 않아도 된다.</p>
 </section>
 
+<!-- 부록 B -->
 <section class="fig" id="gB-1" data-cap="자가점검 문항표 조판 기준 (출판사 참고용)">
   <div class="lead">실습부록 B · 문항표 조판 기준 (출판사 참고용 시안)</div>
   <h2>48문항 자가점검 표 디자인 기준</h2>
@@ -658,19 +473,3 @@ h2{font:900 44px/1.3 var(--serif);letter-spacing:-.02em}
   </div>
   <p class="note">나머지 색의 점수는 좋고 나쁨이나 능력의 높낮이를 뜻하지 않는다. 이 자가점검의 결과는 베이스 엔진 하나이며, 파워 기어 두 개는 이 점수로 계산하지 않는다.</p>
 </section>
-
-<script>
-function gearPath(teeth, R, r, cx, cy){
-  let d='';const step=Math.PI*2/teeth;
-  for(let i=0;i<teeth;i++){
-    const a=i*step, pts=[[a-step*0.25,r],[a-step*0.15,R],[a+step*0.15,R],[a+step*0.25,r],[a+step*0.5,r]];
-    pts.forEach(([ang,rad],j)=>{const x=cx+rad*Math.cos(ang),y=cy+rad*Math.sin(ang);d+=(i===0&&j===0?'M':'L')+x.toFixed(1)+' '+y.toFixed(1)+' '});
-  }
-  return d+'Z';
-}
-document.querySelectorAll('svg[data-gear]').forEach(s=>{
-  const c=s.dataset.gear;s.setAttribute('viewBox','0 0 200 200');
-  s.innerHTML=`<path d="${gearPath(12,96,78,100,100)}" fill="${c}"/><circle cx="100" cy="100" r="34" fill="#fff"/>`;
-});
-</script>
-</body></html>
