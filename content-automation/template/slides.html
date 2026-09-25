@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Noto+Serif+KR:wght@700;900&display=swap">
+<style>
+:root{
+  --paper:#FFFFFF; --ink:#1B1519; --sub:#5E545B; --hair:#E9E2E6; --mag:#D1006F; --mag-soft:#FDE8F2;
+  --red:#D23B30; --red-t:#F7D5D1; --yel:#E0A400; --yel-t:#F6E4AE; --grn:#2C8C5A; --grn-t:#CDEAD8; --blu:#2C66A8; --blu-t:#D3E2F4;
+  --serif:"Noto Serif KR",serif; --sans:"Noto Sans KR",sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#888;font-family:var(--sans);color:var(--ink);word-break:keep-all}
+.slide{width:1080px;height:1350px;background:var(--paper);position:relative;overflow:hidden;padding:110px 96px 120px;display:flex;flex-direction:column}
+.top{position:absolute;top:56px;left:96px;right:96px;display:flex;justify-content:space-between;font:700 24px var(--sans);letter-spacing:.14em;color:var(--sub)}
+.top .n{font-variant-numeric:tabular-nums}
+.foot{position:absolute;bottom:52px;left:96px;right:96px;display:flex;justify-content:space-between;align-items:center;font:500 24px var(--sans);color:var(--sub)}
+.bars{display:flex;gap:8px}.bars i{display:block;width:36px;height:8px;border-radius:4px}
+.b1{background:var(--red)}.b2{background:var(--yel)}.b3{background:var(--grn)}.b4{background:var(--blu)}
+h1,h2{font-family:var(--serif);font-weight:900;letter-spacing:-.02em}
+.m{color:var(--mag)}
+/* cover */
+.cover{padding-top:170px}
+.cover .eyebrow{font:700 30px var(--sans);color:var(--mag);letter-spacing:.06em;margin-bottom:44px}
+.cover h1{font-size:176px;line-height:1.12}
+.cover .sub{margin-top:auto;font:500 52px/1.5 var(--sans);color:var(--ink)}
+.cover .sub b{font-weight:900}
+.swatches{position:absolute;right:0;top:0;display:flex;flex-direction:column;gap:0}
+.swatches i{display:block;width:30px;height:337.5px}
+.swipe{margin-top:64px;margin-bottom:40px;display:flex;align-items:center;gap:22px;font:700 34px var(--sans);color:var(--mag)}
+.swipe .dots{display:flex;gap:12px}.swipe .dots i{width:30px;height:30px;border-radius:50%;display:block}
+/* intro */
+.intro h2{font-size:92px;line-height:1.28;margin-top:64px}
+.intro .tags{display:flex;flex-wrap:wrap;gap:16px;margin-top:10px}
+.intro .tags span{font:700 38px var(--sans);border:3px solid var(--ink);border-radius:99px;padding:10px 30px}
+.intro p{font:500 44px/1.62 var(--sans);color:var(--sub);margin-top:56px}
+.intro p b{color:var(--ink);font-weight:700}
+.intro .def{margin-top:28px;font:500 30px/1.55 var(--sans);color:var(--sub);border-top:2px solid var(--hair);padding-top:24px}
+.intro .q{margin-top:auto;font-family:var(--serif);font-weight:900;font-size:66px;color:var(--mag)}
+/* engine */
+.chip{width:100%;border-radius:18px;overflow:hidden;box-shadow:0 2px 0 var(--hair)}
+.chip .c{height:250px;padding:40px 48px;display:flex;flex-direction:column;justify-content:space-between;color:#fff}
+.chip .c .code{font:700 32px var(--sans);letter-spacing:.04em;opacity:.95}
+.chip .c .name{font:900 74px var(--sans);letter-spacing:.02em}
+.chip .l{background:#fff;border:3px solid var(--hair);border-top:0;border-radius:0 0 18px 18px;padding:18px 48px;font:700 30px var(--sans);color:var(--sub);display:flex;justify-content:space-between}
+.eng h2{font-size:88px;line-height:1.24;margin-top:64px}
+.eng .desc{font:500 40px/1.6 var(--sans);color:var(--sub);margin-top:36px}
+.eng .say{margin-top:30px;font:700 36px var(--sans);color:var(--ink)}
+.eng .say em{font-style:normal;padding:4px 14px;border-radius:8px}
+.fix{margin-top:auto;border-radius:18px;padding:40px 44px}
+.fix .k{font:900 30px var(--sans);letter-spacing:.06em}
+.fix .v{font:700 42px/1.55 var(--sans);color:var(--ink);margin-top:14px}
+/* sheet */
+.sheet h2{font-size:78px;line-height:1.25}
+.sheet .s{font:500 36px var(--sans);color:var(--sub);margin-top:22px}
+.grid{margin-top:56px;display:grid;grid-template-columns:1fr 1fr;gap:24px;flex:1}
+.cell{border-radius:18px;padding:36px 36px;display:flex;flex-direction:column;gap:18px;border-top:14px solid}
+.cell .t{font:900 32px var(--sans);letter-spacing:.1em}
+.cell .p{font:700 38px/1.4 var(--sans);color:var(--ink)}
+.cell .a{margin-top:auto;font:900 44px/1.3 var(--serif);color:var(--ink)}
+.cell .a::before{content:"→ ";color:var(--sub);font-family:var(--sans);font-weight:500}
+/* cta */
+.cta h2{font-size:104px;line-height:1.2;margin-top:40px}
+.cta .dots{display:flex;gap:28px;margin-top:60px}.cta .dots i{width:110px;height:110px;border-radius:50%;display:block}
+.cta .p{font:700 44px/1.55 var(--sans);margin-top:60px}
+.cta .p span{color:var(--sub);font-weight:500}
+.cta .box{margin-top:auto;background:var(--mag);color:#fff;border-radius:18px;padding:42px 48px}
+.cta .box .k{font:700 30px var(--sans);opacity:.85}
+.cta .box .v{font:900 52px/1.35 var(--sans);margin-top:10px}
+.cta .ev{margin-top:30px;font:500 32px/1.5 var(--sans);color:var(--sub)}
+.cta .ev b{color:var(--ink)}
+
+.cover2{padding-top:150px}
+.cover2 .eyebrow{font:700 30px var(--sans);color:var(--mag);letter-spacing:.06em;margin-bottom:30px}
+.cover2 h1{font-size:112px;line-height:1.16}
+.list{margin-top:64px;display:flex;flex-direction:column;gap:22px}
+.row{display:grid;grid-template-columns:76px 1fr;align-items:center;gap:26px;padding:26px 30px;border-radius:16px;background:#F7F3F5}
+.row .no{width:76px;height:76px;border-radius:50%;display:grid;place-items:center;color:#fff;font:900 40px var(--sans)}
+.row .tx{font:700 42px/1.35 var(--sans);letter-spacing:-.01em}
+.cover2 .swipe{margin-top:auto;margin-bottom:40px}
+</style></head><body>
+<div id="root"></div>
+<script>
+// build(DATA) 는 render.js 에서 호출된다. 데이터 형식은 examples/*.json 참고.
+const ENG=[
+  {key:'RED',kr:'추진',color:'var(--red)',tint:'var(--red-t)',label:'var(--red)',sub:'앞으로 밀고 나가는 힘',gears:'R1 · R2 · R3'},
+  {key:'YELLOW',kr:'관계',color:'var(--yel)',tint:'var(--yel-t)',label:'#9A6E00',sub:'가능성을 펼치는 힘',gears:'Y1 · Y2 · Y3'},
+  {key:'GREEN',kr:'조화',color:'var(--grn)',tint:'var(--grn-t)',label:'var(--grn)',sub:'관계와 평온을 지키는 힘',gears:'G1 · G2 · G3'},
+  {key:'BLUE',kr:'분석',color:'var(--blu)',tint:'var(--blu-t)',label:'var(--blu)',sub:'근거와 구조를 세우는 힘',gears:'B1 · B2 · B3'},
+];
+const BARS='<span class="bars"><i class="b1"></i><i class="b2"></i><i class="b3"></i><i class="b4"></i></span>';
+function hdr(n){return `<div class="top"><span>PBS 컬러강점</span><span class="n">0${n} / 08</span></div>`}
+function foot(b){return `<div class="foot"><span>@pbscolor_ceo</span>${b||BARS}</div>`}
+function build(D){
+  const s=[];
+  s.push(`<section class="slide cover2" id="s1">${hdr(1)}
+    <div class="eyebrow">PBS 컬러강점 처방전 #${D.no} · ${D.topic}</div>
+    <h1>${D.cover.title}</h1>
+    <div class="list">${D.cover.items.map((t,i)=>`<div class="row"><span class="no b${i+1}">${i+1}</span><span class="tx">${t}</span></div>`).join('')}</div>
+    <div class="swipe">넘겨서 내 색과 처방 보기 →</div>${foot()}</section>`);
+  s.push(`<section class="slide intro" id="s2">${hdr(2)}
+    <div class="tags">${D.intro.tags.map(t=>`<span>${t}</span>`).join('')}</div>
+    <h2>${D.intro.title}</h2>
+    <p>${D.intro.body}</p>
+    <div class="q">번호별 처방, 넘겨 보세요</div>
+    <p class="def"><b>PBS 컬러강점</b>은 4가지 엔진과 12가지 기어로<br>나를 움직이는 방식을 읽는 강점 모델입니다.</p>${foot()}</section>`);
+  D.engines.forEach((e,i)=>{const m=ENG[i];
+    s.push(`<section class="slide eng" id="s${i+3}">${hdr(i+3)}
+    <div class="chip"><div class="c" style="background:${m.color}"><span class="code">PBS 컬러강점 · 엔진 ${i+1}</span><span class="name">${m.key} · ${m.kr}</span></div><div class="l"><span>${m.sub}</span><span>${m.gears}</span></div></div>
+    <h2>${e.headline}</h2>
+    <p class="desc">${e.desc}</p>
+    <p class="say">자주 하는 말 <em style="background:${m.tint}">“${e.say}”</em></p>
+    <div class="fix" style="background:${m.tint}"><div class="k" style="color:${m.label}">다시 움직이는 법 · ${e.gear} 기어</div><div class="v">${e.fix}</div></div>
+    ${foot(`<span class="bars"><i class="b${i+1}"></i></span>`)}</section>`)});
+  s.push(`<section class="slide sheet" id="s7">${hdr(7)}
+    <h2>${D.sheet.title}</h2>
+    <p class="s">PBS 컬러강점 4엔진 · 저장해 두고 꺼내 보세요</p>
+    <div class="grid">${D.sheet.cells.map((c,i)=>{const m=ENG[i];return `<div class="cell" style="background:${m.tint};border-color:${m.color}"><span class="t" style="color:${m.label}">${m.key}</span><span class="p">${c.p}</span><span class="a">${c.a}</span></div>`}).join('')}</div>${foot()}</section>`);
+  s.push(`<section class="slide cta" id="s8">${hdr(8)}
+    <h2>${D.cta.title}</h2>
+    <div class="dots"><i class="b1"></i><i class="b2"></i><i class="b3"></i><i class="b4"></i></div>
+    <p class="p">댓글에 번호 하나만 남겨 주세요.<br><span>${D.cta.tagline}</span></p>
+    <div class="box"><div class="k">내 색이 헷갈린다면</div><div class="v">프로필 링크에서<br>무료 PBS 컬러강점 진단</div></div>
+    <p class="ev">${D.cta.event}</p>${foot()}</section>`);
+  document.getElementById('root').innerHTML=s.join('\n');
+}
+</script></body></html>
