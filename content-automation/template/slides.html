@@ -71,7 +71,8 @@ h1,h2{font-family:var(--serif);font-weight:900;letter-spacing:-.02em}
 .cover2{padding-top:150px}
 .cover2 .eyebrow{font:700 30px var(--sans);color:var(--mag);letter-spacing:.06em;margin-bottom:30px}
 .cover2 h1{font-size:112px;line-height:1.16}
-.list{margin-top:64px;display:flex;flex-direction:column;gap:22px}
+.cover2 .ask{margin-top:60px;font:700 36px var(--sans);color:var(--sub)}
+.list{margin-top:22px;display:flex;flex-direction:column;gap:22px}
 .row{display:grid;grid-template-columns:76px 1fr;align-items:center;gap:26px;padding:26px 30px;border-radius:16px;background:#F7F3F5}
 .row .no{width:76px;height:76px;border-radius:50%;display:grid;place-items:center;color:#fff;font:900 40px var(--sans)}
 .row .tx{font:700 42px/1.35 var(--sans);letter-spacing:-.01em}
@@ -92,8 +93,9 @@ function foot(b){return `<div class="foot"><span>@pbscolor_ceo</span>${b||BARS}<
 function build(D){
   const s=[];
   s.push(`<section class="slide cover2" id="s1">${hdr(1)}
-    <div class="eyebrow">PBS 컬러강점 처방전 #${D.no} · ${D.topic}</div>
+    <div class="eyebrow">PBS 컬러강점 처방전 #${D.no}</div>
     <h1>${D.cover.title}</h1>
+    <div class="ask">나는 몇 번일까요?</div>
     <div class="list">${D.cover.items.map((t,i)=>`<div class="row"><span class="no b${i+1}">${i+1}</span><span class="tx">${t}</span></div>`).join('')}</div>
     <div class="swipe">넘겨서 내 색과 처방 보기 →</div>${foot()}</section>`);
   s.push(`<section class="slide intro" id="s2">${hdr(2)}
