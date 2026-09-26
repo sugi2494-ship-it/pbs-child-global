@@ -4,7 +4,7 @@
 - 지금 진행 중인 컬러 작업은 PBS 기존 **8톤**을 **12톤**으로 늘려서 **PBS 컬러값을 확정**하는 작업이다.
 - 기존 8톤 결과지(앞면 컬러 · 뒷면 립)는 이전 체계다. 12톤 작업에서 8톤 값과 섞지 않는다.
 - 확정 색값의 기준 문서는 원장님 Google Drive의 **"PBS 12톤 컬러 확정값 (원장님 전용)"** 최신본이다. 작업 전에 이 제목으로 검색해 최신본을 먼저 읽는다. 제목이 "[이전본 · 쓰지 않음]"으로 시작하는 문서는 쓰지 않는다.
-  - 최신본(2026-09-26 6차): https://docs.google.com/document/d/14_S1gWTwC8usNTd6sGw01_GbCFskWxrrbIS2yZnKhlk/edit
+  - 최신본(2026-09-26 7차): https://docs.google.com/document/d/1_l-skMqo_i2CLsQ3Vp0MbGg3aESuXOqPULWwX0qD0mU/edit
 - 색을 바꾸면 이 기준 문서도 새 최신본으로 갱신한다.
 - 이 저장소는 공개(public)다. 색값(HEX · CMYK · 먼셀 값)이나 톤별 색 구성은 이 저장소에 올리지 않는다.
 
