@@ -5,7 +5,7 @@
 - 기존 8톤 자료(결과지 앞면 컬러 · 뒷면 립, 강의 자료 계절 팔레트 20색)는 이전 체계다. 12톤 작업에서 8톤 값과 섞지 않는다. 계절 팔레트는 12톤 확정 30색을 쓴다.
 - 12톤 컬러 10(120색)의 값 · 이름 · 순서는 원장님 최종 마스터 파일 "PBS_12Tone_Color_Master_120" 최신본(25차)과 같아야 한다.
 - 확정 색값의 기준 문서는 원장님 Google Drive의 **"PBS 12톤 컬러 확정값 (원장님 전용)"** 최신본이다. 작업 전에 이 제목으로 검색해 최신본을 먼저 읽는다. 제목이 "[이전본 · 쓰지 않음]"으로 시작하는 문서는 쓰지 않는다.
-  - 최신본(2026-09-28 25차 · 원단 대조 칩 수정 + 보류건 정리): https://docs.google.com/document/d/1nBkrHb8HlpPSIAlJgWvAtNQlHQJnMRLujjRU1CnIkYw/edit
+  - 최신본(2026-09-28 26차 · 립 이름 정리 · 컬러 10은 25차와 같음): https://docs.google.com/document/d/1EsjjOjaWATaweDRJqjw7In8Yc2zEksXcpadG-ezXnzY/edit
 - 색을 바꾸면 이 기준 문서도 새 최신본으로 갱신한다.
 - 이 저장소는 공개(public)다. 색값(HEX · CMYK · 먼셀 값)이나 톤별 색 구성은 이 저장소에 올리지 않는다.
 
