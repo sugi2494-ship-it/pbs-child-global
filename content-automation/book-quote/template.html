@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Noto+Serif+KR:wght@400;700;900&display=swap">
+<style>
+:root{--ink:#1B1519;--night:#1E1720;--sub:#5E545B;--hair:#E7DFE4;--wash:#F7F3F5;--mag:#D1006F;--mag-t:#FCE3EF;
+--red:#D23B30;--yel:#E0A400;--grn:#2C8C5A;--blu:#2C66A8;--serif:"Noto Serif KR",serif;--sans:"Noto Sans KR",sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#888;font-family:var(--sans);color:var(--ink);word-break:keep-all}
+.s{width:1080px;height:1350px;position:relative;overflow:hidden;padding:120px 100px 130px;display:flex;flex-direction:column;justify-content:center;background:#fff}
+.hd{position:absolute;top:58px;left:100px;right:100px;display:flex;justify-content:space-between;font:700 24px var(--sans);letter-spacing:.12em;color:var(--sub)}
+.ft{position:absolute;bottom:56px;left:100px;right:100px;display:flex;justify-content:space-between;align-items:center;font:500 24px var(--sans);color:var(--sub)}
+.bars{display:flex;gap:8px}.bars i{display:block;width:36px;height:8px;border-radius:4px}
+.dark{background:var(--night);color:#fff}.dark .hd,.dark .ft{color:#B9AAB4}
+.mark{font:900 170px/0.7 var(--serif);color:var(--mag)}
+.q{font:900 78px/1.42 var(--serif);letter-spacing:-.02em}
+.q2{font:700 72px/1.5 var(--serif);letter-spacing:-.02em}
+.src{font:500 28px var(--sans);color:#B9AAB4;margin-top:36px}
+.lab{font:700 28px var(--sans);letter-spacing:.08em;color:var(--mag)}
+.h{font:900 70px/1.35 var(--serif);letter-spacing:-.02em;margin-top:22px}
+.p{font:500 42px/1.75 var(--sans);color:#3A3037;margin-top:40px}
+.p b{color:var(--ink);font-weight:700}
+.list{display:flex;flex-direction:column;gap:22px;margin-top:48px}
+.list div{background:var(--wash);border-radius:18px;padding:30px 34px;font:700 38px/1.45 var(--sans)}
+.act{margin-top:64px;background:var(--mag);color:#fff;border-radius:22px;padding:44px 46px}
+.act .k{font:700 28px var(--sans);opacity:.85}.act .v{font:900 44px/1.5 var(--sans);margin-top:12px}
+.book{margin-top:70px;border-top:3px solid var(--hair);padding-top:34px;font:500 30px/1.6 var(--sans);color:var(--sub)}
+.book b{color:var(--ink)}
+/* 표지 그림: 검은 천 스와치 사이 하나의 색 */
+.swatch{display:flex;gap:16px;margin-top:90px;height:230px;align-items:flex-end}
+.swatch i{display:block;width:92px;border-radius:14px 14px 4px 4px;background:#0B080C;box-shadow:inset 0 0 0 2px #2E2530}
+.swatch i.c{background:var(--mag);box-shadow:none}
+</style></head><body><div id="root"></div>
+<script>
+function hd(n,t){return `<div class="hd"><span>${t||'『컬러강점』 한 문장'}</span><span>0${n} / 08</span></div>`}
+const BARS='<span class="bars"><i style="background:var(--red)"></i><i style="background:var(--yel)"></i><i style="background:var(--grn)"></i><i style="background:var(--blu)"></i></span>';
+function ft(){return `<div class="ft"><span>@pbscolor_ceo</span>${BARS}</div>`}
+function build(D){
+  const s=[];
+  // 1 표지: 대표 문장
+  s.push(`<section class="s dark" id="s1">${hd(1,'『컬러강점』 한 문장 #'+D.no+' · '+D.chapter)}
+    <div class="mark">“</div><div class="q" style="margin-top:30px">${D.quote1}</div>
+    <div class="src">— 최해숙, 『컬러강점』 ${D.chapter}</div>
+    <div class="swatch">${[150,205,170,235,185,160,215,175].map((h,i)=>`<i class="${i===D.colorAt?'c':''}" style="height:${h}px"></i>`).join('')}</div>
+    ${ft()}</section>`);
+  // 2 장면
+  s.push(`<section class="s" id="s2">${hd(2)}<div class="lab">이 문장이 나온 장면</div><div class="h">${D.scene.title}</div><div class="p">${D.scene.body}</div>${ft()}</section>`);
+  // 3 두 번째 문장
+  s.push(`<section class="s dark" id="s3">${hd(3)}<div class="mark">“</div><div class="q2" style="margin-top:30px">${D.quote2}</div><div class="src">— ${D.chapter}</div>${ft()}</section>`);
+  // 4 공감
+  s.push(`<section class="s" id="s4">${hd(4)}<div class="lab">혹시 당신도</div><div class="h">${D.empathy.title}</div><div class="list">${D.empathy.items.map(x=>`<div>${x}</div>`).join('')}</div>${ft()}</section>`);
+  // 5 깨달음
+  s.push(`<section class="s" id="s5">${hd(5)}<div class="lab">그리고 알게 된 것</div><div class="h">${D.insight.title}</div><div class="p">${D.insight.body}</div>${ft()}</section>`);
+  // 6 질문
+  s.push(`<section class="s dark" id="s6">${hd(6)}<div class="lab" style="color:#FF7DBE">책이 건네는 질문</div><div class="q2" style="margin-top:40px">${D.question}</div><div class="src">${D.questionNote||''}</div>${ft()}</section>`);
+  // 7 오늘 해 볼 한 가지
+  s.push(`<section class="s" id="s7">${hd(7)}<div class="lab">오늘 해 볼 한 가지</div><div class="h">${D.action.title}</div><div class="p">${D.action.body}</div><div class="act"><div class="k">24시간 안에</div><div class="v">${D.action.step}</div></div>${ft()}</section>`);
+  // 8 마무리
+  s.push(`<section class="s" id="s8">${hd(8)}<div class="lab">저장해 두고 다시 꺼내 보세요</div><div class="h">${D.closing}</div>
+    <div class="p">마음에 남은 문장이 있다면<br>댓글에 한 줄만 적어 주세요.</div>
+    <div class="book">최해숙 『컬러강점』 ${D.chapter}에서<br><b>출간 기념회 · 11.29 (일) 오전 11시 · 강남 교보문고</b><br>다음 편 · ${D.next}</div>${ft()}</section>`);
+  document.getElementById('root').innerHTML=s.join('');
+}
+</script></body></html>
