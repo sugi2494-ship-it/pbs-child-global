@@ -69,25 +69,59 @@ body{background:#888;font-family:var(--sans);color:var(--ink);word-break:keep-al
 .cta div span{display:block;font-size:44px;margin-bottom:8px;color:var(--mag)}
 .book{margin-top:56px;border-top:3px solid var(--hair);padding-top:32px;font:500 29px/1.65 var(--sans);color:var(--sub)}
 .book b{color:var(--ink)}
+
+/* 컬러 칩 */
+.cc{display:inline-flex;align-items:center;gap:10px;font:900 30px var(--sans);color:#fff;padding:10px 20px;border-radius:40px;margin-right:10px}
+.cover .sub .cc{font-size:28px;padding:8px 18px;vertical-align:middle}
+/* 3 기어 진단 */
+.gears{display:flex;gap:22px;margin-top:50px}
+.gear{flex:1;border-radius:24px;padding:34px 32px;color:#fff}
+.gear .k{font:700 26px var(--sans);opacity:.85;letter-spacing:.04em}
+.gear .n{font:900 56px/1.2 var(--sans);margin-top:10px}
+.gear .d{font:500 30px/1.55 var(--sans);margin-top:16px;opacity:.95}
+.plus{align-self:center;font:900 60px var(--sans);color:var(--sub)}
+.result{margin-top:34px;background:var(--night);color:#fff;border-radius:24px;padding:34px 38px;font:700 38px/1.5 var(--sans)}
+.result small{display:block;font:700 26px var(--sans);color:var(--pink);margin-bottom:10px;letter-spacing:.04em}
+/* 4 강점 vs 과할 때 */
+.vs{margin-top:46px;display:flex;flex-direction:column;gap:22px}
+.vs .row{border-radius:22px;overflow:hidden;background:var(--wash)}
+.vs .t{padding:16px 30px;font:900 30px var(--sans);color:#fff}
+.vs .c{display:flex}
+.vs .c div{flex:1;padding:24px 30px;font:500 31px/1.55 var(--sans)}
+.vs .c div b{display:block;font:700 24px var(--sans);color:var(--sub);margin-bottom:6px}
+.vs .c div+div{border-left:2px solid var(--hair);color:#7A1244}
+/* 7 네 가지 색의 방전 */
+.grid4{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:46px}
+.grid4 div{background:#2A2230;border-radius:22px;padding:30px 30px;border-top:12px solid}
+.grid4 b{display:block;font:900 34px var(--sans)}
+.grid4 span{display:block;font:500 30px/1.55 var(--sans);color:#D9CED5;margin-top:10px}
+.grid4 div.on{background:#fff;color:var(--ink)}.grid4 div.on span{color:#3A3037}
 </style></head><body><div id="root"></div>
 <script>
 const BARS='<span class="bars"><i style="background:var(--red)"></i><i style="background:var(--yel)"></i><i style="background:var(--grn)"></i><i style="background:var(--blu)"></i></span>';
 function hd(n,D){return `<div class="hd"><span>PBS 컬러강점 · ${D.part}</span><span>0${n} / 08</span></div>`}
 function ft(){return `<div class="ft"><span>@pbscolor_ceo</span>${BARS}</div>`}
+const EC={RED:'var(--red)',YELLOW:'var(--yel)',GREEN:'var(--grn)',BLUE:'var(--blu)'};
+function cc(e,t){return `<span class="cc" style="background:${EC[e]}">${t||e}</span>`}
 function build(D){
   const s=[];
   s.push(`<section class="s cover ${D.textPos||''}" id="s1"><img src="${D.image}" style="${D.imgShift?`top:${D.imgShift}px;height:1350px`:''}">${D.aiLabel?'<div class="ai">AI 생성 이미지</div>':''}<div class="shade"></div>
-    <div class="in"><span class="chip">PBS 컬러강점 · ${D.part} #${D.no}</span><div class="h">${D.hook}</div><div class="sub">${D.hookSub}</div></div>
+    <div class="in"><span class="chip">PBS 컬러강점 · ${D.part} #${D.no}</span><div class="h">${D.hook}</div><div class="sub">${D.hookSub.replace(/\[(\w+)\]/g,(m,e)=>cc(e))}</div></div>
     <div class="ft"><span>@pbscolor_ceo</span><span class="swipe">넘겨서 확인하기 →</span></div></section>`);
   s.push(`<section class="s" id="s2">${hd(2,D)}<div class="lab">혹시 나도?</div><div class="h">${D.check.title}</div><div class="chk">${D.check.items.map(x=>`<div>${x}</div>`).join('')}</div><div class="note">${D.check.note}</div>${ft()}</section>`);
-  s.push(`<section class="s dark" id="s3">${hd(3,D)}<div class="lab">먼저 알아둘 것</div><div class="h">${D.reframe.title}</div><div class="p">${D.reframe.body}</div>${ft()}</section>`);
-  s.push(`<section class="s" id="s4">${hd(4,D)}<div class="lab">${D.signals.label}</div><div class="h">${D.signals.title}</div><div class="sig">${D.signals.items.map(x=>`<div><b>${x[0]}</b><span>${x[1]}</span></div>`).join('')}</div>${ft()}</section>`);
-  s.push(`<section class="s dark" id="s5">${hd(5,D)}<div class="mark">“</div><div class="q">${D.quote}</div><div class="src">— 최해숙, 『컬러강점』 ${D.chapter}</div>${ft()}</section>`);
-  s.push(`<section class="s" id="s6">${hd(6,D)}<div class="lab">오늘 써 볼 한 문장</div><div class="h">${D.lines.title}</div><div class="bub">${D.lines.items.map(x=>`<div>${x}</div>`).join('')}</div><div class="tip">${D.lines.tip}</div>${ft()}</section>`);
-  s.push(`<section class="s dark" id="s7">${hd(7,D)}<div class="lab">꼭 구분하세요</div><div class="h">${D.caution.title}</div><div class="p">${D.caution.body}</div><div class="warn">${D.caution.box}</div>${ft()}</section>`);
+  s.push(`<section class="s" id="s3">${hd(3,D)}<div class="lab">컬러강점으로 보면</div><div class="h">${D.gears.title}</div>
+    <div class="gears">${D.gears.items.map(g=>`<div class="gear" style="background:${EC[g.e]}"><div class="k">${g.e}</div><div class="n">${g.n}</div><div class="d">${g.d}</div></div>`).join('<div class="plus">+</div>')}</div>
+    <div class="result"><small>두 기어가 과하게 겹치면</small>${D.gears.result}</div>${ft()}</section>`);
+  s.push(`<section class="s" id="s4">${hd(4,D)}<div class="lab">강점이 그림자가 되는 순간</div><div class="h">${D.vs.title}</div>
+    <div class="vs">${D.vs.rows.map(r=>`<div class="row"><div class="t" style="background:${EC[r.e]}">${r.n}</div><div class="c"><div><b>목표에 맞게 쓰면</b>${r.good}</div><div><b>과하게 쓰면</b>${r.over}</div></div></div>`).join('')}</div>${ft()}</section>`);
+  s.push(`<section class="s dark" id="s5">${hd(5,D)}<div class="mark">“</div><div class="q">${D.quote}</div><div class="src">— 최해숙, 『컬러강점』 ${D.quoteChapter||D.chapter}</div>${ft()}</section>`);
+  s.push(`<section class="s" id="s6">${hd(6,D)}<div class="lab">${D.lines.label}</div><div class="h">${D.lines.title}</div><div class="bub">${D.lines.items.map(x=>`<div>${x}</div>`).join('')}</div><div class="tip">${D.lines.tip}</div>${ft()}</section>`);
+  s.push(`<section class="s dark" id="s7">${hd(7,D)}<div class="lab">색마다 지치는 방식이 달라요</div><div class="h">${D.colors.title}</div>
+    <div class="grid4">${D.colors.items.map(c=>`<div class="${c.on?'on':''}" style="border-color:${EC[c.e]}"><b style="color:${c.on?'var(--ink)':EC[c.e]}">${c.e}</b><span>${c.t}</span></div>`).join('')}</div>
+    <div class="src" style="margin-top:30px">${D.colors.note}</div>${ft()}</section>`);
   s.push(`<section class="s" id="s8">${hd(8,D)}<div class="lab">저장해 두고 필요할 때 꺼내 보세요</div><div class="h">${D.closing}</div>
-    <div class="cta"><div><span>↓</span>저장해 두기</div><div><span>↗</span>떠오르는 사람에게 보내기</div><div><span>✎</span>내 한 문장 댓글</div></div>
-    <div class="book"><b>최해숙 『컬러강점』</b>(가제) ${D.chapter} 중에서<br>출간 기념회 · 11.29 (일) 오전 11시 · 강남 교보문고<br>다음 편 · ${D.next}</div>${ft()}</section>`);
+    <div class="cta"><div><span>↓</span>저장해 두기</div><div><span>↗</span>떠오르는 사람에게 보내기</div><div><span>✎</span>내 색을 댓글로</div></div>
+    <div class="book"><b>내 엔진과 기어가 궁금하다면</b> · 프로필 링크의 PBS 컬러강점 진단<br><b>최해숙 『컬러강점』</b>(가제) ${D.chapter} 중에서 · 출간 기념회 11.29 (일) 오전 11시 강남 교보문고<br>다음 편 · ${D.next}</div>${ft()}</section>`);
   document.getElementById('root').innerHTML=s.join('');
 }
 </script></body></html>
