@@ -110,8 +110,8 @@ function build(D){
     <div class="ft"><span>@pbscolor_ceo</span><span class="swipe">넘겨서 확인하기 →</span></div></section>`);
   s.push(`<section class="s" id="s2">${hd(2,D)}<div class="lab">혹시 나도?</div><div class="h">${D.check.title}</div><div class="chk">${D.check.items.map(x=>`<div>${x}</div>`).join('')}</div><div class="note">${D.check.note}</div>${ft()}</section>`);
   s.push(`<section class="s" id="s3">${hd(3,D)}<div class="lab">컬러강점으로 보면</div><div class="h">${D.gears.title}</div>
-    <div class="gears">${D.gears.items.map(g=>`<div class="gear" style="background:${EC[g.e]}"><div class="k">${g.e}</div><div class="n">${g.n}</div><div class="d">${g.d}</div></div>`).join('<div class="plus">+</div>')}</div>
-    <div class="result"><small>두 기어가 과하게 겹치면</small>${D.gears.result}</div>${ft()}</section>`);
+    <div class="gears">${D.gears.items.map(g=>`<div class="gear" style="background:${EC[g.e]}"><div class="k">${g.k||g.e}</div><div class="n">${g.n}</div><div class="d">${g.d}</div></div>`).join('<div class="plus">+</div>')}</div>
+    <div class="result"><small>${D.gears.resultLabel||'두 기어가 과하게 겹치면'}</small>${D.gears.result}</div>${ft()}</section>`);
   s.push(`<section class="s" id="s4">${hd(4,D)}<div class="lab">강점이 그림자가 되는 순간</div><div class="h">${D.vs.title}</div>
     <div class="vs">${D.vs.rows.map(r=>`<div class="row"><div class="t" style="background:${EC[r.e]}">${r.n}</div><div class="c"><div><b>목표에 맞게 쓰면</b>${r.good}</div><div><b>과하게 쓰면</b>${r.over}</div></div></div>`).join('')}</div>${ft()}</section>`);
   s.push(`<section class="s dark" id="s5">${hd(5,D)}<div class="mark">“</div><div class="q">${D.quote}</div><div class="src">— 최해숙, 『컬러강점』 ${D.quoteChapter||D.chapter}</div>${ft()}</section>`);
