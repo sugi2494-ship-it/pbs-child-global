@@ -27,6 +27,7 @@ description: PBS 인스타·블로그 마케팅 팀을 한 번에 돌리는 오�
 - 캘린더를 Notion에 올려 달라고 하면 Notion 커넥터로 데이터베이스를 만든다(열: 날짜, 채널, 필러, 주제, 훅, CTA, 상태).
 - 카드뉴스 이미지는 힉스필드(generate_image) 또는 Gamma(socials)로 생성하고 생성 프롬프트를 원고 파일에 남긴다.
 - Google Drive에 올려 달라고 하면 원고 .md를 그대로 업로드한다.
+- 인스타 게시는 `marketing/publish/queue.json`에 항목을 넣고 `python3 marketing/publish/ig_publish.py due`로 올린다(환경 변수 IG_ACCESS_TOKEN 필요, 없으면 META_TOKEN_GUIDE.md 안내).
 - Meta Ads, Google Analytics, Apify는 이 세션에 연결되어 있지 않다. 필요한 수치는 사용자에게 스크린샷으로 요청한다.
 
 ## 금지

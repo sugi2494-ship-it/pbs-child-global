@@ -56,3 +56,9 @@ marketing/
 요금·계약 관련 문서는 모두 "제안 초안 — 확정 전 내부 검토용"으로 표시하고 법률 검토 후 사용한다.
 
 PBS컬러랩 | 대표: 최해숙 | 1600-7218 | 인증센터 문의: 010-4285-7997
+
+## 인스타그램 자동 게시 (`marketing/publish/`)
+- `META_TOKEN_GUIDE.md`: 무료 토큰 발급 순서와 토큰을 넣는 자리(환경 설정의 `IG_ACCESS_TOKEN`). 토큰은 채팅·깃허브에 붙여넣지 않는다.
+- `queue.json`: 올릴 것 목록. type(image/carousel/reel/story), 예약 시각, 공개 URL, 캡션.
+- `ig_publish.py`: `check`(연결 확인) · `due`(예약 지난 것 게시) · `post <id>` · `refresh`(토큰 60일 연장). 표준 라이브러리만 사용.
+- `media/`: 사진·영상을 두고 main에 합치면 Vercel 배포 주소로 공개 URL이 생긴다.

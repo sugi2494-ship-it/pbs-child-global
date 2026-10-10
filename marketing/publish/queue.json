@@ -1,0 +1,15 @@
+{
+  "note": "status: pending → published(또는 failed). scheduled_at은 한국시간 ISO 형식. media_urls는 공개 URL.",
+  "items": [
+    {
+      "id": "2026-10-13-reels-red-homework",
+      "type": "reel",
+      "scheduled_at": "2026-10-13T19:00:00+09:00",
+      "media_urls": ["https://REPLACE-WITH-DEPLOYED-URL/marketing/publish/media/2026-10-13_reels.mp4"],
+      "cover_url": "",
+      "caption": "숙제 미루는 아이, 게으른 게 아니라 RED였어요 🦁\n\nRED는 추진 엔진이에요. 목표가 보이면 제일 먼저 달리는 아이예요.\n그런데 \"왜 하는지, 어디까지 하면 끝인지\"가 안 보이면 시동이 안 걸려요.\n\"숙제 해\" 대신 \"수학 3문제, 몇 분 안에 끝낼 수 있어?\"\n도착점과 도전을 먼저 보여 주면, 같은 아이가 다르게 움직여요.\n30문항 어린이판 진단으로 우리 아이 강점 컬러를 먼저 확인해 보세요.\n\n오늘 저녁 숙제 시간에 써 보실 수 있게 ✅ 저장해 두세요.\n\n#PBS컬러랩 #컬러강점 #숙제미루는아이 #아이강점 #강점교육 #초등학부모 #컬러강점진단 #육아 #초등맘 #육아소통",
+      "status": "pending",
+      "source": "marketing/calendar/2026-10_pbs/2026-10-13_reels_RED아이숙제.md"
+    }
+  ]
+}
