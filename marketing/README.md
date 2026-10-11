@@ -62,3 +62,8 @@ PBS컬러랩 | 대표: 최해숙 | 1600-7218 | 인증센터 문의: 010-4285-799
 - `queue.json`: 올릴 것 목록. type(image/carousel/reel/story), 예약 시각, 공개 URL, 캡션.
 - `ig_publish.py`: `check`(연결 확인) · `due`(예약 지난 것 게시) · `post <id>` · `refresh`(토큰 60일 연장). 표준 라이브러리만 사용.
 - `media/`: 사진·영상을 두고 main에 합치면 Vercel 배포 주소로 공개 URL이 생긴다.
+
+## 디자인 원본 (`marketing/design/`)
+- `cards.html`(카드뉴스) · `highlights.html`(하이라이트 커버) · `render.js`(PNG 생성). 문구·색을 고친 뒤 `node marketing/design/render.js` 를 실행하면 `publish/media/`에 다시 생성된다.
+- 글꼴은 Pretendard. 세션에 없으면 `npm pack pretendard@1.3.9` 로 받아 `~/.fonts`에 넣고 `fc-cache -f`.
+- 전략 문서: `brand/instagram-strategy.md`

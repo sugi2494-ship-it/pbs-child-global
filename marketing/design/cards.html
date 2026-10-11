@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="UTF-8">
+<style>
+:root{
+  --pink:#E466F2; --pink-bold:#D63FE8; --violet:#4A0E78; --violet-line:#5A1A7A;
+  --b1:#FBE3FE; --b2:#F6ACFD; --b3:#E86BF5;
+  --red:#D23B30; --yellow:#E0A400; --green:#2C8C5A; --blue:#2C66A8;
+  --kred:#FF3366; --kyel:#F5A623; --kgrn:#00A878; --kblu:#0077B6; --kpur:#9B59B6;
+  --ink:#15161A; --soft:#6B6987;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#ddd;font-family:'Pretendard',sans-serif;color:var(--ink);word-break:keep-all}
+.card{width:1080px;height:1350px;background:#fff;position:relative;overflow:hidden;padding:88px 84px;display:flex;flex-direction:column}
+.card.dark{background:var(--ink);color:#fff}
+.hdr{display:flex;justify-content:space-between;align-items:flex-start}
+.hdr .en{font-family:Arial,Helvetica,sans-serif;line-height:1.05;letter-spacing:.02em}
+.hdr .en .l1{font-weight:300;font-size:30px;color:var(--pink)}
+.hdr .en .l2{font-weight:900;font-size:40px;color:var(--pink-bold)}
+.hdr .en .l2 span{display:inline-block;width:60px;height:3px;background:var(--violet-line);vertical-align:middle;margin-left:18px}
+.hdr .kr{font-size:30px;font-weight:700;color:var(--violet);white-space:nowrap}
+.hdr .kr b{color:var(--pink);font-weight:400;margin:0 8px}
+.dark .hdr .kr{color:#fff}
+.blob{position:absolute;right:-180px;bottom:-200px;width:620px;height:620px;border-radius:62% 38% 55% 45%/48% 60% 40% 52%;background:radial-gradient(circle at 35% 35%,var(--b1) 0%,var(--b2) 48%,var(--b3) 100%);opacity:.95}
+.blob.sm{width:360px;height:360px;right:-100px;bottom:-110px}
+.body{flex:1;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:2}
+h1{font-size:104px;line-height:1.18;font-weight:800;letter-spacing:-.02em}
+h2{font-size:84px;line-height:1.2;font-weight:800;letter-spacing:-.02em}
+.sub{font-size:40px;line-height:1.5;color:var(--soft);margin-top:40px;font-weight:500}
+.dark .sub{color:#C9C7D6}
+.ftr{display:flex;justify-content:space-between;font-size:22px;color:#9694B0;position:relative;z-index:2}
+.badge{display:inline-block;border:3px solid var(--violet);color:var(--violet);border-radius:999px;padding:10px 30px;font-size:28px;font-weight:700;margin-bottom:36px;width:max-content}
+.dark .badge{border-color:var(--pink);color:var(--pink)}
+.step{display:flex;align-items:center;gap:36px;margin:22px 0}
+.step .n{width:120px;height:120px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:Arial;font-weight:900;font-size:44px;color:#fff;flex:none}
+.step .t{font-size:44px;font-weight:800}
+.step .d{font-size:30px;color:var(--soft);margin-top:4px}
+.arrow{font-size:40px;color:var(--pink);margin-left:42px;line-height:1}
+.eng{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:40px}
+.eng .e{border-radius:28px;padding:40px 36px;color:#fff;min-height:300px;display:flex;flex-direction:column;justify-content:flex-end}
+.eng .e .nm{font-family:Arial;font-weight:900;font-size:44px;letter-spacing:.04em}
+.eng .e .ko{font-size:36px;font-weight:800;margin-top:6px}
+.eng .e .ds{font-size:26px;opacity:.92;margin-top:10px;line-height:1.35}
+.kids{display:flex;gap:22px;margin-top:48px}
+.kids .k{flex:1;border-radius:28px;padding:34px 10px;text-align:center;font-weight:800;font-size:30px}
+.kids .k .em{font-size:84px;display:block;margin-bottom:10px}
+.nums{display:grid;grid-template-columns:1fr 1fr;gap:40px 30px;margin-top:40px}
+.nums .num .v{font-family:Arial,'Pretendard';font-weight:900;font-size:120px;line-height:1;color:var(--violet);letter-spacing:-.03em}
+.nums .num .v small{font-size:52px;font-weight:800;font-family:'Pretendard'}
+.nums .num .k{font-size:32px;color:var(--soft);margin-top:12px;font-weight:600}
+.quote{font-size:72px;line-height:1.35;font-weight:700}
+.quote em{font-style:normal;color:var(--pink)}
+.creds{margin-top:56px;font-size:30px;line-height:1.75;color:#C9C7D6}
+.creds b{color:#fff}
+.cta{margin-top:56px;background:var(--violet);color:#fff;border-radius:999px;padding:30px 50px;font-size:38px;font-weight:800;width:max-content}
+.cta.pink{background:var(--pink-bold)}
+.sign{font-size:30px;color:var(--soft);margin-top:20px}
+</style></head><body>
+
+<!-- 1 표지 -->
+<section class="card" id="c1">
+  <div class="hdr"><div class="en"><div class="l1">FIND YOUR</div><div class="l2">TRUE COLOR.<span></span></div></div><div class="kr"><b>{</b>PBS COLOR LAB<b>}</b></div></div>
+  <div class="body">
+    <div class="badge">계정 소개</div>
+    <h1>당신 안의<br>색을<br>켜 드립니다</h1>
+    <p class="sub">컬러로 내면 · 강점 · 외면을 잇는<br>PBS COLOR LAB 최해숙입니다</p>
+  </div>
+  <div class="ftr"><span>ⓒ PBS COLOR LAB</span><span>1 / 8</span></div>
+  <div class="blob"></div>
+</section>
+
+<!-- 2 철학 -->
+<section class="card" id="c2">
+  <div class="hdr"><div class="en"><div class="l1">COLOR IS</div><div class="l2">LANGUAGE.<span></span></div></div><div class="kr"><b>{</b>브랜드 철학<b>}</b></div></div>
+  <div class="body">
+    <h2>색은 꾸밈이 아니라<br><span style="color:var(--pink-bold)">언어</span>입니다</h2>
+    <p class="sub">빛을 새로 만드는 게 아니라<br>이미 당신 안에 있는 색을<br>발견하고 켜 주는 일을 합니다</p>
+  </div>
+  <div class="ftr"><span>ⓒ PBS COLOR LAB</span><span>2 / 8</span></div>
+  <div class="blob sm"></div>
+</section>
+
+<!-- 3 Color Iceberg -->
+<section class="card" id="c3">
+  <div class="hdr"><div class="en"><div class="l1">COLOR ICEBERG</div><div class="l2">SYSTEM.<span></span></div></div><div class="kr"><b>{</b>세 단계 성장<b>}</b></div></div>
+  <div class="body">
+    <h2 style="font-size:72px">나를 만나고, 채우고,<br>완성하는 3단계</h2>
+    <div style="margin-top:56px">
+      <div class="step"><div class="n" style="background:var(--blue)">1</div><div><div class="t">내면의 색 · INSIDE</div><div class="d">감정과 기질을 이해합니다 (컬러테라피)</div></div></div>
+      <div class="arrow">↓</div>
+      <div class="step"><div class="n" style="background:var(--red)">2</div><div><div class="t">강점의 색 · STRENGTH</div><div class="d">나의 행동 엔진과 기어를 찾습니다 (컬러강점)</div></div></div>
+      <div class="arrow">↓</div>
+      <div class="step"><div class="n" style="background:var(--pink-bold)">3</div><div><div class="t">외면의 색 · OUTSIDE</div><div class="d">스타일과 이미지로 표현합니다 (퍼스널컬러)</div></div></div>
+    </div>
+  </div>
+  <div class="ftr"><span>ⓒ PBS COLOR LAB</span><span>3 / 8</span></div>
+</section>
+
+<!-- 4 4엔진 -->
+<section class="card" id="c4">
+  <div class="hdr"><div class="en"><div class="l1">COLOR</div><div class="l2">STRENGTH.<span></span></div></div><div class="kr"><b>{</b>4가지 그룹엔진<b>}</b></div></div>
+  <div class="body">
+    <h2 style="font-size:72px">사람에게는<br>4가지 엔진이 있어요</h2>
+    <div class="eng">
+      <div class="e" style="background:var(--red)"><div class="nm">RED</div><div class="ko">추진 엔진</div><div class="ds">앞으로 밀고 나가는 힘<br>도전 · 열정 · 성과</div></div>
+      <div class="e" style="background:var(--yellow)"><div class="nm">YELLOW</div><div class="ko">관계 엔진</div><div class="ds">가능성을 펼치는 힘<br>발견 · 공감 · 창의</div></div>
+      <div class="e" style="background:var(--green)"><div class="nm">GREEN</div><div class="ko">조화 엔진</div><div class="ds">관계와 평온을 지키는 힘<br>배려 · 평화 · 밸런스</div></div>
+      <div class="e" style="background:var(--blue)"><div class="nm">BLUE</div><div class="ko">분석 엔진</div><div class="ds">근거와 구조를 세우는 힘<br>신뢰 · 분석 · 체계</div></div>
+    </div>
+    <p class="sub" style="font-size:32px;margin-top:36px">엔진은 바꾸지 않아도 됩니다. 기어를 올리면 됩니다.</p>
+  </div>
+  <div class="ftr"><span>ⓒ PBS COLOR LAB</span><span>4 / 8</span></div>
+</section>
+
+<!-- 5 어린이판 -->
+<section class="card" id="c5">
+  <div class="hdr"><div class="en"><div class="l1">KIDS</div><div class="l2">EDITION.<span></span></div></div><div class="kr"><b>{</b>어린이판 진단<b>}</b></div></div>
+  <div class="body">
+    <h2 style="font-size:72px">우리 아이는<br>어떤 컬러 친구일까요?</h2>
+    <div class="kids">
+      <div class="k" style="background:#FFE5EC;color:var(--kred)"><span class="em">🦁</span>사자</div>
+      <div class="k" style="background:#FFF4D6;color:#B97800"><span class="em">🌻</span>해바라기</div>
+      <div class="k" style="background:#D4F5E5;color:var(--kgrn)"><span class="em">🌳</span>나무</div>
+      <div class="k" style="background:#D4E9F5;color:var(--kblu)"><span class="em">🌊</span>바다</div>
+      <div class="k" style="background:#EFE0F4;color:var(--kpur)"><span class="em">🎨</span>팔레트</div>
+    </div>
+    <p class="sub">30문항 · 5개 언어 · 무료<br>친구 · 소통 · 자기관리 · 학습 · 예술 영역의<br>강점을 긍정의 언어로 알려 드려요</p>
+  </div>
+  <div class="ftr"><span>ⓒ PBS COLOR LAB</span><span>5 / 8</span></div>
+  <div class="blob sm"></div>
+</section>
+
+<!-- 6 숫자 -->
+<section class="card" id="c6">
+  <div class="hdr"><div class="en"><div class="l1">PBS IN</div><div class="l2">NUMBERS.<span></span></div></div><div class="kr"><b>{</b>숫자로 보는 PBS<b>}</b></div></div>
+  <div class="body">
+    <h2 style="font-size:72px">2021년부터<br>색으로 사람을 만났습니다</h2>
+    <div class="nums">
+      <div class="num"><div class="v">2<small>만 명+</small></div><div class="k">누적 교육 참여자</div></div>
+      <div class="num"><div class="v">257<small>명</small></div><div class="k">양성한 전문강사</div></div>
+      <div class="num"><div class="v">4.97</div><div class="k">교육 만족도 (5.0 기준)</div></div>
+      <div class="num"><div class="v">6<small>종</small></div><div class="k">전문가 자격과정</div></div>
+    </div>
+    <p class="sub" style="font-size:28px;margin-top:48px">HD현대 · 기아 · 현대자동차 · 현대백화점 · 롯데백화점 · 울산광역시 · 한국관광공사 · KOTRA DUBAI</p>
+  </div>
+  <div class="ftr"><span>ⓒ PBS COLOR LAB</span><span>6 / 8</span></div>
+</section>
+
+<!-- 7 대표 -->
+<section class="card dark" id="c7">
+  <div class="hdr"><div class="en"><div class="l1">CEO</div><div class="l2">CHOI HAE SOOK.<span></span></div></div><div class="kr"><b>{</b>대표 최해숙<b>}</b></div></div>
+  <div class="body">
+    <p class="quote">"색은 사람의<br>가능성을 비추는<br><em>빛</em>입니다"</p>
+    <div class="creds">
+      <b>KBS 1TV 생생투데이 · KBS 2TV 아침마당</b> 출연<br>
+      두바이 왕실 초청 퍼스널컬러 컨설팅 (2024)<br>
+      2018 대한민국 신지식인 · 2021 울산시장 사회혁신상<br>
+      저서 《상처도 스펙이다》 · 역서 《Color &amp; Number》
+    </div>
+  </div>
+  <div class="ftr"><span>ⓒ PBS COLOR LAB</span><span>7 / 8</span></div>
+</section>
+
+<!-- 8 CTA -->
+<section class="card" id="c8">
+  <div class="hdr"><div class="en"><div class="l1">START</div><div class="l2">TODAY.<span></span></div></div><div class="kr"><b>{</b>지금 시작하기<b>}</b></div></div>
+  <div class="body">
+    <h2>우리 아이 강점 컬러,<br>오늘 확인해 보세요</h2>
+    <p class="sub">프로필 링크에서 30문항 어린이판 진단<br>결과는 5개 언어로, 비용은 없어요</p>
+    <div class="cta pink">프로필 링크 → 진단하기</div>
+    <p class="sign">강사 자격과정 · 기업 교육 문의는 DM 또는 1600-7218</p>
+  </div>
+  <div class="ftr"><span>ⓒ PBS COLOR LAB · #PBS컬러랩 #컬러강점</span><span>8 / 8</span></div>
+  <div class="blob"></div>
+</section>
+</body></html>
