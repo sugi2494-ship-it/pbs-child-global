@@ -66,5 +66,5 @@ PBS컬러랩 | 대표: 최해숙 | 1600-7218 | 인증센터 문의: 010-4285-799
 ## 디자인 원본 (`marketing/design/`)
 - `cards.html`(카드뉴스) · `highlights.html`(하이라이트 커버) · `render.js`(PNG 생성). 문구·색을 고친 뒤 `node marketing/design/render.js` 를 실행하면 `publish/media/`에 다시 생성된다.
 - 글꼴은 Pretendard. 세션에 없으면 `npm pack pretendard@1.3.9` 로 받아 `~/.fonts`에 넣고 `fc-cache -f`.
-- 릴스 자막: `design/reel_subs.py` + `design/reel_subs.tsv`(시작·끝·문구). 캡컷 스타일 흰 글자·검정 외곽선, 글씨체 Jua/DoHyeon/BlackHanSans/GothicA1 선택, 위치 bottom/middle/top.
+- 릴스: `/reel` 스킬이 절차를 안다. 스타일 기준 `brand/reel-style.md`, 렌더러 `design/reel_subs.py`, 자막 파일 `design/subs/*.tsv`(시작·끝·문구). 캡컷 스타일 흰 글자·검정 외곽선, 글씨체 Jua/DoHyeon/BlackHanSans/GothicA1 선택, 위치 bottom/middle/top.
 - 전략 문서: `brand/instagram-strategy.md`
