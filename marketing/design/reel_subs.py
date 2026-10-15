@@ -2,7 +2,7 @@
 """세로 영상 → 9:16 릴스 + 캡컷 스타일 큰 자막(흰 글자·검정 외곽선).
 사용: python3 marketing/design/reel_subs.py --in 원본.mp4 --out 출력.mp4 --subs marketing/design/reel_subs.tsv
       [--pos bottom|middle|top] [--font Jua] [--size 82] [--start 0] [--end 0] [--brand "@PBS컬러랩 · 컬러강점"]
-      [--title "첫 줄\\n둘째 줄" --title-size 96 --title-end 3 --title-y 300]  ← 시작 제목(위쪽, 더 큰 글씨)
+      [--title "첫 줄\\n둘째 줄" --title-size 96 --title-end 3 --title-y 300 --title-color 0xFFE400 --title-box 0x15161A@0.9]  ← 시작 제목
 subs.tsv: 시작초<TAB>끝초<TAB>문구(줄바꿈은 \\n). 시간은 --start 를 뺀 뒤의 영상 기준.
 """
 import argparse, os, subprocess, tempfile
@@ -18,6 +18,7 @@ a.add_argument("--start", type=float, default=0); a.add_argument("--end", type=f
 a.add_argument("--brand", default="@PBS컬러랩 · 컬러강점"); a.add_argument("--border", type=int, default=7)
 a.add_argument("--title", default=""); a.add_argument("--title-size", type=int, default=96)
 a.add_argument("--title-end", type=float, default=3.0); a.add_argument("--title-y", type=int, default=300)
+a.add_argument("--title-color", default="white"); a.add_argument("--title-box", default="")  # 예: 0xD63FE8@0.92
 o = a.parse_args()
 tmp = tempfile.mkdtemp()
 filters = ["scale=-2:1920,crop=1080:1920,setsar=1"]
@@ -30,8 +31,10 @@ for i, line in enumerate(open(o.subs, encoding="utf-8")):
                    f":line_spacing=18:text_align=center:x=(w-text_w)/2:y={POS[o.pos]}:enable='between(t,{s},{e})'")
 if o.title:
     tp = os.path.join(tmp, "title.txt"); open(tp, "w", encoding="utf-8").write(o.title.replace("\\n", "\n"))
+    deco = (f":box=1:boxcolor={o.title_box}:boxborderw=28" if o.title_box
+            else f":borderw={o.border+2}:bordercolor=black:shadowcolor=black@0.5:shadowx=4:shadowy=4")
     filters.append(f"drawtext=expansion=none:fontfile={FONTS[o.font]}:textfile={tp}:fontsize={o.title_size}"
-                   f":fontcolor=white:borderw={o.border+2}:bordercolor=black:shadowcolor=black@0.5:shadowx=4:shadowy=4"
+                   f":fontcolor={o.title_color}{deco}"
                    f":line_spacing=20:text_align=center:x=(w-text_w)/2:y={o.title_y}-text_h/2:enable='between(t,0,{o.title_end})'")
 if o.brand:
     b = os.path.join(tmp, "brand.txt"); open(b, "w", encoding="utf-8").write(o.brand)

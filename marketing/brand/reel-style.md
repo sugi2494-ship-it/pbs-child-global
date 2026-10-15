@@ -8,10 +8,10 @@
 | 자막 글씨체 | Jua (둥근 굵은 한글). 대안: DoHyeon, BlackHanSans, GothicA1 |
 | 자막 스타일 | 흰 글자 + 검정 외곽선 7px + 옅은 그림자, 가운데 정렬, 한 번에 2줄 이내 |
 | 자막 크기·위치 | 82px, 화면 아래쪽(중심 y≈1520) |
-| 시작 제목 | 같은 글씨체, 100px, 화면 위쪽(중심 y≈300), 0~3.5초만 표시. 훅 문장 2줄 |
+| 시작 제목 | 같은 글씨체, 104px, **노란 글자(#FFE400) + 검정 반투명 상자**, 화면 위쪽(중심 y≈300), 0~3.5초만 표시. 훅 문장 2줄 |
 | 브랜드 표기 | 맨 아래 작게 "@PBS컬러랩 · 컬러강점" (Pretendard 32px) |
 | 오디오 | 원본 음성 유지 |
 | 자막 문구 | 대표님이 준 문장 그대로(맞춤법·띄어쓰기만 손봄). 없으면 Claude가 이야기에서 뽑아 쓰고 확인받는다 |
 
-렌더: `python3 marketing/design/reel_subs.py --in 원본.mp4 --out 출력.mp4 --subs 자막.tsv --title "훅 1줄\n훅 2줄" [--start 초 --end 초]`
+렌더: `python3 marketing/design/reel_subs.py --in 원본.mp4 --out 출력.mp4 --subs 자막.tsv --title "훅 1줄\n훅 2줄" --title-size 104 --title-color 0xFFE400 --title-box 0x15161A@0.88 [--start 초 --end 초]`
 자막 파일(tsv): `시작초<TAB>끝초<TAB>문구(줄바꿈 \n)`
