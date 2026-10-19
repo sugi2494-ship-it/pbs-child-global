@@ -96,10 +96,23 @@ body{background:#888;font-family:var(--sans);color:var(--ink);word-break:keep-al
 .grid4 b{display:block;font:900 34px var(--sans)}
 .grid4 span{display:block;font:500 30px/1.55 var(--sans);color:#D9CED5;margin-top:10px}
 .grid4 div.on{background:#fff;color:var(--ink)}.grid4 div.on span{color:#3A3037}
+
+/* 9 출간 기념회 (공통) */
+.event{background:var(--mag);color:#fff;justify-content:flex-start;padding-top:170px}
+.event .hd,.event .ft{color:rgba(255,255,255,.8)}
+.event .ev-lab{display:inline-block;align-self:flex-start;border:3px solid #fff;border-radius:40px;padding:10px 26px;font:700 30px var(--sans)}
+.event .ev-h{font:900 84px/1.28 var(--sans);letter-spacing:-.03em;margin-top:44px}
+.event .ev-h span{background:#fff;color:var(--mag);padding:0 14px;border-radius:12px}
+.ev-card{margin-top:60px;background:#fff;color:var(--ink);border-radius:28px;padding:44px 48px;display:flex;flex-direction:column;gap:18px}
+.ev-card .d{font:900 64px/1.15 var(--sans);letter-spacing:-.02em}
+.ev-card .t{font:900 48px var(--sans);color:var(--mag)}
+.ev-card .pl{font:700 40px var(--sans)}
+.ev-card .bars4{display:flex;gap:12px;margin-top:10px}.ev-card .bars4 i{flex:1;height:16px;border-radius:8px}
+.ev-note{margin-top:40px;font:500 32px/1.6 var(--sans);color:rgba(255,255,255,.92)}
 </style></head><body><div id="root"></div>
 <script>
 const BARS='<span class="bars"><i style="background:var(--red)"></i><i style="background:var(--yel)"></i><i style="background:var(--grn)"></i><i style="background:var(--blu)"></i></span>';
-function hd(n,D){return `<div class="hd"><span>PBS 컬러강점 · ${D.part}</span><span>0${n} / 08</span></div>`}
+function hd(n,D){return `<div class="hd"><span>PBS 컬러강점 · ${D.part}</span><span>0${n} / 09</span></div>`}
 function ft(){return `<div class="ft"><span>@pbscolor_ceo</span>${BARS}</div>`}
 const EC={RED:'var(--red)',YELLOW:'var(--yel)',GREEN:'var(--grn)',BLUE:'var(--blu)'};
 function cc(e,t){return `<span class="cc" style="background:${EC[e]}">${t||e}</span>`}
@@ -121,7 +134,13 @@ function build(D){
     <div class="src" style="margin-top:30px">${D.colors.note}</div>${ft()}</section>`);
   s.push(`<section class="s" id="s8">${hd(8,D)}<div class="lab">저장해 두고 필요할 때 꺼내 보세요</div><div class="h">${D.closing}</div>
     <div class="cta"><div><span>↓</span>저장해 두기</div><div><span>↗</span>떠오르는 사람에게 보내기</div><div><span>✎</span>내 색을 댓글로</div></div>
-    <div class="book"><b>내 엔진과 기어가 궁금하다면</b> · 프로필 링크의 PBS 컬러강점 진단<br><b>최해숙 『컬러강점』</b>(가제) ${D.chapter} 중에서 · 출간 기념회 11.29 (일) 오전 11시 강남 교보문고<br>다음 편 · ${D.next}</div>${ft()}</section>`);
+    <div class="book"><b>내 엔진과 기어가 궁금하다면</b> · 프로필 링크의 PBS 컬러강점 진단<br><b>최해숙 『컬러강점』</b>(가제) ${D.chapter} 중에서<br>다음 편 · ${D.next}</div>${ft()}</section>`);
+  s.push(`<section class="s event" id="s9">${hd(9,D)}<span class="ev-lab">최해숙 『컬러강점』(가제) 출간 기념회</span>
+    <div class="ev-h">현장에서<br><span>당신의 컬러강점</span>을<br>확인하는 시간</div>
+    <div class="ev-card"><div class="d">11월 29일 일요일</div><div class="t">오전 11시</div><div class="pl">강남 교보문고</div>
+      <div class="bars4"><i style="background:var(--red)"></i><i style="background:var(--yel)"></i><i style="background:var(--grn)"></i><i style="background:var(--blu)"></i></div></div>
+    <div class="ev-note">내 엔진은 무슨 색일까? 저자와 함께 직접 확인해 보세요.<br>소식은 @pbscolor_ceo 에서 알려 드려요.</div>
+    <div class="ft"><span>@pbscolor_ceo</span><span>PBS 컬러강점</span></div></section>`);
   document.getElementById('root').innerHTML=s.join('');
 }
 </script></body></html>
